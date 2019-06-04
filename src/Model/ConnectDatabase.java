@@ -17,6 +17,16 @@ class ConnectDatabase {
         return null;
     }
 
+    //Make function for execute sql update from another model
+    static int executeUpdate(String query) {
+        try {
+            return Objects.requireNonNull(ConnectDatabase.statement()).executeUpdate(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     //Make statement
     private static Statement statement() {
         try {
