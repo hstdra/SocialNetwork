@@ -41,8 +41,8 @@ class ConnectDatabase {
     private static Connection connection() {
         config();
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            return DriverManager.getConnection("jdbc:sqlserver://DESKTOP-NJ2B10D;databaseName=" + database + ";", user, password);
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            return DriverManager.getConnection("jdbc:mysql://35.240.187.148:3306/mxh", user, password);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -53,7 +53,9 @@ class ConnectDatabase {
     private static void config() {
         user = "hst";
         password = "123456";
-        database = "FuLib";
     }
 
+    public static void main(String[] args) {
+        ConnectDatabase.executeQuery("Select * from Users");
+    }
 }
