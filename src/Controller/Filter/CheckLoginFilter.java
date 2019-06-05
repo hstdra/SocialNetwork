@@ -15,10 +15,15 @@ public class CheckLoginFilter implements Filter {
     }
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
-        User user = (User) ((HttpServletRequest) req).getSession().getAttribute("user");
-        if (user == null)
-            req.getRequestDispatcher("/login").forward(req, resp);
-            chain.doFilter(req, resp);
+        String path = ((HttpServletRequest) req).getRequestURI();
+        if (path.startsWith("/login")) {
+        } else {
+            User user = (User) ((HttpServletRequest) req).getSession().getAttribute("user");
+            if (user == null)
+                req.getRequestDispatcher("/login").forward(req, resp);
+        }
+
+        chain.doFilter(req, resp);
     }
 
     public void init(FilterConfig config) throws ServletException {

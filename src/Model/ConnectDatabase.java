@@ -24,7 +24,17 @@ class ConnectDatabase {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return 0;
+        return -1;
+    }
+
+    //Make function for execute sql callable from another model
+    static CallableStatement prepareCall(String query){
+        try {
+            return Objects.requireNonNull(ConnectDatabase.connection()).prepareCall(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     //Make function for prepare sql from another model
