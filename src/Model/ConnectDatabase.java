@@ -27,6 +27,16 @@ class ConnectDatabase {
         return 0;
     }
 
+    //Make function for prepare sql from another model
+    static PreparedStatement preparedStatement(String query) {
+        try {
+            return Objects.requireNonNull(ConnectDatabase.connection()).prepareStatement(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     //Make statement
     private static Statement statement() {
         try {
@@ -55,7 +65,4 @@ class ConnectDatabase {
         password = "123456";
     }
 
-    public static void main(String[] args) {
-        ConnectDatabase.executeQuery("Select * from Users");
-    }
 }
