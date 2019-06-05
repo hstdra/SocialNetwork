@@ -10,7 +10,7 @@ class ConnectDatabase {
     //Make function for execute sql query from another model
     static ResultSet executeQuery(String query) {
         try {
-            return Objects.requireNonNull(ConnectDatabase.statement()).executeQuery(query);
+            return Objects.requireNonNull(statement()).executeQuery(query);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -20,7 +20,7 @@ class ConnectDatabase {
     //Make function for execute sql update from another model
     static int executeUpdate(String query) {
         try {
-            return Objects.requireNonNull(ConnectDatabase.statement()).executeUpdate(query);
+            return Objects.requireNonNull(statement()).executeUpdate(query);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -30,7 +30,7 @@ class ConnectDatabase {
     //Make function for execute sql callable from another model
     static CallableStatement prepareCall(String query){
         try {
-            return Objects.requireNonNull(ConnectDatabase.connection()).prepareCall(query);
+            return Objects.requireNonNull(connection()).prepareCall(query);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -40,7 +40,7 @@ class ConnectDatabase {
     //Make function for prepare sql from another model
     static PreparedStatement preparedStatement(String query) {
         try {
-            return Objects.requireNonNull(ConnectDatabase.connection()).prepareStatement(query);
+            return Objects.requireNonNull(connection()).prepareStatement(query);
         } catch (SQLException e) {
             e.printStackTrace();
         }
