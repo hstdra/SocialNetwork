@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="shortcut icon" type="image/png" href="">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/login.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/login.css">
     <title>Đăng nhập</title>
 </head>
 
@@ -59,7 +59,7 @@
                         <p>Register</p>
                     </div>
                 </div>
-                <form class="login" action="/login" method="POST">
+                <form class="login" action="login" method="POST">
                     <input class="input-text" name="email" placeholder="Email" type="text">
                     <input class="input-text" name="passWord" placeholder="Mật khẩu" type="password">
                     <input class="input-btn" type="submit" value="Đăng nhập">

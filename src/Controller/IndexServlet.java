@@ -14,6 +14,6 @@ public class IndexServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/assets/index.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/index.jsp").forward(request, response);
     }
 }
