@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="83bbdbec-f7f5-44a2-9618-df94a9729d16" name="Default Changelist" comment="v0.1.2&#10;- Lam tam bay choi">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="67c3ded4-d8e0-438e-bc02-7e593a822661" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/web/views/trangchu.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/views/trangchu.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -13,23 +11,193 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="mxh@35.240.187.148" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="mxh@35.240.187.148" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="mxh@35.240.187.148" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="mxh: schema" type="76f4a085:MysqlImplModel$Schema" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
+  </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/views/content.html">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/web/views/trangchu.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf>
+          <file pinned="false" current-in-tab="false">
+            <entry file="uml://DATABASE/b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.SCHEMA:mxh">
+              <provider selected="true" editor-type-id="UmlEditorProvider">
+                <state>
+                  <ID>DATABASE</ID>
+                  <OriginalElement>b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.SCHEMA:mxh</OriginalElement>
+                  <nodes>
+                    <node x="364.714705882353" y="265.0">b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.Stories</node>
+                    <node x="154.24558823529412" y="0.0">b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.Users</node>
+                    <node x="229.71470588235294" y="442.0">b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.Comments</node>
+                    <node x="228.3955882352941" y="796.0">b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.Announcements</node>
+                    <node x="59.224999999999966" y="254.0">b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.ChatMessages</node>
+                    <node x="69.3955882352941" y="453.0">b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.ChatMembers</node>
+                    <node x="385.714705882353" y="453.0">b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.ReactStories</node>
+                    <node x="268.964705882353" y="630.0">b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.ReactComments</node>
+                    <node x="4.595588235294116" y="66.0">b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.ChatGroups</node>
+                  </nodes>
+                  <notes />
+                  <edges>
+                    <edge source="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.Comments" target="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.Users">
+                      <point x="-34.0" y="-69.0" />
+                      <point x="263.714705882353" y="229.0" />
+                      <point x="259.9455882352941" y="229.0" />
+                      <point x="30.19999999999999" y="102.0" />
+                    </edge>
+                    <edge source="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.Announcements" target="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.Users">
+                      <point x="-49.125" y="-57.5" />
+                      <point x="244.7705882352941" y="771.0" />
+                      <point x="219.21470588235294" y="771.0" />
+                      <point x="219.21470588235294" y="229.0" />
+                      <point x="229.74558823529412" y="229.0" />
+                      <point x="0.0" y="102.0" />
+                    </edge>
+                    <edge source="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.Announcements" target="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.ReactComments">
+                      <point x="16.375" y="-57.5" />
+                      <point x="310.2705882352941" y="771.0" />
+                      <point x="336.964705882353" y="771.0" />
+                      <point x="0.0" y="58.0" />
+                    </edge>
+                    <edge source="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.ChatMembers" target="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.Users">
+                      <point x="42.0" y="-58.0" />
+                      <point x="174.3955882352941" y="417.0" />
+                      <point x="192.72499999999997" y="417.0" />
+                      <point x="192.72499999999997" y="229.0" />
+                      <point x="199.54558823529413" y="229.0" />
+                      <point x="-30.19999999999999" y="102.0" />
+                    </edge>
+                    <edge source="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.ChatMembers" target="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.ChatGroups">
+                      <point x="-42.0" y="-58.0" />
+                      <point x="90.3955882352941" y="417.0" />
+                      <point x="41.5" y="417.0" />
+                      <point x="41.5" y="229.0" />
+                      <point x="36.095588235294116" y="229.0" />
+                      <point x="-31.5" y="36.0" />
+                    </edge>
+                    <edge source="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.Announcements" target="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.Comments">
+                      <point x="-16.375" y="-57.5" />
+                      <point x="277.5205882352941" y="771.0" />
+                      <point x="258.464705882353" y="771.0" />
+                      <point x="258.464705882353" y="605.0" />
+                      <point x="263.714705882353" y="605.0" />
+                      <point x="-34.0" y="69.0" />
+                    </edge>
+                    <edge source="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.Comments" target="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.Stories">
+                      <point x="34.0" y="-69.0" />
+                      <point x="331.714705882353" y="417.0" />
+                      <point x="392.214705882353" y="417.0" />
+                      <point x="-27.5" y="58.0" />
+                    </edge>
+                    <edge source="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.ChatMessages" target="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.ChatGroups">
+                      <point x="-30.75" y="-69.0" />
+                      <point x="89.97499999999997" y="229.0" />
+                      <point x="99.09558823529412" y="229.0" />
+                      <point x="31.5" y="36.0" />
+                    </edge>
+                    <edge source="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.Announcements" target="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.ReactStories">
+                      <point x="49.12499999999999" y="-57.5" />
+                      <point x="343.0205882352941" y="771.0" />
+                      <point x="447.214705882353" y="771.0" />
+                      <point x="0.0" y="58.0" />
+                    </edge>
+                    <edge source="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.ChatMessages" target="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.Users">
+                      <point x="30.75" y="-69.0" />
+                      <point x="151.47499999999997" y="229.0" />
+                      <point x="169.34558823529412" y="229.0" />
+                      <point x="-60.400000000000006" y="102.0" />
+                    </edge>
+                    <edge source="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.Stories" target="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.Users">
+                      <point x="0.0" y="-58.0" />
+                      <point x="419.714705882353" y="229.0" />
+                      <point x="290.1455882352941" y="229.0" />
+                      <point x="60.39999999999998" y="102.0" />
+                    </edge>
+                    <edge source="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.ReactComments" target="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.Comments">
+                      <point x="0.0" y="-58.0" />
+                      <point x="336.964705882353" y="605.0" />
+                      <point x="331.714705882353" y="605.0" />
+                      <point x="34.0" y="69.0" />
+                    </edge>
+                    <edge source="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.ChatMembers" target="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.ChatMessages">
+                      <point x="0.0" y="-58.0" />
+                      <point x="132.3955882352941" y="417.0" />
+                      <point x="120.72499999999997" y="417.0" />
+                      <point x="0.0" y="69.0" />
+                    </edge>
+                    <edge source="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.ReactStories" target="b8c01f1d-34cc-4fc1-8e62-ba281e6cd95a.TABLE:mxh.Stories">
+                      <point x="0.0" y="-58.0" />
+                      <point x="27.5" y="58.0" />
+                    </edge>
+                  </edges>
+                  <settings layout="Hierarchic Group" zoom="1.2616541353383457" x="207.3280298527488" y="180.22646007151374" />
+                  <SelectedNodes />
+                  <Categories>
+                    <Category>Key columns</Category>
+                    <Category>Columns</Category>
+                  </Categories>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/web/views/trangchu.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="240">
+                  <caret line="20" column="29" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/web/assets/css/index.css">
+              <provider selected="true" editor-type-id="text-editor" />
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/web/assets/css/index.css">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="48">
+                  <caret line="2" column="1" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -42,10 +210,14 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="85" />
-    <option name="y" value="25" />
+    <option name="x" value="-210" />
+    <option name="y" value="95" />
     <option name="width" value="1750" />
     <option name="height" value="980" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <OptionsSetting value="false" id="Update" />
+    <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -67,13 +239,42 @@
             <path>
               <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
               <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
               <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
           <select />
@@ -101,6 +302,80 @@
       </list>
     </option>
   </component>
+  <component name="RunManager">
+    <configuration name="Tomcat 8.0.27" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 8.0.27" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment>
+        <artifact name="SocialNetwork:war exploded">
+          <settings>
+            <option name="CONTEXT_PATH" value="/" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="Unnamed_SocialNetwork_2" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="51416" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="SocialNetwork:war exploded" />
+        </option>
+      </method>
+    </configuration>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -126,17 +401,19 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1484000" />
+    <option name="totallyTimeSpent" value="1596000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23154363" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.28322148" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Web" order="2" side_tool="true" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Favorites" order="5" side_tool="true" />
+      <window_info anchor="bottom" id="Application Servers" visible="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -145,7 +422,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="8" visible="true" weight="0.32794118" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="8" weight="0.32794118" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Terminal" order="10" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
@@ -213,8 +490,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/views/trangchu.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
+        <state relative-caret-position="240">
+          <caret line="20" column="29" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
         </state>
       </provider>
     </entry>
