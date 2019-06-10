@@ -311,7 +311,7 @@
         <div class="container">
             <div class="content">
                 <div class="block-content"></div>
-                <iframe src="content.html" frameborder="0" scrolling="yes"></iframe>
+                <iframe src="../views/content.html" frameborder="0" scrolling="yes"></iframe>
             </div>
             <div class="people">
                 <div class="block-people"></div>

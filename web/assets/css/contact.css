@@ -1,0 +1,52 @@
+/*CSS for contact-search*/
+#contact-search {
+    width: 100%;
+    height: 40px;
+    background-color: #cbcbcb;
+    display: inline-flex;
+}
+
+input[name=contact-search-input] {
+    align-self: center;
+    text-align: center;
+    margin: auto;
+    outline: none;
+    border-radius: 20px;
+    border: 0px;
+    font-size: 14px;
+    padding: 5px;
+    width: 75%;
+}
+
+/*CSS for contact-main*/
+#contact-main {
+    width: 100%;
+    height: calc(100% - 80px);
+    padding: 10px 0;
+}
+
+.contact-main-people{
+    display: flex;
+    height: 50px;
+}
+
+.contact-main-people-img{
+    height: 80%;
+    border-radius: 50%;
+    margin: auto;
+}
+
+.contact-main-people-name{
+    margin-left: 0;
+}
+
+
+/*CSS for contact-button*/
+
+#contact-button {
+    width: 100%;
+    height: 40px;
+    background-color: #cbcbcb;
+    margin-right: 0;
+    margin-left: 0;
+}

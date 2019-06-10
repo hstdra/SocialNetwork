@@ -6,11 +6,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
-    <link rel="stylesheet" type="text/css" href="../assets/css/left-menu.css">
-    <link rel="stylesheet" type="text/css" href="../assets/css/chat-people.css">
-    <link rel="stylesheet" type="text/css" href="../assets/css/content.css">
-    <link rel="stylesheet" type="text/css" href="../assets/css/OverlayScrollbars.css">
+    <link rel="stylesheet" type="text/css" href="../assets/cssold/style.css">
+    <link rel="stylesheet" type="text/css" href="../assets/cssold/left-menu.css">
+    <link rel="stylesheet" type="text/css" href="../assets/cssold/chat-people.css">
+    <link rel="stylesheet" type="text/css" href="../assets/cssold/content.css">
+    <link rel="stylesheet" type="text/css" href="../assets/cssold/OverlayScrollbars.css">
     <script type="text/javascript" src="../assets/js/OverlayScrollbars.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="../assets/js/main.js"></script>
@@ -311,7 +311,7 @@
         <div class="container">
             <div class="content">
                 <div class="block-content"></div>
-                <iframe src="content.html" frameborder="0" scrolling="yes"></iframe>
+                <iframe src="../views/content.html" frameborder="0" scrolling="yes"></iframe>
             </div>
             <div class="people">
                 <div class="block-people"></div>
