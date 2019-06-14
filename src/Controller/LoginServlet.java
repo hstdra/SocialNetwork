@@ -1,6 +1,8 @@
 package Controller;
 
 import Model.User;
+
+import java.io.File;
 import java.io.IOException;
 
 @javax.servlet.annotation.WebServlet(name = "LoginServlet", urlPatterns = "/login")

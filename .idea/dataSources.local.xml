@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal">
-    <data-source name="mxh@35.240.187.148" uuid="358cd58d-e04e-4913-b482-d317944550d2">
+    <data-source name="root@hst.ciodxqutvgb3.ap-southeast-1.rds.amazonaws.com" uuid="358cd58d-e04e-4913-b482-d317944550d2">
+      <database-info product="MySQL" version="5.7.22-log" jdbc-version="4.2" driver-name="MySQL Connector/J" driver-version="mysql-connector-java-8.0.15 (Revision: 79a4336f140499bd22dd07f02b708e163844e3d5)" dbms="MYSQL" exact-version="5.7.22" exact-driver-version="8.0">
+        <extra-name-characters>#@</extra-name-characters>
+        <identifier-quote-string>`</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>root</user-name>
+      <introspection-schemas>*:mxh,root</introspection-schemas>
+    </data-source>
+    <data-source name="mxh@35.240.187.148" uuid="e909af76-0dd3-4b04-ad92-5c3bb291b4b4">
       <database-info product="MySQL" version="5.7.14-google" jdbc-version="4.2" driver-name="MySQL Connector/J" driver-version="mysql-connector-java-8.0.15 (Revision: 79a4336f140499bd22dd07f02b708e163844e3d5)" dbms="MYSQL" exact-version="5.7.14" exact-driver-version="8.0">
         <extra-name-characters>#@</extra-name-characters>
         <identifier-quote-string>`</identifier-quote-string>

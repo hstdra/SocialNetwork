@@ -3,6 +3,11 @@
     <output-path>$PROJECT_DIR$/out/artifacts/SocialNetwork_war</output-path>
     <root id="archive" name="SocialNetwork_war.war">
       <element id="artifact" artifact-name="SocialNetwork:war exploded" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="lib">
+          <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/lib/mysql-connector-java-5.1.47.jar" />
+        </element>
+      </element>
     </root>
   </artifact>
 </component>

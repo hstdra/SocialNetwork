@@ -14,7 +14,7 @@ public class CheckLoginFilter implements Filter {
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         String path = ((HttpServletRequest) req).getRequestURI();
-        if (path.startsWith("/login") || path.startsWith("/assets")) {
+        if (path.startsWith("/login") || path.startsWith("/assets") || path.startsWith("/views")) {
         } else {
             User user = (User) ((HttpServletRequest) req).getSession().getAttribute("user");
             if (user == null)

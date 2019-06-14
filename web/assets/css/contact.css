@@ -25,18 +25,48 @@ input[name=contact-search-input] {
     padding: 10px 0;
 }
 
-.contact-main-people{
+.contact-main-people {
     display: flex;
     height: 50px;
 }
 
-.contact-main-people-img{
-    height: 80%;
-    border-radius: 50%;
-    margin: auto;
+.contact-main-people:hover {
+    background-color: #d1d1d1;
+    cursor: pointer;
 }
 
-.contact-main-people-name{
+.contact-main-people-img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    margin: auto;
+    object-fit: cover;
+}
+
+.contact-main-people-online {
+    height: 17px;
+    width: 17px;
+    border: 3px solid #f6f6f6;
+    border-radius: 50%;
+    position: absolute;
+    margin-left: 30px;
+}
+
+.contact-main-people-offline {
+    height: 42px;
+    width: 42px;
+    border: 4px solid #c4bcbc;
+    border-radius: 50%;
+    position: absolute;
+    margin-left: -1px;
+    margin-top: 4px;
+    font-size: 9px;
+    color: white;
+    background-color: #a4a4a4b3;
+    text-align: center;
+}
+
+.contact-main-people-name {
     margin-left: 0;
 }
 
@@ -49,4 +79,9 @@ input[name=contact-search-input] {
     background-color: #cbcbcb;
     margin-right: 0;
     margin-left: 0;
+}
+
+#contact-button > div:hover {
+    background-color: #999999;
+    cursor: pointer;
 }

@@ -1,11 +1,10 @@
 package Model;
 
 import java.sql.*;
-import java.util.Collections;
 import java.util.Objects;
 
 class ConnectDatabase {
-    private static String user, password, database;
+    private static String user, password, host, database;
 
     //Make function for execute sql query from another model
     static ResultSet executeQuery(String query) {
@@ -28,7 +27,7 @@ class ConnectDatabase {
     }
 
     //Make function for execute sql callable from another model
-    static CallableStatement prepareCall(String query){
+    static CallableStatement prepareCall(String query) {
         try {
             return Objects.requireNonNull(connection()).prepareCall(query);
         } catch (SQLException e) {
@@ -61,8 +60,8 @@ class ConnectDatabase {
     private static Connection connection() {
         config();
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            return DriverManager.getConnection("jdbc:mysql://35.240.187.148:3306/mxh", user, password);
+            Class.forName("com.mysql.jdbc.Driver");
+            return DriverManager.getConnection("jdbc:mysql://" + host + "/" + database+"?useSSL=false", user, password);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -71,8 +70,14 @@ class ConnectDatabase {
 
     //Declare parameter for database connection
     private static void config() {
-        user = "hst";
-        password = "123456";
-    }
+//        host = "35.240.187.148:3306";
+//        user = "hst";
+//        password = "123456";
+//        database = "mxh";
 
+        host = "hst.ciodxqutvgb3.ap-southeast-1.rds.amazonaws.com";
+        user = "root";
+        password = "123456789";
+        database = "root";
+    }
 }
