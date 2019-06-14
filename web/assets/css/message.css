@@ -1,8 +1,8 @@
 #chat_bar{
-    background-color: #bab3b3;
-    display: inline-flex;
+    background-color: #d9d9d9;
     height: 6.5%;
     margin: auto;
+    display: flex;
 }
 .mess_button {
     width: 48px;
@@ -47,7 +47,7 @@
 
 .chat_body{
     height: 85%;
-    background-color: #bccfcf;
+    background-color: #f6f6f6;
     overflow: auto;
 }
 .chat_ava_mess {
@@ -64,6 +64,7 @@
     margin-top: 5px;
     margin-bottom: 5px;
     margin-left: 30px;
+    padding: 10px;
     color: white;
 }
 
@@ -74,12 +75,13 @@
     margin-top: 5px;
     margin-bottom: 5px;
     margin-right: 10px;
+    padding: 10px;
     color: white;
     float: right;
 }
 #input_chat_mess {
     height: auto;
-    background-color: #bccfcf;
+    background-color: #d9d9d9;
 }
 #chat_box {
     margin: 10px;
