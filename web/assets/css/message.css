@@ -1,19 +1,24 @@
 #chat_bar{
     background-color: #bab3b3;
     display: inline-flex;
+    height: 6.5%;
+    margin: auto;
 }
-#hide_show_btn {
+.mess_button {
     width: 48px;
     height: 48px;
     border: none;
     position: relative;
-    margin-left: 10px;
+    margin-top: 5px;
+    margin-left: 5px;
     cursor: pointer;
 }
 #All_chat_tab {
     width: 100px;
     height: 48px;
-    margin-left: 10px;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
     position: relative;
     background-color: #f6f6f6;
     border: 3px solid red;
@@ -23,7 +28,9 @@
 .chat_tab {
     width: 100px;
     height: 48px;
-    margin-left: 10px;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
     position: relative;
     background-color: #f6f6f6;
     border: 3px solid #0064ff;
@@ -37,3 +44,47 @@
     width: 20px;
     margin-left: auto;
 }
+
+.chat_body{
+    height: 85%;
+    background-color: #bccfcf;
+    overflow: auto;
+}
+.chat_ava_mess {
+    border-radius: 60%;
+    size: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.other_chat_mess {
+    display: inline-block;
+    background-color: red;
+    border-radius: 12px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 30px;
+    color: white;
+}
+
+#your_chat_mess {
+    display: inline-block;
+    background-color: #0064ff;
+    border-radius: 12px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: 10px;
+    color: white;
+    float: right;
+}
+#input_chat_mess {
+    height: auto;
+    background-color: #bccfcf;
+}
+#chat_box {
+    margin: 10px;
+    border-radius: 10%;
+    width: 75%;
+    overflow: auto;
+}
+
