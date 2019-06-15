@@ -11,35 +11,26 @@ import java.util.Set;
 
 @ServerEndpoint(value = "/contact", configurator=ServletAwareConfig.class)
 public class ContactEndpoint {
-    private Session session;
-    private static Set<Session> users = Collections.synchronizedSet(new HashSet<>());
     private HttpSession httpSession;
+
     @OnOpen
-    public void onOpen(Session session, EndpointConfig config) throws IOException, EncodeException {
-        this.session = session;
-        users.add(session);
+    public void onOpen(Session session, EndpointConfig config) throws IOException {
         httpSession = (HttpSession) config.getUserProperties().get("httpSession");
     }
 
     @OnMessage
-    public void onMessage(Session session, String message) throws IOException, EncodeException {
+    public void onMessage(Session session, String message) throws IOException {
         String s = httpSession.getServletContext().getAttribute("Contact").toString();
-        //System.out.println(s);
         session.getBasicRemote().sendText(s);
     }
 
     @OnClose
-    public void onClose(Session session) throws IOException, EncodeException {
-        users.remove(session);
+    public void onClose(Session session) throws IOException {
     }
 
     @OnError
     public void onError(Session session, Throwable throwable) {
         // Do error handling here
-    }
-
-    private synchronized void broadcast(String message) throws IOException, EncodeException {
-        this.session.getBasicRemote().sendObject(message);
     }
 
 }

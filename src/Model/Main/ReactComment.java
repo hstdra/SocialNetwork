@@ -1,4 +1,4 @@
-package Model;
+package Model.Main;
 
 public class ReactComment {
     private String rCID;

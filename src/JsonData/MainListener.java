@@ -1,7 +1,6 @@
 package JsonData;
 
-import Model.User;
-import Model.UserDB;
+import Model.Chat.ContactDB;
 import com.google.gson.Gson;
 
 import javax.servlet.ServletContextEvent;
@@ -11,12 +10,11 @@ import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
-import java.util.List;
 
 @WebListener()
 public class MainListener implements ServletContextListener,
         HttpSessionListener, HttpSessionAttributeListener {
-    private static Gson gson = new Gson();
+    private static final Gson gson = new Gson();
 
     // Public constructor is required by servlet spec
     public MainListener() {
@@ -28,17 +26,14 @@ public class MainListener implements ServletContextListener,
     public void contextInitialized(ServletContextEvent sce) {
 
         //Update Contact User Each 30s
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    String contactJsonString = gson.toJson(UserDB.getListUsers());
-                    sce.getServletContext().setAttribute("Contact", contactJsonString);
-                    try {
-                        Thread.sleep(30000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+        Thread t = new Thread(() -> {
+            while (true) {
+                String contactJsonString = gson.toJson(ContactDB.getContact());
+                sce.getServletContext().setAttribute("Contact", contactJsonString);
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -80,7 +75,7 @@ public class MainListener implements ServletContextListener,
     }
 
     public void attributeReplaced(HttpSessionBindingEvent sbe) {
-      /* This method is invoked when an attibute
+      /* This method is invoked when an attribute
          is replaced in a session.
       */
     }

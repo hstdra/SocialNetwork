@@ -1,4 +1,6 @@
-package Model;
+package Model.Main;
+
+import Model.ConnectDatabase;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,29 +40,6 @@ public class UserDB {
         listUser.clear();
         try {
             ResultSet rs = ConnectDatabase.executeQuery("Select * from Users");
-            assert rs != null;
-            while (rs.next()) {
-                String userID = rs.getString("UserID");
-                String email = rs.getString("Email");
-                String firstName = rs.getString("FirstName");
-                String lastName = rs.getString("LastName");
-                String avatar = rs.getString("Avatar");
-                Date dob = rs.getDate("Dob");
-                Date lastOnline = rs.getTimestamp("LastOnline");
-
-                listUser.add(new User(userID, email, firstName, lastName, avatar, dob, lastOnline));
-            }
-            return listUser;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static List<User> getContact() {
-        listUser.clear();
-        try {
-            ResultSet rs = ConnectDatabase.executeQuery("Select * from Users ORDER BY LastOnline DESC");
             assert rs != null;
             while (rs.next()) {
                 String userID = rs.getString("UserID");

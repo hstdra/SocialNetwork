@@ -1,6 +1,6 @@
 package Controller.Filter;
 
-import Model.User;
+import Model.Main.User;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -17,8 +17,12 @@ public class CheckLoginFilter implements Filter {
         if (path.startsWith("/login") || path.startsWith("/assets") || path.startsWith("/views")) {
         } else {
             User user = (User) ((HttpServletRequest) req).getSession().getAttribute("user");
-            if (user == null)
+            if (user == null){
                 req.getRequestDispatcher("/login").forward(req, resp);
+
+            }
+                //((HttpServletResponse) resp).sendRedirect("/login");
+
         }
 
         chain.doFilter(req, resp);

@@ -1,8 +1,7 @@
 package Controller;
 
-import Model.User;
+import Model.Main.User;
 
-import java.io.File;
 import java.io.IOException;
 
 @javax.servlet.annotation.WebServlet(name = "LoginServlet", urlPatterns = "/login")
@@ -13,14 +12,14 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
         User user = User.login(email, passWord);
         if (user != null) {
             request.getSession().setAttribute("user", user);
-            request.getRequestDispatcher("/views/index.jsp").forward(request, response);
+            response.sendRedirect("");
         } else request.getRequestDispatcher("/views/login.jsp").forward(request, response);
     }
 
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
         if (user != null){
-            request.getRequestDispatcher("/views/index.jsp").forward(request, response);
+            response.sendRedirect("");
         } else {
             request.getRequestDispatcher("/views/login.jsp").forward(request, response);
         }

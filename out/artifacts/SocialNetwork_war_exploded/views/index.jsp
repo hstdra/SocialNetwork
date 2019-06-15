@@ -1,4 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,6 +29,11 @@
     <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+
+    <!-- Plugin CSS -->
+    <link type="text/css" href="../assets/css/OverlayScrollbar.css" rel="stylesheet"/>
+    <!-- Plugin JS -->
+    <script type="text/javascript" src="../assets/js/jquery.overlayScrollbars.js"></script>
 </head>
 
 <body>
@@ -44,73 +51,38 @@
             <input type="text" placeholder="Tìm kiếm..." name="contact-search-input" class="ma">
         </div>
         <div id="contact-main">
-            <div class="contact-main-people">
-                <div class="col-sm-3 if">
-                    <img class="contact-main-people-img ma" src="https://bit.ly/2ZeCbaL" alt="">
-                    <img class="contact-main-people-online"
-                         src="https://cdn.clipart.email/33e1f7cb7397d141c79db0c12ad1ac75_filegreen-light-iconsvg-wikimedia-commons_232-232.png"
-                         alt="">
-                </div>
-                <div class="col-sm-7 if">
-                    <p class="contact-main-people-name ma">Vĩnh Hân</p>
-                </div>
-                <i class="far fa-comment fa-lg ma"></i>
-            </div>
-            <div class="contact-main-people">
-                <div class="col-sm-3 if">
-                    <img class="contact-main-people-img ma" src="https://bit.ly/2ZeCbaL" alt="">
-                    <img class="contact-main-people-online"
-                         src="https://cdn.clipart.email/33e1f7cb7397d141c79db0c12ad1ac75_filegreen-light-iconsvg-wikimedia-commons_232-232.png"
-                         alt="">
-                </div>
-                <div class="col-sm-7 if">
-                    <p class="contact-main-people-name ma">Vĩnh Hân</p>
-                </div>
-                <i class="far fa-comment fa-lg ma"></i>
-            </div>
-            <div class="contact-main-people">
-                <div class="col-sm-3 if">
-                    <img class="contact-main-people-img ma" src="https://bit.ly/2ZeCbaL" alt="">
-                    <img class="contact-main-people-online"
-                         src="https://cdn.clipart.email/33e1f7cb7397d141c79db0c12ad1ac75_filegreen-light-iconsvg-wikimedia-commons_232-232.png"
-                         alt="">
-                </div>
-                <div class="col-sm-7 if">
-                    <p class="contact-main-people-name ma">Vĩnh Hân</p>
-                </div>
-                <i class="far fa-comment fa-lg ma"></i>
-            </div>
-            <div class="contact-main-people">
-                <div class="col-sm-3 if">
-                    <img class="contact-main-people-img ma" src="https://bit.ly/2ZeCbaL" alt="">
-                    <div class="contact-main-people-offline if">
-                        <p class="ma">25m</p>
+
+            <%--REACT LOAD HERE--%>
+            <div id="contact-main-online"></div>
+
+            <div id="contact-main-recent">
+                <c:forEach items="${sessionScope.listrecent}" var="recent">
+                    <div class="contact-main-people" chatid="${recent.chatID}">
+                        <div class="col-sm-3 if">
+                            <img class="contact-main-people-img ma" src="${recent.avatar}" alt="">
+                        </div>
+                        <div class="col-sm-7">
+                            <p class="contact-main-people-name1 ma">${recent.name}</p>
+                            <c:if test = "${recent.lSMessID != recent.messID}">
+                                <p class="contact-main-people-message ma b">${recent.content}</p>
+                            </c:if>
+                            <c:if test = "${recent.lSMessID == recent.messID}">
+                                <p class="contact-main-people-message ma">${recent.content}</p>
+                            </c:if>
+                        </div>
+                        <i class="far fa-comment fa-lg ma"></i>
                     </div>
-                </div>
-                <div class="col-sm-7 if">
-                    <p class="contact-main-people-name ma">Vĩnh Hân</p>
-                </div>
-                <i class="far fa-comment fa-lg ma"></i>
+                </c:forEach>
             </div>
-            <div class="contact-main-people">
-                <div class="col-sm-3 if">
-                    <img class="contact-main-people-img ma" src="https://bit.ly/2ZeCbaL" alt="">
-                    <div class="contact-main-people-offline if">
-                        <p class="ma">25m</p>
-                    </div>
-                </div>
-                <div class="col-sm-7 if">
-                    <p class="contact-main-people-name ma">Vĩnh Hân</p>
-                </div>
-                <i class="far fa-comment fa-lg ma"></i>
-            </div>
+
+
         </div>
         <div id="contact-button" class="row ma">
-            <div id="contact-button-recent" class="col if">
-                <i class="fal fa-envelope-open fa-lg ma"></i>
-            </div>
             <div id="contact-button-online" class="col if">
                 <i class="fal fa-user-friends fa-lg ma"></i>
+            </div>
+            <div id="contact-button-recent" class="col if">
+                <i class="fal fa-envelope-open fa-lg ma"></i>
             </div>
             <div id="contact-button-setting" class="col if">
                 <i class="fal fa-cog fa-lg ma"></i>
@@ -119,7 +91,7 @@
     </div>
 </div>
 
-<script type="text/babel" src="../assets/js/contact.jsx"></script>
-
+<script type="text/babel" src="../assets/js/contact2.jsx"></script>
+<script src="../assets/js/index.js"></script>
 </body>
 </html>

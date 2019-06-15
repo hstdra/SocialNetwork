@@ -3,11 +3,12 @@ package Model;
 import java.sql.*;
 import java.util.Objects;
 
-class ConnectDatabase {
+public class ConnectDatabase {
     private static String user, password, host, database;
+    private static final Connection connection = connection();
 
     //Make function for execute sql query from another model
-    static ResultSet executeQuery(String query) {
+    public static ResultSet executeQuery(String query) {
         try {
             return Objects.requireNonNull(statement()).executeQuery(query);
         } catch (SQLException e) {
@@ -17,7 +18,7 @@ class ConnectDatabase {
     }
 
     //Make function for execute sql update from another model
-    static int executeUpdate(String query) {
+    public static int executeUpdate(String query) {
         try {
             return Objects.requireNonNull(statement()).executeUpdate(query);
         } catch (SQLException e) {
@@ -27,9 +28,9 @@ class ConnectDatabase {
     }
 
     //Make function for execute sql callable from another model
-    static CallableStatement prepareCall(String query) {
+    public static CallableStatement prepareCall(String query) {
         try {
-            return Objects.requireNonNull(connection()).prepareCall(query);
+            return connection.prepareCall(query);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -37,7 +38,7 @@ class ConnectDatabase {
     }
 
     //Make function for prepare sql from another model
-    static PreparedStatement preparedStatement(String query) {
+    public static PreparedStatement preparedStatement(String query) {
         try {
             return Objects.requireNonNull(connection()).prepareStatement(query);
         } catch (SQLException e) {
@@ -49,7 +50,7 @@ class ConnectDatabase {
     //Make statement
     private static Statement statement() {
         try {
-            return Objects.requireNonNull(connection()).createStatement();
+            return connection.createStatement();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -70,11 +71,6 @@ class ConnectDatabase {
 
     //Declare parameter for database connection
     private static void config() {
-//        host = "35.240.187.148:3306";
-//        user = "hst";
-//        password = "123456";
-//        database = "mxh";
-
         host = "hst.ciodxqutvgb3.ap-southeast-1.rds.amazonaws.com";
         user = "root";
         password = "123456789";

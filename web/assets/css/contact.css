@@ -23,6 +23,7 @@ input[name=contact-search-input] {
     width: 100%;
     height: calc(100% - 80px);
     padding: 10px 0;
+    overflow: hidden;
 }
 
 .contact-main-people {
@@ -68,6 +69,18 @@ input[name=contact-search-input] {
 
 .contact-main-people-name {
     margin-left: 0;
+    font-weight: bold;
+}
+
+.contact-main-people-name1 {
+    margin-left: 0;
+    margin-top: 5px;
+    font-style: italic;
+    font-weight: bold;
+}
+.contact-main-people-message {
+    margin-left: 0;
+    font-size: 10px;
 }
 
 

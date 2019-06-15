@@ -2,24 +2,24 @@
  * OverlayScrollbars
  * https://github.com/KingSora/OverlayScrollbars
  *
- * Version: 1.5.2
+ * Version: 1.7.2
  *
  * Copyright KingSora.
  * https://github.com/KingSora
  *
  * Released under the MIT license.
- * Date: 09.09.2018
+ * Date: 10.06.2019
  */
 
 (function (global, factory) {
     if (typeof define === 'function' && define.amd)
-        define(function() { return factory(global, global.document, undefined); });
+        define(['jquery'], function(framework) { return factory(global, global.document, undefined, framework); });
     else if (typeof module === 'object' && typeof module.exports === 'object')
-        module.exports = factory(global, global.document, undefined);
+        module.exports = factory(global, global.document, undefined, require('jquery'));
     else
-        factory(global, global.document, undefined);
+        factory(global, global.document, undefined, global.jQuery);
 }(typeof window !== 'undefined' ? window : this,
-    function(window, document, undefined) {
+    function(window, document, undefined, framework) {
         'use strict';
         var PLUGINNAME = 'OverlayScrollbars';
         var TYPES = {
@@ -49,6 +49,61 @@
             cW : 'clientWidth',
             sW : 'scrollWidth'
         };
+        var VENDORS = {
+            //https://developer.mozilla.org/en-US/docs/Glossary/Vendor_Prefix
+            _jsCache : { },
+            _cssCache : { },
+            _cssPrefixes : ['-webkit-', '-moz-', '-o-', '-ms-'],
+            _jsPrefixes : ['WebKit', 'Moz', 'O', 'MS'],
+            _cssProperty : function(name) {
+                var cache = this._cssCache;
+
+                if(cache[name])
+                    return cache[name];
+
+                var prefixes = this._cssPrefixes;
+                var uppercasedName = this._firstLetterToUpper(name);
+                var elmStyle = document.createElement('div')[LEXICON.s];
+                var resultPossibilities;
+                var i = 0;
+                var v = 0;
+                var currVendorWithoutDashes;
+
+                for (; i < prefixes.length; i++) {
+                    currVendorWithoutDashes = prefixes[i].replace(/-/g, '');
+                    resultPossibilities = [
+                        name, //transition
+                        prefixes[i] + name, //-webkit-transition
+                        currVendorWithoutDashes + uppercasedName, //webkitTransition
+                        this._firstLetterToUpper(currVendorWithoutDashes) + uppercasedName //WebkitTransition
+                    ];
+                    for(v = 0; v < resultPossibilities[LEXICON.l]; v++) {
+                        if(elmStyle[resultPossibilities[v]] !== undefined) {
+                            cache[name] = resultPossibilities[v];
+                            return resultPossibilities[v];
+                        }
+                    }
+                }
+
+                return null;
+            },
+            _jsAPI : function(name, isInterface, fallback) {
+                var prefixes = this._jsPrefixes;
+                var cache = this._jsCache;
+                var i = 0;
+                var result = cache[name];
+                if(!result) {
+                    result = window[name];
+                    for(; i < prefixes[LEXICON.l]; i++)
+                        result = result || window[(isInterface ? prefixes[i] : prefixes[i].toLowerCase()) + this._firstLetterToUpper(name)];
+                    cache[name] = result;
+                }
+                return result || fallback;
+            },
+            _firstLetterToUpper : function(str) {
+                return str.charAt(0).toUpperCase() + str.slice(1);
+            }
+        };
         var COMPATIBILITY = {
             /**
              * Gets the current window width.
@@ -71,7 +126,7 @@
              * @returns {MutationObserver|*|undefined} The MutationsObserver Object or undefined.
              */
             mO: function() {
-                return window.MutationObserver || window.WebKitMutationObserver || window.WebkitMutationObserver || window.MozMutationObserver || undefined;
+                return VENDORS._jsAPI('MutationObserver', true);
             },
 
             /**
@@ -79,7 +134,7 @@
              * @returns {MutationObserver|*|undefined} The ResizeObserver Object or undefined.
              */
             rO: function() {
-                return window.ResizeObserver || window.WebKitResizeObserver || window.WebkitResizeObserver || window.MozResizeObserver || undefined;
+                return VENDORS._jsAPI('ResizeObserver', true);
             },
 
             /**
@@ -87,9 +142,7 @@
              * @returns {*|Function} The RequestAnimationFrame method or it's corresponding polyfill.
              */
             rAF: function() {
-                return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (func) {
-                        return window.setTimeout(func, 1000 / 60);
-                    };
+                return VENDORS._jsAPI('requestAnimationFrame', false, function (func) { return window.setTimeout(func, 1000 / 60); });
             },
 
             /**
@@ -97,9 +150,7 @@
              * @returns {*|Function} The CancelAnimationFrame method or it's corresponding polyfill.
              */
             cAF: function() {
-                return window.cancelAnimationFrame || window.webkitCancelAnimationFrame || window.mozCancelAnimationFrame || window.oCancelAnimationFrame || window.msCancelAnimationFrame || function (id) {
-                        return window.clearTimeout(id);
-                    };
+                return VENDORS._jsAPI('cancelAnimationFrame', false, function (id) { return window.clearTimeout(id); });
             },
 
             /**
@@ -107,7 +158,7 @@
              * @returns {number} The current time.
              */
             now: function() {
-                return Date.now() || new Date().getTime();
+                return Date.now && Date.now() || new Date().getTime();
             },
 
             /**
@@ -135,7 +186,7 @@
             /**
              * Gets the pageX and pageY values of the given mouse event.
              * @param event The mouse event of which the pageX and pageX shall be got.
-             * @returns {x: number, y: number} x = pageX value, y = pageY value.
+             * @returns {{x: number, y: number}} x = pageX value, y = pageY value.
              */
             page: function(event) {
                 event = event.originalEvent || event;
@@ -163,11 +214,11 @@
 
                     return {
                         x : event[strClient + strX] +
-                        (doc && doc.scrollLeft || body && body.scrollLeft || 0) -
-                        (doc && doc.clientLeft || body && body.clientLeft || 0),
+                            (doc && doc.scrollLeft || body && body.scrollLeft || 0) -
+                            (doc && doc.clientLeft || body && body.clientLeft || 0),
                         y : event[strClient + strY] +
-                        (doc && doc.scrollTop || body && body.scrollTop || 0) -
-                        (doc && doc.clientTop || body && body.clientTop || 0)
+                            (doc && doc.scrollTop || body && body.scrollTop || 0) -
+                            (doc && doc.clientTop || body && body.clientTop || 0)
                     }
                 }
                 return {
@@ -179,11 +230,12 @@
             /**
              * Gets the clicked mouse button of the given mouse event.
              * @param event The mouse event of which the clicked button shal be got.
-             * @returns {number} The number of the clicked mouse button. (1 : leftButton | 2 : middleButton | 3 : rightButton)
+             * @returns {number} The number of the clicked mouse button. (0 : none | 1 : leftButton | 2 : middleButton | 3 : rightButton)
              */
             mBtn: function(event) {
-                if (!event.which && event.button !== undefined)
-                    return (event.button & 1 ? 1 : (event.button & 2 ? 3 : (event.button & 4 ? 2 : 0)));
+                var button = event.button;
+                if (!event.which && button !== undefined)
+                    return (button & 1 ? 1 : (button & 2 ? 3 : (button & 4 ? 2 : 0)));
                 else
                     return event.which;
             },
@@ -191,20 +243,43 @@
             /**
              * Checks whether a item is in the given array and returns its index.
              * @param item The item of which the position in the array shall be determined.
-             * @param arr The array
+             * @param arr The array.
              * @returns {number} The zero based index of the item or -1 if the item isn't in the array.
              */
             inA : function(item, arr) {
-                for (var i = 0; i < arr[LEXICON.l]; i++) {
-                    //Sometiems in IE a "SCRIPT70" Permission denied error occurs if HTML elemtns in a iFrame are compared
+                for (var i = 0; i < arr[LEXICON.l]; i++)
+                    //Sometiems in IE a "SCRIPT70" Permission denied error occurs if HTML elements in a iFrame are compared
                     try {
                         if (arr[i] === item)
                             return i;
                     }
                     catch(e) { }
-                }
                 return -1;
             },
+
+            /**
+             * Returns true if the given value is a array.
+             * @param arr The potential array.
+             * @returns {boolean} True if the given value is a array, false otherwise.
+             */
+            isA: function(arr) {
+                var def = Array.isArray;
+                return def ? def(arr) : this.type(arr) == TYPES.a;
+            },
+
+            /**
+             * Determine the internal JavaScript [[Class]] of the given object.
+             * @param obj The object of which the type shall be determined.
+             * @returns {string} The type of the given object.
+             */
+            type: function(obj) {
+                if (obj === undefined)
+                    return obj + "";
+                if (obj === null)
+                    return obj + "";
+                return Object[LEXICON.p].toString.call(obj).replace(/^\[object (.+)\]$/, '$1').toLowerCase();
+            },
+
 
             bind: function(func, thisObj) {
                 if (typeof func != TYPES.f) {
@@ -224,1068 +299,26 @@
 
                 return fBound;
             }
+
+            /**
+             * Gets the vendor-prefixed CSS property by the given name.
+             * For example the given name is "transform" and you're using a old Firefox browser then the returned value would be "-moz-transform".
+             * If the browser doesn't need a vendor-prefix, then the returned string is the given name.
+             * If the browser doesn't support the given property name at all (not even with a vendor-prefix) the returned value is null.
+             * @param propName The unprefixed CSS property name.
+             * @returns {string|null} The vendor-prefixed CSS property or null if the browser doesn't support the given CSS property.
+
+             cssProp : function(propName) {
+                return VENDORS._cssProperty(propName);
+            }
+             */
         };
 
-        var JQUERY = window.jQuery;
-        var FRAMEWORK = (function(compatibility) {
-            var _rnothtmlwhite = ( /[^\x20\t\r\n\f]+/g );
-            var _toStr = Object[LEXICON.p].toString;
-            var _strSpace = ' ';
-            var _strEmpty = '';
-            var _strScrollLeft = 'scrollLeft';
-            var _strScrollTop = 'scrollTop';
-            var _animations = [ ];
-            var _cssNumber = {
-                "animationIterationCount": true,
-                "columnCount": true,
-                "fillOpacity": true,
-                "flexGrow": true,
-                "flexShrink": true,
-                "fontWeight": true,
-                "lineHeight": true,
-                "opacity": true,
-                "order": true,
-                "orphans": true,
-                "widows": true,
-                "zIndex": true,
-                "zoom": true
-            };
-            var _easings = {
-                /*
-                 x : current percent (0 - 1),
-                 t : current time (duration * percent),
-                 b : start value (from),
-                 c : end value (to),
-                 d : duration
-
-                 easingName : function(x, t, b, c, d) { return easedValue; }
-                 */
-
-                swing: function (x, t, b, c, d) {
-                    return 0.5 - Math.cos(x * Math.PI) / 2;
-                },
-                linear: function(x, t, b, c, d) {
-                    return x;
-                },
-                easeInQuad: function (x, t, b, c, d) {
-                    return c*(t/=d)*t + b;
-                },
-                easeOutQuad: function (x, t, b, c, d) {
-                    return -c *(t/=d)*(t-2) + b;
-                },
-                easeInOutQuad: function (x, t, b, c, d) {
-                    if ((t/=d/2) < 1) return c/2*t*t + b;
-                    return -c/2 * ((--t)*(t-2) - 1) + b;
-                },
-                easeInCubic: function (x, t, b, c, d) {
-                    return c*(t/=d)*t*t + b;
-                },
-                easeOutCubic: function (x, t, b, c, d) {
-                    return c*((t=t/d-1)*t*t + 1) + b;
-                },
-                easeInOutCubic: function (x, t, b, c, d) {
-                    if ((t/=d/2) < 1) return c/2*t*t*t + b;
-                    return c/2*((t-=2)*t*t + 2) + b;
-                },
-                easeInQuart: function (x, t, b, c, d) {
-                    return c*(t/=d)*t*t*t + b;
-                },
-                easeOutQuart: function (x, t, b, c, d) {
-                    return -c * ((t=t/d-1)*t*t*t - 1) + b;
-                },
-                easeInOutQuart: function (x, t, b, c, d) {
-                    if ((t/=d/2) < 1) return c/2*t*t*t*t + b;
-                    return -c/2 * ((t-=2)*t*t*t - 2) + b;
-                },
-                easeInQuint: function (x, t, b, c, d) {
-                    return c*(t/=d)*t*t*t*t + b;
-                },
-                easeOutQuint: function (x, t, b, c, d) {
-                    return c*((t=t/d-1)*t*t*t*t + 1) + b;
-                },
-                easeInOutQuint: function (x, t, b, c, d) {
-                    if ((t/=d/2) < 1) return c/2*t*t*t*t*t + b;
-                    return c/2*((t-=2)*t*t*t*t + 2) + b;
-                },
-                easeInSine: function (x, t, b, c, d) {
-                    return -c * Math.cos(t/d * (Math.PI/2)) + c + b;
-                },
-                easeOutSine: function (x, t, b, c, d) {
-                    return c * Math.sin(t/d * (Math.PI/2)) + b;
-                },
-                easeInOutSine: function (x, t, b, c, d) {
-                    return -c/2 * (Math.cos(Math.PI*t/d) - 1) + b;
-                },
-                easeInExpo: function (x, t, b, c, d) {
-                    return (t==0) ? b : c * Math.pow(2, 10 * (t/d - 1)) + b;
-                },
-                easeOutExpo: function (x, t, b, c, d) {
-                    return (t==d) ? b+c : c * (-Math.pow(2, -10 * t/d) + 1) + b;
-                },
-                easeInOutExpo: function (x, t, b, c, d) {
-                    if (t==0) return b;
-                    if (t==d) return b+c;
-                    if ((t/=d/2) < 1) return c/2 * Math.pow(2, 10 * (t - 1)) + b;
-                    return c/2 * (-Math.pow(2, -10 * --t) + 2) + b;
-                },
-                easeInCirc: function (x, t, b, c, d) {
-                    return -c * (Math.sqrt(1 - (t/=d)*t) - 1) + b;
-                },
-                easeOutCirc: function (x, t, b, c, d) {
-                    return c * Math.sqrt(1 - (t=t/d-1)*t) + b;
-                },
-                easeInOutCirc: function (x, t, b, c, d) {
-                    if ((t/=d/2) < 1) return -c/2 * (Math.sqrt(1 - t*t) - 1) + b;
-                    return c/2 * (Math.sqrt(1 - (t-=2)*t) + 1) + b;
-                },
-                easeInElastic: function (x, t, b, c, d) {
-                    var s=1.70158;var p=0;var a=c;
-                    if (t==0) return b;  if ((t/=d)==1) return b+c;  if (!p) p=d*.3;
-                    if (a < Math.abs(c)) { a=c; var s=p/4; }
-                    else var s = p/(2*Math.PI) * Math.asin (c/a);
-                    return -(a*Math.pow(2,10*(t-=1)) * Math.sin( (t*d-s)*(2*Math.PI)/p )) + b;
-                },
-                easeOutElastic: function (x, t, b, c, d) {
-                    var s=1.70158;var p=0;var a=c;
-                    if (t==0) return b;  if ((t/=d)==1) return b+c;  if (!p) p=d*.3;
-                    if (a < Math.abs(c)) { a=c; var s=p/4; }
-                    else var s = p/(2*Math.PI) * Math.asin (c/a);
-                    return a*Math.pow(2,-10*t) * Math.sin( (t*d-s)*(2*Math.PI)/p ) + c + b;
-                },
-                easeInOutElastic: function (x, t, b, c, d) {
-                    var s=1.70158;var p=0;var a=c;
-                    if (t==0) return b;  if ((t/=d/2)==2) return b+c;  if (!p) p=d*(.3*1.5);
-                    if (a < Math.abs(c)) { a=c; var s=p/4; }
-                    else var s = p/(2*Math.PI) * Math.asin (c/a);
-                    if (t < 1) return -.5*(a*Math.pow(2,10*(t-=1)) * Math.sin( (t*d-s)*(2*Math.PI)/p )) + b;
-                    return a*Math.pow(2,-10*(t-=1)) * Math.sin( (t*d-s)*(2*Math.PI)/p )*.5 + c + b;
-                },
-                easeInBack: function (x, t, b, c, d, s) {
-                    if (s == undefined) s = 1.70158;
-                    return c*(t/=d)*t*((s+1)*t - s) + b;
-                },
-                easeOutBack: function (x, t, b, c, d, s) {
-                    if (s == undefined) s = 1.70158;
-                    return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b;
-                },
-                easeInOutBack: function (x, t, b, c, d, s) {
-                    if (s == undefined) s = 1.70158;
-                    if ((t/=d/2) < 1) return c/2*(t*t*(((s*=(1.525))+1)*t - s)) + b;
-                    return c/2*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b;
-                },
-                easeInBounce: function (x, t, b, c, d) {
-                    return c - this.easeOutBounce (x, d-t, 0, c, d) + b;
-                },
-                easeOutBounce: function (x, t, b, c, d) {
-                    if ((t/=d) < (1/2.75)) {
-                        return c*(7.5625*t*t) + b;
-                    } else if (t < (2/2.75)) {
-                        return c*(7.5625*(t-=(1.5/2.75))*t + .75) + b;
-                    } else if (t < (2.5/2.75)) {
-                        return c*(7.5625*(t-=(2.25/2.75))*t + .9375) + b;
-                    } else {
-                        return c*(7.5625*(t-=(2.625/2.75))*t + .984375) + b;
-                    }
-                },
-                easeInOutBounce: function (x, t, b, c, d) {
-                    if (t < d/2) return this.easeInBounce (x, t*2, 0, c, d) * .5 + b;
-                    return this.easeOutBounce (x, t*2-d, 0, c, d) * .5 + c*.5 + b;
-                }
-            };
-
-            var extend = function() {
-                var src, copyIsArray, copy, name, options, clone, target = arguments[0] || {},
-                    i = 1,
-                    length = arguments[LEXICON.l],
-                    deep = false;
-
-                // Handle a deep copy situation
-                if (typeof target === "boolean") {
-                    deep = target;
-                    target = arguments[1] || {};
-                    // skip the boolean and the target
-                    i = 2;
-                }
-
-                // Handle case when target is a string or something (possible in deep copy)
-                if (typeof target != TYPES.o && !type(target) == TYPES.f) {
-                    target = {};
-                }
-
-                // extend jQuery itself if only one argument is passed
-                if (length === i) {
-                    target = FakejQuery;
-                    --i;
-                }
-
-                for (; i < length; i++) {
-                    // Only deal with non-null/undefined values
-                    if ((options = arguments[i]) != null) {
-                        // Extend the base object
-                        for (name in options) {
-                            src = target[name];
-                            copy = options[name];
-
-                            // Prevent never-ending loop
-                            if (target === copy) {
-                                continue;
-                            }
-
-                            // Recurse if we're merging plain objects or arrays
-                            if (deep && copy && (isPlainObject(copy) || (copyIsArray = isArray(copy)))) {
-                                if (copyIsArray) {
-                                    copyIsArray = false;
-                                    clone = src && isArray(src) ? src : [];
-
-                                } else {
-                                    clone = src && isPlainObject(src) ? src : {};
-                                }
-
-                                // Never move original objects, clone them
-                                target[name] = extend(deep, clone, copy);
-
-                                // Don't bring in undefined values
-                            } else if (copy !== undefined) {
-                                target[name] = copy;
-                            }
-                        }
-                    }
-                }
-
-                // Return the modified object
-                return target;
-            };
-
-            var type = function(obj) {
-                if (obj === undefined)
-                    return obj + _strEmpty;
-                if (obj === null)
-                    return obj + _strEmpty;
-                return _toStr.call(obj).replace(/^\[object (.+)\]$/, '$1').toLowerCase();
-            };
-
-            var isFunction = function(obj) {
-                return type(obj) == TYPES.f;
-            };
-
-            var isArray = function(arr) {
-                return type(arr) == TYPES.a;
-            };
-
-            var isEmptyObject = function(obj) {
-                for (var name in obj )
-                    return false;
-                return true;
-            };
-
-            var isPlainObject = function(obj) {
-                if (!obj || type(obj) != TYPES.o)
-                    return false;
-
-                var key;
-                var proto = LEXICON.p;
-                var hasOwnProperty = Object[proto].hasOwnProperty;
-                var hasOwnConstructor = hasOwnProperty.call(obj, 'constructor');
-                var hasIsPrototypeOf = obj.constructor && obj.constructor[proto] && hasOwnProperty.call(obj.constructor[proto], 'isPrototypeOf');
-
-                if (obj.constructor && !hasOwnConstructor && !hasIsPrototypeOf) {
-                    return false;
-                }
-
-
-                for (key in obj) { /**/ }
-
-                return typeof key == TYPES.u || hasOwnProperty.call(obj, key);
-            };
-
-            var inArray = function(item, arr, fromIndex) {
-                for (var i = fromIndex || 0; i < arr[LEXICON.l]; i++)
-                    if (arr[i] === item)
-                        return i;
-                return -1;
-            }
-
-            var each = function(obj, callback) {
-                var i = 0;
-
-                if (isArrayLike(obj)) {
-                    for (; i < obj[LEXICON.l]; i++) {
-                        if (callback.call(obj[i], i, obj[i]) === false)
-                            break;
-                    }
-                }
-                else {
-                    for (i in obj) {
-                        if (callback.call(obj[i], i, obj[i]) === false)
-                            break;
-                    }
-                }
-
-                return obj;
-            };
-
-            var FakejQuery = function (selector) {
-                if(arguments[LEXICON.l] === 0)
-                    return this;
-
-                var base = new FakejQuery();
-                var elements = selector;
-                var i = 0;
-                var elms;
-                var el;
-
-                if(type(selector) == TYPES.s) {
-                    elements = [ ];
-                    if(selector.charAt(0) === '<') {
-                        el = document.createElement('div');
-                        el.innerHTML = selector;
-                        elms = el.children;
-                    }
-                    else {
-                        elms = document.querySelectorAll(selector);
-                    }
-
-                    for(; i < elms[LEXICON.l]; i++)
-                        elements.push(elms[i]);
-                }
-
-                if(elements) {
-                    if(type(elements) != TYPES.s && !isArrayLike(elements))
-                        elements = [ elements ];
-
-                    for(i = 0; i < elements[LEXICON.l]; i++)
-                        base[i] = elements[i];
-
-                    base[LEXICON.l] = elements[LEXICON.l];
-                }
-
-                return base;
-            };
-
-            function isArrayLike(obj) {
-                var length = !!obj && [LEXICON.l] in obj && obj[LEXICON.l];
-                var t = type(obj);
-                //|| obj === window = self added!
-                return isFunction(t) || obj === window ? false : (t == TYPES.a || length === 0 || typeof length == TYPES.n && length > 0 && (length - 1) in obj);
-            }
-
-            function stripAndCollapse(value) {
-                var tokens = value.match(_rnothtmlwhite) || [];
-                return tokens.join(_strSpace);
-            }
-
-            function matches(elem, selector) {
-                var nodeList = (elem.parentNode || document).querySelectorAll(selector) || [];
-                var i = nodeList[LEXICON.l];
-
-                while (i--)
-                    if (nodeList[i] == elem)
-                        return true;
-
-                return false;
-            }
-
-            function insertAdjacentElement(el, strategy, child) {
-                if(type(child) == TYPES.a) {
-                    for(var i = 0; i < child[LEXICON.l]; i++)
-                        insertAdjacentElement(el, strategy, child[i]);
-                }
-                else if(type(child) == TYPES.s)
-                    el.insertAdjacentHTML(strategy, child);
-                else if(child.nodeType)
-                    el.insertAdjacentElement(strategy, child);
-                else
-                    el.insertAdjacentElement(strategy, child[0]);
-            }
-
-            function setCSSVal(el, prop, val) {
-                try {
-                    if(el[LEXICON.s][prop] !== undefined)
-                        el[LEXICON.s][prop] = parseCSSVal(prop, val);
-                } catch(e) { }
-            }
-
-            function parseCSSVal(prop, val) {
-                if(!_cssNumber[prop.toLowerCase()] && type(val) == TYPES.n)
-                    val += 'px';
-                return val;
-            }
-
-            function startNextAnimationInQ(animObj, removeFromQ) {
-                var index;
-                var nextAnim;
-                if(removeFromQ !== false)
-                    animObj.q.splice(0, 1);
-                if(animObj.q[LEXICON.l] > 0) {
-                    nextAnim = animObj.q[0];
-                    animate(animObj.el, nextAnim.props, nextAnim.duration, nextAnim.easing, nextAnim.complete, true);
-                }
-                else {
-                    index = inArray(animObj, _animations);
-                    if(index > -1)
-                        _animations.splice(index, 1);
-                }
-            }
-
-            function setAnimationValue(el, prop, value) {
-                if(prop === _strScrollLeft)
-                    el[prop] = value;
-                else if(prop === _strScrollTop)
-                    el[prop] = value;
-                else
-                    setCSSVal(el, prop, value);
-            }
-
-            function animate(el, props, options, easing, complete, guaranteedNext) {
-                var hasOptions = isPlainObject(options);
-                var from = { };
-                var to = { };
-                var i = 0;
-                var key;
-                var animObj;
-                var start;
-                var progress;
-                var step;
-                var specialEasing;
-                var duration;
-                if(hasOptions) {
-                    easing = options.easing;
-                    start = options.start;
-                    progress = options.progress;
-                    step = options.step;
-                    specialEasing = options.specialEasing;
-                    complete = options.complete;
-                    duration = options.duration;
-                }
-                else
-                    duration = options;
-                specialEasing = specialEasing || { };
-                duration = duration || 400;
-                easing = easing || 'swing';
-                guaranteedNext = guaranteedNext || false;
-
-                for(; i < _animations[LEXICON.l]; i++) {
-                    if(_animations[i].el === el) {
-                        animObj = _animations[i];
-                        break;
-                    }
-                }
-
-                if(!animObj) {
-                    animObj = {
-                        el : el,
-                        q : []
-                    };
-                    _animations.push(animObj);
-                }
-
-                for (key in props) {
-                    if(key === _strScrollLeft || key === _strScrollTop)
-                        from[key] = el[key];
-                    else
-                        from[key] = FakejQuery(el).css(key);
-                }
-
-                for (key in from) {
-                    if(from[key] !== props[key] && props[key] !== undefined)
-                        to[key] = props[key];
-                }
-
-                if(!isEmptyObject(to)) {
-                    var timeNow;
-                    var end;
-                    var percent;
-                    var fromVal;
-                    var toVal;
-                    var easedVal;
-                    var timeStart;
-                    var frame;
-                    var elapsed;
-                    var qPos = guaranteedNext ? 0 : inArray(qObj, animObj.q);
-                    var qObj = {
-                        props : to,
-                        duration : hasOptions ? options : duration,
-                        easing : easing,
-                        complete : complete
-                    };
-                    if (qPos === -1) {
-                        qPos = animObj.q[LEXICON.l];
-                        animObj.q.push(qObj);
-                    }
-
-                    if(qPos === 0) {
-                        if(duration > 0) {
-                            timeStart = compatibility.now();
-                            frame = function() {
-                                timeNow = compatibility.now();
-                                elapsed = (timeNow - timeStart);
-                                end = qObj.stop || elapsed >= duration;
-                                percent = 1 - ((Math.max(0, timeStart + duration - timeNow) / duration) || 0);
-
-                                for(key in to) {
-                                    fromVal = parseFloat(from[key]);
-                                    toVal = parseFloat(to[key]);
-                                    easedVal = (toVal - fromVal) * _easings[specialEasing[key] || easing](percent, percent * duration, 0, 1, duration) + fromVal;
-                                    setAnimationValue(el, key, easedVal);
-                                    if(isFunction(step)) {
-                                        step(easedVal, {
-                                            elem : el,
-                                            prop : key,
-                                            start : fromVal,
-                                            now : easedVal,
-                                            end : toVal,
-                                            pos : percent,
-                                            options : {
-                                                easing : easing,
-                                                speacialEasing : specialEasing,
-                                                duration : duration,
-                                                complete : complete,
-                                                step : step
-                                            },
-                                            startTime : timeStart
-                                        });
-                                    }
-                                }
-
-                                if(isFunction(progress))
-                                    progress({ }, percent, Math.max(0, duration - elapsed));
-
-                                if (end) {
-                                    startNextAnimationInQ(animObj);
-                                    if(isFunction(complete))
-                                        complete();
-                                }
-                                else
-                                    qObj.frame = compatibility.rAF()(frame);
-                            };
-                            qObj.frame = compatibility.rAF()(frame);
-                        }
-                        else {
-                            for(key in to)
-                                setAnimationValue(el, key, to[key]);
-                            startNextAnimationInQ(animObj);
-                        }
-                    }
-                }
-                else if(guaranteedNext)
-                    startNextAnimationInQ(animObj);
-            }
-
-            function stop(el, clearQ, jumpToEnd) {
-                var animObj;
-                var qObj;
-                var key;
-                var i = 0;
-                for(; i < _animations[LEXICON.l]; i++) {
-                    animObj = _animations[i];
-                    if(animObj.el === el) {
-                        if(animObj.q[LEXICON.l] > 0) {
-                            qObj = animObj.q[0];
-                            qObj.stop = true;
-                            compatibility.cAF()(qObj.frame);
-                            animObj.q.splice(0, 1);
-
-                            if(jumpToEnd)
-                                for(key in qObj.props)
-                                    setAnimationValue(el, key, qObj.props[key]);
-
-                            if(clearQ)
-                                animObj.q = [ ];
-                            else
-                                startNextAnimationInQ(animObj, false);
-                        }
-                        break;
-                    }
-                }
-            }
-
-            FakejQuery[LEXICON.p] = {
-
-                //EVENTS:
-
-                on : function(eventName, handler) {
-                    eventName = (eventName || _strEmpty).match(_rnothtmlwhite) || [_strEmpty];
-
-                    var eventNameLength = eventName[LEXICON.l];
-                    var i = 0;
-                    var el;
-                    return this.each(function() {
-                        el = this;
-                        try {
-                            if (el.addEventListener) {
-                                for (; i < eventNameLength; i++)
-                                    el.addEventListener(eventName[i], handler);
-                            }
-                            else if(el.detachEvent) {
-                                for (; i < eventNameLength; i++)
-                                    el.attachEvent('on' + eventName[i], handler);
-                            }
-                        } catch (e) { }
-                    });
-                },
-
-                off : function(eventName, handler) {
-                    eventName = (eventName || _strEmpty).match(_rnothtmlwhite) || [_strEmpty];
-
-                    var eventNameLength = eventName[LEXICON.l];
-                    var i = 0;
-                    var el;
-                    return this.each(function() {
-                        el = this;
-                        try {
-                            if (el.removeEventListener) {
-                                for (; i < eventNameLength; i++)
-                                    el.removeEventListener(eventName[i], handler);
-                            }
-                            else if(el.detachEvent) {
-                                for (; i < eventNameLength; i++)
-                                    el.detachEvent('on' + eventName[i], handler);
-                            }
-                        } catch (e) { }
-                    });
-                },
-
-                one : function (eventName, handler) {
-                    eventName = (eventName || _strEmpty).match(_rnothtmlwhite) || [_strEmpty];
-                    return this.each(function() {
-                        var el = FakejQuery(this);
-                        FakejQuery.each(eventName, function(i, oneEventName) {
-                            var oneHandler = function(e) {
-                                handler.call(this, e);
-                                el.off(oneEventName, oneHandler);
-                            };
-                            el.on(oneEventName, oneHandler);
-                        });
-                    });
-                },
-
-                trigger : function(eventName) {
-                    var el;
-                    var event;
-                    return this.each(function() {
-                        el = this;
-                        if (document.createEvent) {
-                            event = document.createEvent('HTMLEvents');
-                            event.initEvent(eventName, true, false);
-                            el.dispatchEvent(event);
-                        }
-                        else {
-                            el.fireEvent("on" + eventName);
-                        }
-                    });
-                },
-
-                hover: function(over, out) {
-                    return this.on('mouseenter', over).on('mouseleave', out || over);
-                },
-
-
-                //DOM NODE INSERTING / REMOVING:
-
-                append : function(child) {
-                    return this.each(function() { insertAdjacentElement(this, 'beforeend', child); });
-                },
-
-                prepend : function(child) {
-                    return this.each(function() { insertAdjacentElement(this, 'afterbegin', child); });
-                },
-
-                before : function(child) {
-                    return this.each(function() { insertAdjacentElement(this, 'beforebegin', child); });
-                },
-
-                after : function(child) {
-                    return this.each(function() { insertAdjacentElement(this, 'afterend', child); });
-                },
-
-                remove : function() {
-                    return this.each(function() {
-                        var el = this;
-                        var parentNode = el.parentNode;
-                        if(parentNode != null)
-                            parentNode.removeChild(el);
-                    });
-                },
-
-                unwrap : function() {
-                    var parents = [ ];
-                    var i;
-                    var el;
-                    var parent;
-
-                    this.each(function() {
-                        parent = this.parentNode;
-                        if(inArray(parent, parents) === - 1)
-                            parents.push(parent);
-                    });
-
-                    for(i = 0; i < parents[LEXICON.l]; i++) {
-                        el = parents[i];
-                        parent = el.parentNode;
-                        while (el.firstChild)
-                            parent.insertBefore(el.firstChild, el);
-                        parent.removeChild(el);
-                    }
-
-                    return this;
-                },
-
-                wrapAll : function(wrapperHTML) {
-                    var i;
-                    var nodes = this;
-                    var wrapper = FakejQuery(wrapperHTML)[0];
-                    var deepest = wrapper;
-                    var parent = nodes[0].parentNode;
-                    var previousSibling = nodes[0].previousSibling;
-                    while(deepest.childNodes[LEXICON.l] > 0)
-                        deepest = deepest.childNodes[0];
-
-                    for (i = 0; nodes[LEXICON.l] - i; deepest.firstChild === nodes[0] && i++)
-                        deepest.appendChild(nodes[i]);
-
-                    var nextSibling = previousSibling ? previousSibling.nextSibling : parent.firstChild;
-                    parent.insertBefore(wrapper, nextSibling);
-
-                    return this;
-                },
-
-                wrapInner : function(wrapperHTML) {
-                    return this.each(function() {
-                        var el = FakejQuery(this);
-                        var contents = el.contents();
-
-                        if (contents[LEXICON.l])
-                            contents.wrapAll(wrapperHTML);
-                        else
-                            el.append(wrapperHTML);
-                    });
-                },
-
-                wrap : function(wrapperHTML) {
-                    return this.each(function() { FakejQuery(this).wrapAll(wrapperHTML); });
-                },
-
-
-                //DOM NODE MANIPULATION / INFORMATION:
-
-                css : function(styles, val) {
-                    var el;
-                    var key;
-                    var cptStyle;
-                    var getCptStyle = window.getComputedStyle;
-                    if(type(styles) == TYPES.s) {
-                        if(val === undefined) {
-                            el = this[0];
-                            cptStyle = getCptStyle ? getCptStyle(el, null) : el.currentStyle[styles];
-                            //https://bugzilla.mozilla.org/show_bug.cgi?id=548397 can be null sometimes if iframe with display: none (firefox only!)
-                            return getCptStyle && cptStyle != null ? cptStyle.getPropertyValue(styles) : el[LEXICON.s][styles];
-                        }
-                        else {
-                            return this.each(function() {
-                                setCSSVal(this, styles, val);
-                            });
-                        }
-                    }
-                    else {
-                        return this.each(function() {
-                            for(key in styles)
-                                setCSSVal(this, key, styles[key]);
-                        });
-                    }
-                },
-
-                hasClass : function(className) {
-                    var elem, i = 0;
-                    var classNamePrepared = _strSpace + className + _strSpace;
-                    var classList;
-
-                    while ((elem = this[ i++ ])) {
-                        classList = elem.classList;
-                        if(classList) {
-                            if(classList.contains(className))
-                                return true;
-                        }
-                        else if (elem.nodeType === 1 && (_strSpace + stripAndCollapse(elem.className + _strEmpty) + _strSpace).indexOf(classNamePrepared) > -1 )
-                            return true;
-                    }
-
-                    return false;
-                },
-
-                addClass : function(className) {
-                    var classes;
-                    var elem;
-                    var cur;
-                    var curValue;
-                    var clazz;
-                    var finalValue;
-                    var supportClassList;
-                    var elmClassList;
-                    var i = 0;
-                    var v = 0;
-
-                    if (className) {
-                        classes = className.match( _rnothtmlwhite ) || [];
-
-                        while ((elem = this[i++])) {
-                            elmClassList = elem.classList;
-                            if(supportClassList === undefined)
-                                supportClassList = elmClassList !== undefined;
-
-                            if(supportClassList) {
-                                while ((clazz = classes[v++]))
-                                    elmClassList.add(clazz);
-                            }
-                            else {
-                                curValue = elem.className + _strEmpty;
-                                cur = elem.nodeType === 1 && (_strSpace + stripAndCollapse(curValue) + _strSpace);
-
-                                if (cur) {
-                                    while ((clazz = classes[v++]))
-                                        if (cur.indexOf(_strSpace + clazz + _strSpace) < 0)
-                                            cur += clazz + _strSpace;
-
-                                    finalValue = stripAndCollapse(cur);
-                                    if (curValue !== finalValue)
-                                        elem.className = finalValue;
-                                }
-                            }
-                        }
-                    }
-
-                    return this;
-                },
-
-                removeClass : function(className) {
-                    var classes;
-                    var elem;
-                    var cur;
-                    var curValue;
-                    var clazz;
-                    var finalValue;
-                    var supportClassList;
-                    var elmClassList;
-                    var i = 0;
-                    var v = 0;
-
-                    if (className) {
-                        classes = className.match(_rnothtmlwhite) || [];
-
-                        while ((elem = this[i++])) {
-                            elmClassList = elem.classList;
-                            if(supportClassList === undefined)
-                                supportClassList = elmClassList !== undefined;
-
-                            if(supportClassList) {
-                                while ((clazz = classes[v++]))
-                                    elmClassList.remove(clazz);
-                            }
-                            else {
-                                curValue = elem.className + _strEmpty;
-                                cur = elem.nodeType === 1 && (_strSpace + stripAndCollapse(curValue) + _strSpace);
-
-                                if (cur) {
-                                    while ((clazz = classes[v++]))
-                                        while (cur.indexOf(_strSpace + clazz + _strSpace) > -1)
-                                            cur = cur.replace(_strSpace + clazz + _strSpace, _strSpace);
-
-                                    finalValue = stripAndCollapse(cur);
-                                    if (curValue !== finalValue)
-                                        elem.className = finalValue;
-                                }
-                            }
-                        }
-                    }
-
-                    return this;
-                },
-
-                hide : function() {
-                    return this.each(function() { this[LEXICON.s].display = 'none'; });
-                },
-
-                show : function() {
-                    return this.each(function() { this[LEXICON.s].display = 'block'; });
-                },
-
-                attr : function(attrName, value) {
-                    for(var i = 0; i < this[LEXICON.l]; i++) {
-                        var el = this[i];
-                        if(value === undefined)
-                            return el.getAttribute(attrName);
-                        el.setAttribute(attrName, value);
-                    }
-                    return this;
-                },
-
-                removeAttr : function(attrName) {
-                    return this.each(function() { this.removeAttribute(attrName); });
-                },
-
-                offset : function() {
-                    var el = this[0];
-                    var rect = el.getBoundingClientRect();
-                    var scrollLeft = window.pageXOffset || document.documentElement[_strScrollLeft];
-                    var scrollTop = window.pageYOffset || document.documentElement[_strScrollTop];
-                    return {
-                        top: rect.top + scrollTop,
-                        left: rect.left + scrollLeft
-                    };
-                },
-
-                position : function() {
-                    var el = this[0];
-                    return {
-                        top: el.offsetTop,
-                        left: el.offsetLeft
-                    };
-                },
-
-                scrollLeft : function(value) {
-                    for(var i = 0; i < this[LEXICON.l]; i++) {
-                        var el = this[i];
-                        if(value === undefined)
-                            return el[_strScrollLeft];
-                        el[_strScrollLeft] = value;
-                    }
-                    return this;
-                },
-
-                scrollTop : function(value) {
-                    for(var i = 0; i < this[LEXICON.l]; i++) {
-                        var el = this[i];
-                        if(value === undefined)
-                            return el[_strScrollTop];
-                        el[_strScrollTop] = value;
-                    }
-                    return this;
-                },
-
-                val : function(value) {
-                    var el = this[0];
-                    if(!value)
-                        return el.value;
-                    el.value = value;
-                    return this;
-                },
-
-
-                //DOM TRAVERSAL / FILTERING:
-
-                first : function() {
-                    return this.eq(0);
-                },
-
-                last : function() {
-                    return this.eq(-1);
-                },
-
-                eq : function(index) {
-                    return FakejQuery(this[index >= 0 ? index : this[LEXICON.l] + index]);
-                },
-
-                find : function(selector) {
-                    var children = [ ];
-                    var i;
-                    this.each(function() {
-                        var el = this;
-                        var ch = el.querySelectorAll(selector);
-                        for(i = 0; i < ch[LEXICON.l]; i++)
-                            children.push(ch[i]);
-                    });
-                    return FakejQuery(children);
-                },
-
-                children : function(selector) {
-                    var children = [ ];
-                    var el;
-                    var ch;
-                    var i;
-
-                    this.each(function() {
-                        ch = this.children;
-                        for(i = 0; i < ch[LEXICON.l]; i++) {
-                            el = ch[i];
-                            if(selector) {
-                                if((el.matches && el.matches(selector)) || matches(el, selector))
-                                    children.push(el);
-                            }
-                            else
-                                children.push(el);
-                        }
-                    });
-                    return FakejQuery(children);
-                },
-
-                parent : function(selector) {
-                    var parents = [ ];
-                    var parent;
-                    this.each(function() {
-                        parent = this.parentNode;
-                        if(selector ? FakejQuery(parent).is(selector) : true)
-                            parents.push(parent);
-                    });
-                    return FakejQuery(parents);
-                },
-
-                is : function(selector) {
-                    var el;
-                    var i;
-                    for(i = 0; i < this[LEXICON.l]; i++) {
-                        el = this[i];
-                        if(selector === ":visible")
-                            return !!(el[LEXICON.oW] || el[LEXICON.oH] || el.getClientRects()[LEXICON.l]);
-                        if(selector === ":hidden")
-                            return !!!(el[LEXICON.oW] || el[LEXICON.oH] || el.getClientRects()[LEXICON.l]);
-                        if((el.matches && el.matches(selector)) || matches(el, selector))
-                            return true;
-                    }
-                    return false;
-                },
-
-                contents : function() {
-                    var contents = [ ];
-                    var childs;
-                    var i;
-
-                    this.each(function() {
-                        childs = this.childNodes;
-                        for(i = 0; i < childs[LEXICON.l]; i++)
-                            contents.push(childs[i]);
-                    });
-
-                    return FakejQuery(contents);
-                },
-
-                each : function(callback) {
-                    return each(this, callback);
-                },
-
-
-                //ANIMATION:
-
-                animate : function(props, duration, easing, complete) {
-                    return this.each(function() { animate(this, props, duration, easing, complete); });
-                },
-
-                stop : function(clearQ, jump) {
-                    return this.each(function() { stop(this, clearQ, jump); });
-                }
-            };
-
-            extend(FakejQuery, {
-                extend : extend,
-                type : type,
-                isArray : isArray,
-                isEmptyObject : isEmptyObject,
-                isPlainObject : isPlainObject,
-                inArray : inArray,
-                each : each
-            });
-
-            return FakejQuery;
-        })(COMPATIBILITY);
-        var INSTANCES = (function(compatibility) {
+        var MATH = Math;
+        var JQUERY = framework;
+        var EASING = framework.easing;
+        var FRAMEWORK = framework;
+        var INSTANCES = (function() {
             var _targets = [ ];
             var _instancePropertyString = '__overlayScrollbars__';
 
@@ -1312,7 +345,7 @@
                         _targets.push(target);
                     }
                     else {
-                        var index = compatibility.inA(target, _targets);
+                        var index = COMPATIBILITY.inA(target, _targets);
                         if (index > -1) {
                             if(argLen > 1) {
                                 //unregister instance
@@ -1327,8 +360,8 @@
                     }
                 }
             }
-        })(COMPATIBILITY);
-        var PLUGIN = (function(framework, compatibility, instances) {
+        })();
+        var PLUGIN = (function() {
             var _pluginsGlobals;
             var _pluginsAutoUpdateLoop;
             var _pluginsExtensions = [ ];
@@ -1342,60 +375,63 @@
                     TYPES.f, //function
                     TYPES.z  //null
                 ];
-                var restrictedStringsSplit = " ";
-                var restrictedStringsPossibilitiesSplit = ":";
+                var restrictedStringsSplit = ' ';
+                var restrictedStringsPossibilitiesSplit = ':';
                 var classNameAllowedValues = [TYPES.z, TYPES.s];
                 var numberAllowedValues = TYPES.n;
                 var booleanNullAllowedValues = [TYPES.z, TYPES.b];
                 var booleanTrueTemplate = [true, TYPES.b];
                 var booleanFalseTemplate = [false, TYPES.b];
                 var callbackTemplate = [null,  [TYPES.z, TYPES.f]];
+                var inheritedAttrsTemplate = [['style', 'class'], [TYPES.s, TYPES.a, TYPES.z]];
                 var resizeAllowedValues = 'n:none b:both h:horizontal v:vertical';
                 var overflowBehaviorAllowedValues = 'v-h:visible-hidden v-s:visible-scroll s:scroll h:hidden';
                 var scrollbarsVisibilityAllowedValues = 'v:visible h:hidden a:auto';
                 var scrollbarsAutoHideAllowedValues = 'n:never s:scroll l:leave m:move';
                 var optionsDefaultsAndTemplate = {
-                    className: ['os-theme-dark', classNameAllowedValues],           //null || string
-                    resize: ['none', resizeAllowedValues],                          //none || both  || horizontal || vertical || n || b || h || v
-                    sizeAutoCapable: booleanTrueTemplate,                           //true || false
-                    clipAlways: booleanTrueTemplate,                                //true || false
-                    normalizeRTL: booleanTrueTemplate,                              //true || false
-                    paddingAbsolute: booleanFalseTemplate,                          //true || false
-                    autoUpdate: [null, booleanNullAllowedValues],                   //true || false || null
-                    autoUpdateInterval: [33, numberAllowedValues],                  //number
+                    className: ['os-theme-dark', classNameAllowedValues],                //null || string
+                    resize: ['none', resizeAllowedValues],                               //none || both  || horizontal || vertical || n || b || h || v
+                    sizeAutoCapable: booleanTrueTemplate,                                //true || false
+                    clipAlways: booleanTrueTemplate,                                     //true || false
+                    normalizeRTL: booleanTrueTemplate,                                   //true || false
+                    paddingAbsolute: booleanFalseTemplate,                               //true || false
+                    autoUpdate: [null, booleanNullAllowedValues],                        //true || false || null
+                    autoUpdateInterval: [33, numberAllowedValues],                       //number
                     nativeScrollbarsOverlaid: {
-                        showNativeScrollbars: booleanFalseTemplate,                 //true || false
-                        initialize: booleanTrueTemplate                             //true || false
+                        showNativeScrollbars: booleanFalseTemplate,                      //true || false
+                        initialize: booleanTrueTemplate                                  //true || false
                     },
                     overflowBehavior: {
-                        x: ['scroll', overflowBehaviorAllowedValues],               //visible-hidden  || visible-scroll || hidden || scroll || v-h || v-s || h || s
-                        y: ['scroll', overflowBehaviorAllowedValues]                //visible-hidden  || visible-scroll || hidden || scroll || v-h || v-s || h || s
+                        x: ['scroll', overflowBehaviorAllowedValues],                    //visible-hidden  || visible-scroll || hidden || scroll || v-h || v-s || h || s
+                        y: ['scroll', overflowBehaviorAllowedValues]                     //visible-hidden  || visible-scroll || hidden || scroll || v-h || v-s || h || s
                     },
                     scrollbars: {
-                        visibility: ['auto', scrollbarsVisibilityAllowedValues],    //visible || hidden || auto || v || h || a
-                        autoHide: ['never', scrollbarsAutoHideAllowedValues],       //never || scroll || leave || move || n || s || l || m
-                        autoHideDelay: [800, numberAllowedValues],                  //number
-                        dragScrolling: booleanTrueTemplate,                         //true || false
-                        clickScrolling: booleanFalseTemplate,                       //true || false
-                        touchSupport: booleanTrueTemplate                           //true || false
+                        visibility: ['auto', scrollbarsVisibilityAllowedValues],         //visible || hidden || auto || v || h || a
+                        autoHide: ['never', scrollbarsAutoHideAllowedValues],            //never || scroll || leave || move || n || s || l || m
+                        autoHideDelay: [800, numberAllowedValues],                       //number
+                        dragScrolling: booleanTrueTemplate,                              //true || false
+                        clickScrolling: booleanFalseTemplate,                            //true || false
+                        touchSupport: booleanTrueTemplate,                               //true || false
+                        snapHandle: booleanFalseTemplate                                 //true || false
                     },
                     textarea: {
-                        dynWidth: booleanFalseTemplate,                             //true || false
-                        dynHeight: booleanFalseTemplate                             //true || false
+                        dynWidth: booleanFalseTemplate,                                  //true || false
+                        dynHeight: booleanFalseTemplate,                                 //true || false
+                        inheritedAttrs : inheritedAttrsTemplate                          //string || array || null
                     },
                     callbacks: {
-                        onInitialized: callbackTemplate,                            //null || function
-                        onInitializationWithdrawn: callbackTemplate,                //null || function
-                        onDestroyed: callbackTemplate,                              //null || function
-                        onScrollStart: callbackTemplate,                            //null || function
-                        onScroll: callbackTemplate,                                 //null || function
-                        onScrollStop: callbackTemplate,                             //null || function
-                        onOverflowChanged: callbackTemplate,                        //null || function
-                        onOverflowAmountChanged: callbackTemplate,                  //null || function
-                        onDirectionChanged: callbackTemplate,                       //null || function
-                        onContentSizeChanged: callbackTemplate,                     //null || function
-                        onHostSizeChanged: callbackTemplate,                        //null || function
-                        onUpdated: callbackTemplate                                 //null || function
+                        onInitialized: callbackTemplate,                                 //null || function
+                        onInitializationWithdrawn: callbackTemplate,                     //null || function
+                        onDestroyed: callbackTemplate,                                   //null || function
+                        onScrollStart: callbackTemplate,                                 //null || function
+                        onScroll: callbackTemplate,                                      //null || function
+                        onScrollStop: callbackTemplate,                                  //null || function
+                        onOverflowChanged: callbackTemplate,                             //null || function
+                        onOverflowAmountChanged: callbackTemplate,                       //null || function
+                        onDirectionChanged: callbackTemplate,                            //null || function
+                        onContentSizeChanged: callbackTemplate,                          //null || function
+                        onHostSizeChanged: callbackTemplate,                             //null || function
+                        onUpdated: callbackTemplate                                      //null || function
                     }
                 };
                 var convert = function(template) {
@@ -1407,7 +443,7 @@
                             if(!obj.hasOwnProperty(key))
                                 continue;
                             val = obj[key];
-                            valType = framework.type(val);
+                            valType = COMPATIBILITY.type(val);
                             if(valType == TYPES.a)
                                 obj[key] = val[template ? 1 : 0];
                             else if(valType == TYPES.o)
@@ -1415,17 +451,14 @@
                         }
                         return obj;
                     };
-                    return recursive(framework.extend(true, { }, optionsDefaultsAndTemplate));
+                    return recursive(FRAMEWORK.extend(true, { }, optionsDefaultsAndTemplate));
                 };
 
                 return {
-                    //defaults
-                    d : convert(),
+                    _defaults : convert(),
 
-                    //template
-                    t : convert(true),
+                    _template : convert(true),
 
-                    //validate
                     /**
                      * Validates the passed object by the passed template.
                      * @param obj The object which shall be validated.
@@ -1435,18 +468,19 @@
                      * @param keepForeignProps True if properties which aren't in the template shall be added to the validated object, false otherwise.
                      * @returns {{}} A object which contains only the valid properties of the passed original object.
                      */
-                    v : function (obj, template, writeErrors, usePreparedValues, keepForeignProps) {
+                    _validate : function (obj, template, writeErrors, usePreparedValues, keepForeignProps) {
                         var validatedOptions = { };
-                        var objectCopy = framework.extend(true, { }, obj);
+                        var objectCopy = FRAMEWORK.extend(true, { }, obj);
                         var checkObjectProps = function(data, template, validatedOptions, prevPropName) {
                             for (var prop in template) {
                                 if (template.hasOwnProperty(prop) && data.hasOwnProperty(prop)) {
                                     var isValid = false;
                                     var templateValue = template[prop];
-                                    var templateValueType = framework.type(templateValue);
-                                    var templateTypes = framework.type(templateValue) != TYPES.a ? [ templateValue ] : templateValue;
+                                    var templateValueType = COMPATIBILITY.type(templateValue);
+                                    var templateIsComplext = templateValueType == TYPES.o;
+                                    var templateTypes = COMPATIBILITY.type(templateValue) != TYPES.a ? [ templateValue ] : templateValue;
                                     var dataValue = data[prop];
-                                    var dataValueType = framework.type(dataValue);
+                                    var dataValueType = COMPATIBILITY.type(dataValue);
                                     var propPrefix = prevPropName ? prevPropName + "." : "";
                                     var error = "The option \"" + propPrefix + prop + "\" wasn't set, because";
                                     var errorPossibleTypes = [ ];
@@ -1461,18 +495,18 @@
                                     var j;
 
                                     //if the template has a object as value, it means that the options are complex (verschachtelt)
-                                    if(templateValueType == TYPES.o) {
+                                    if(templateIsComplext && dataValueType == TYPES.o) {
                                         validatedOptions[prop] = { };
                                         checkObjectProps(dataValue, templateValue, validatedOptions[prop], propPrefix + prop);
-                                        if(framework.isEmptyObject(dataValue))
+                                        if(FRAMEWORK.isEmptyObject(dataValue))
                                             delete data[prop];
                                     }
-                                    else {
+                                    else if(!templateIsComplext) {
                                         for(i = 0; i < templateTypes.length; i++) {
                                             currType = templateTypes[i];
-                                            templateValueType = framework.type(currType);
+                                            templateValueType = COMPATIBILITY.type(currType);
                                             //if currtype is string and starts with restrictedStringPrefix and end with restrictedStringSuffix
-                                            isRestrictedValue = templateValueType == TYPES.s && framework.inArray(currType, possibleTemplateTypes) === -1;
+                                            isRestrictedValue = templateValueType == TYPES.s && FRAMEWORK.inArray(currType, possibleTemplateTypes) === -1;
                                             if(isRestrictedValue) {
                                                 errorPossibleTypes.push(TYPES.s);
 
@@ -1521,9 +555,9 @@
 
                         //add values which aren't specified in the template to the finished validated object to prevent them from being discarded
                         if(keepForeignProps)
-                            framework.extend(true, validatedOptions, objectCopy);
-                        else if(!framework.isEmptyObject(objectCopy) && writeErrors)
-                            console.warn("The following options are discarded due to invalidity:\r\n" + JSON.stringify(objectCopy, null, 2));
+                            FRAMEWORK.extend(true, validatedOptions, objectCopy);
+                        else if(!FRAMEWORK.isEmptyObject(objectCopy) && writeErrors)
+                            console.warn("The following options are discarded due to invalidity:\r\n" + window.JSON.stringify(objectCopy, null, 2));
 
                         return validatedOptions;
                     }
@@ -1535,13 +569,13 @@
              */
             function initOverlayScrollbarsStatics() {
                 if(!_pluginsGlobals)
-                    _pluginsGlobals = new OverlayScrollbarsGlobals(_pluginsOptions.d);
+                    _pluginsGlobals = new OverlayScrollbarsGlobals(_pluginsOptions._defaults);
                 if(!_pluginsAutoUpdateLoop)
                     _pluginsAutoUpdateLoop = new OverlayScrollbarsAutoUpdateLoop(_pluginsGlobals);
             }
 
             /**
-             * The global object for the hide scrollbars objects. It contains resources which every hide scrollbars object needs. This object is initialized only once: if the first hide scrollbars object gets initialized.
+             * The global object for the OverlayScrollbars objects. It contains resources which every OverlayScrollbars object needs. This object is initialized only once: if the first OverlayScrollbars object gets initialized.
              * @param defaultOptions
              * @constructor
              */
@@ -1550,12 +584,13 @@
                 var strOverflow = 'overflow';
                 var strHidden = 'hidden';
                 var strScroll = 'scroll';
-                var bodyElement = framework('body');
-                var scrollbarDummyElement = framework('<div id="hs-dummy-scrollbar-size"><div style="height: 200%; width: 200%; margin: 10px 0;"></div></div>');
+                var bodyElement = FRAMEWORK('body');
+                var scrollbarDummyElement = FRAMEWORK('<div id="os-dummy-scrollbar-size"><div></div></div>');
                 var scrollbarDummyElement0 = scrollbarDummyElement[0];
-                var dummyContainerChild = framework(scrollbarDummyElement.children('div').eq(0));
+                var dummyContainerChild = FRAMEWORK(scrollbarDummyElement.children('div').eq(0));
 
                 bodyElement.append(scrollbarDummyElement);
+                scrollbarDummyElement.hide().show(); //fix IE8 bug (incorrect measuring)
 
                 var nativeScrollbarSize = calcNativeScrollbarSize(scrollbarDummyElement0);
                 var nativeScrollbarIsOverlaid = {
@@ -1563,18 +598,21 @@
                     y: nativeScrollbarSize.y === 0
                 };
 
-                framework.extend(_base, {
+                FRAMEWORK.extend(_base, {
                     defaultOptions : defaultOptions,
                     autoUpdateLoop : false,
-                    autoUpdateRecommended : !compatibility.mO(),
+                    autoUpdateRecommended : !COMPATIBILITY.mO(),
                     nativeScrollbarSize : nativeScrollbarSize,
                     nativeScrollbarIsOverlaid : nativeScrollbarIsOverlaid,
                     nativeScrollbarStyling : (function() {
                         scrollbarDummyElement.addClass('os-viewport-native-scrollbars-invisible');
+
                         //fix opera bug: scrollbar styles will only appear if overflow value is scroll or auto during the activation of the style.
                         //and set overflow to scroll
-                        scrollbarDummyElement.css(strOverflow, strHidden).hide().css(strOverflow, strScroll).show();
-                        return (scrollbarDummyElement0[LEXICON.oH] - scrollbarDummyElement0[LEXICON.cH]) === 0 && (scrollbarDummyElement0[LEXICON.oW] - scrollbarDummyElement0[LEXICON.cW]) === 0;
+                        //scrollbarDummyElement.css(strOverflow, strHidden).hide().css(strOverflow, strScroll).show();
+                        //return (scrollbarDummyElement0[LEXICON.oH] - scrollbarDummyElement0[LEXICON.cH]) === 0 && (scrollbarDummyElement0[LEXICON.oW] - scrollbarDummyElement0[LEXICON.cW]) === 0;
+
+                        return scrollbarDummyElement.css('scrollbar-width') === 'none' || window.getComputedStyle(scrollbarDummyElement0, '::-webkit-scrollbar').getPropertyValue('display') === 'none';
                     })(),
                     overlayScrollbarDummySize : { x: 30, y: 30 },
                     msie : (function() {
@@ -1586,33 +624,33 @@
                         var edge = ua[strIndexOf]('Edge/');
                         var rv = ua[strIndexOf]('rv:');
                         var result;
-                        var parseInt = window.parseInt;
+                        var parseIntFunc = parseInt;
 
                         // IE 10 or older => return version number
                         if (msie > 0)
-                            result = parseInt(ua[strSubString](msie + 5, ua[strIndexOf]('.', msie)), 10);
+                            result = parseIntFunc(ua[strSubString](msie + 5, ua[strIndexOf]('.', msie)), 10);
 
                         // IE 11 => return version number
                         else if (trident > 0)
-                            result = parseInt(ua[strSubString](rv + 3, ua[strIndexOf]('.', rv)), 10);
+                            result = parseIntFunc(ua[strSubString](rv + 3, ua[strIndexOf]('.', rv)), 10);
 
                         // Edge (IE 12+) => return version number
                         else if (edge > 0)
-                            result = parseInt(ua[strSubString](edge + 5, ua[strIndexOf]('.', edge)), 10);
+                            result = parseIntFunc(ua[strSubString](edge + 5, ua[strIndexOf]('.', edge)), 10);
 
                         // other browser
                         return result;
                     })(),
                     cssCalc : (function() {
-                        var dummy = document.createElement('div');
-                        var props = ['calc', '-webkit-calc', '-moz-calc', '-o-calc'];
-                        var i;
+                        var dummyStyle = document.createElement('div')[LEXICON.s];
+                        var strCalc = 'calc';
+                        var i = -1;
                         var prop;
 
-                        for (i = 0; i < props.length; ++i) {
-                            prop = props[i];
-                            dummy[LEXICON.s].cssText = 'width:' + prop + '(1px);';
-                            if (dummy[LEXICON.s].length)
+                        for(; i < VENDORS._cssPrefixes[LEXICON.l]; i++) {
+                            prop = i < 0 ? strCalc : VENDORS._cssPrefixes[i] + strCalc;
+                            dummyStyle.cssText = 'width:' + prop + '(1px);';
+                            if (dummyStyle[LEXICON.l])
                                 return prop;
                         }
                         return null;
@@ -1650,8 +688,8 @@
                             n : dummyContainerChildOffset.left - dummyContainerScrollOffsetAfterScroll.left === 0
                         };
                     })(),
-                    supportTransform : detectCSSFeature('transform'),
-                    supportTransition : detectCSSFeature('transition'),
+                    supportTransform : VENDORS._cssProperty('transform') !== null,
+                    supportTransition : VENDORS._cssProperty('transition') !== null,
                     supportPassiveEvents : (function() {
                         var supportsPassive = false;
                         try {
@@ -1663,8 +701,8 @@
                         } catch (e) { }
                         return supportsPassive;
                     })(),
-                    supportResizeObserver : !!compatibility.rO(),
-                    supportMutationObserver : !!compatibility.mO()
+                    supportResizeObserver : !!COMPATIBILITY.rO(),
+                    supportMutationObserver : !!COMPATIBILITY.mO()
                 });
 
                 scrollbarDummyElement.removeAttr(LEXICON.s).remove();
@@ -1674,22 +712,22 @@
                     if(nativeScrollbarIsOverlaid.x && nativeScrollbarIsOverlaid.y)
                         return;
 
-                    var abs = Math.abs;
-                    var windowWidth = compatibility.wW();
-                    var windowHeight = compatibility.wH();
+                    var abs = MATH.abs;
+                    var windowWidth = COMPATIBILITY.wW();
+                    var windowHeight = COMPATIBILITY.wH();
                     var windowDpr = getWindowDPR();
                     var onResize = function() {
-                        if(instances().length > 0) {
-                            var newW = compatibility.wW();
-                            var newH = compatibility.wH();
+                        if(INSTANCES().length > 0) {
+                            var newW = COMPATIBILITY.wW();
+                            var newH = COMPATIBILITY.wH();
                             var deltaW = newW - windowWidth;
                             var deltaH = newH - windowHeight;
 
                             if (deltaW === 0 && deltaH === 0)
                                 return;
 
-                            var deltaWRatio = Math.round(newW / (windowWidth / 100.0));
-                            var deltaHRatio = Math.round(newH / (windowHeight / 100.0));
+                            var deltaWRatio = MATH.round(newW / (windowWidth / 100.0));
+                            var deltaHRatio = MATH.round(newH / (windowHeight / 100.0));
                             var absDeltaW = abs(deltaW);
                             var absDeltaH = abs(deltaH);
                             var absDeltaWRatio = abs(deltaWRatio);
@@ -1708,9 +746,9 @@
                                 newScrollbarSize = _base.nativeScrollbarSize = calcNativeScrollbarSize(scrollbarDummyElement[0]);
                                 scrollbarDummyElement.remove();
                                 if(oldScrollbarSize.x !== newScrollbarSize.x || oldScrollbarSize.y !== newScrollbarSize.y) {
-                                    framework.each(instances(), function () {
-                                        if(instances(this))
-                                            instances(this).update('zoom');
+                                    FRAMEWORK.each(INSTANCES(), function () {
+                                        if(INSTANCES(this))
+                                            INSTANCES(this).update('zoom');
                                     });
                                 }
                             }
@@ -1720,7 +758,7 @@
                             windowDpr = newDPR;
                         }
                     };
-                    
+
                     function differenceIsBiggerThanOne(valOne, valTwo) {
                         var absValOne = abs(valOne);
                         var absValTwo = abs(valTwo);
@@ -1732,33 +770,9 @@
                         var sDPI = window.screen.logicalXDPI || 1;
                         return window.devicePixelRatio || (dDPI / sDPI);
                     }
-                    
-                    framework(window).on('resize', onResize);
+
+                    FRAMEWORK(window).on('resize', onResize);
                 })();
-
-                function detectCSSFeature(featurename) {
-                    var feature = false;
-                    var domPrefixes = 'Webkit Moz ms O'.split(' ');
-                    var elm = document.createElement('div');
-                    var featurenameCapital = null;
-                    var i = 0;
-
-                    featurename = featurename.toLowerCase();
-
-                    if (elm[LEXICON.s][featurename] !== undefined)
-                        feature = true;
-
-                    if (!feature) {
-                        featurenameCapital = featurename.charAt(0).toUpperCase() + featurename.substr(1);
-                        for (; i < domPrefixes.length; i++) {
-                            if (elm[LEXICON.s][domPrefixes[i] + featurenameCapital] !== undefined) {
-                                feature = true;
-                                break;
-                            }
-                        }
-                    }
-                    return feature;
-                }
 
                 function calcNativeScrollbarSize(measureElement) {
                     return {
@@ -1769,7 +783,7 @@
             }
 
             /**
-             * The object which manages the auto update loop for all hide scrollbars objects. This object is initialized only once: if the first hide scrollbars object gets initialized.
+             * The object which manages the auto update loop for all OverlayScrollbars objects. This object is initialized only once: if the first OverlayScrollbars object gets initialized.
              * @constructor
              */
             function OverlayScrollbarsAutoUpdateLoop(globals) {
@@ -1777,13 +791,12 @@
                 var _strAutoUpdate = 'autoUpdate';
                 var _strAutoUpdateInterval = _strAutoUpdate + 'Interval';
                 var _strLength = LEXICON.l;
-
                 var _loopingInstances = [ ];
                 var _loopingInstancesIntervalCache = [ ];
                 var _loopIsActive = false;
                 var _loopIntervalDefault = 33;
                 var _loopInterval = _loopIntervalDefault;
-                var _loopTimeOld  = compatibility.now();
+                var _loopTimeOld  = COMPATIBILITY.now();
                 var _loopID;
 
                 /**
@@ -1791,27 +804,35 @@
                  */
                 var loop = function() {
                     if(_loopingInstances[_strLength] > 0 && _loopIsActive) {
-                        _loopID = compatibility.rAF()(function () {
+                        _loopID = COMPATIBILITY.rAF()(function () {
                             loop();
                         });
-                        var timeNew = compatibility.now();
+                        var timeNew = COMPATIBILITY.now();
                         var timeDelta = timeNew - _loopTimeOld;
+                        var lowestInterval;
+                        var instance;
+                        var instanceOptions;
+                        var instanceAutoUpdateAllowed;
+                        var instanceAutoUpdateInterval;
+                        var now;
 
                         if (timeDelta > _loopInterval) {
                             _loopTimeOld = timeNew - (timeDelta % _loopInterval);
-                            var lowestInterval = _loopIntervalDefault;
+                            lowestInterval = _loopIntervalDefault;
                             for(var i = 0; i < _loopingInstances[_strLength]; i++) {
-                                var instance = _loopingInstances[i];
+                                instance = _loopingInstances[i];
                                 if (instance !== undefined) {
-                                    var instanceOptions = instance.options();
-                                    var instanceAutoUpdateAllowed = instanceOptions[_strAutoUpdate];
-                                    var instanceAutoUpdateInterval = Math.max(1, instanceOptions[_strAutoUpdateInterval]);
-                                    var now = compatibility.now();
+                                    instanceOptions = instance.options();
+                                    instanceAutoUpdateAllowed = instanceOptions[_strAutoUpdate];
+                                    instanceAutoUpdateInterval = MATH.max(1, instanceOptions[_strAutoUpdateInterval]);
+                                    now = COMPATIBILITY.now();
+
                                     if ((instanceAutoUpdateAllowed === true || instanceAutoUpdateAllowed === null) && (now - _loopingInstancesIntervalCache[i]) > instanceAutoUpdateInterval) {
                                         instance.update('auto');
                                         _loopingInstancesIntervalCache[i] = new Date(now += instanceAutoUpdateInterval);
                                     }
-                                    lowestInterval = Math.max(1, Math.min(lowestInterval, instanceAutoUpdateInterval));
+
+                                    lowestInterval = MATH.max(1, MATH.min(lowestInterval, instanceAutoUpdateInterval));
                                 }
                             }
                             _loopInterval = lowestInterval;
@@ -1826,9 +847,9 @@
                  * @param instance The instance which shall be updated in a loop automatically.
                  */
                 _base.add = function(instance) {
-                    if(framework.inArray(instance, _loopingInstances) === -1) {
+                    if(FRAMEWORK.inArray(instance, _loopingInstances) === -1) {
                         _loopingInstances.push(instance);
-                        _loopingInstancesIntervalCache.push(compatibility.now());
+                        _loopingInstancesIntervalCache.push(COMPATIBILITY.now());
                         if (_loopingInstances[_strLength] > 0 && !_loopIsActive) {
                             _loopIsActive = true;
                             globals.autoUpdateLoop = _loopIsActive;
@@ -1842,7 +863,7 @@
                  * @param instance The instance which shall be updated in a loop automatically.
                  */
                 _base.remove = function(instance) {
-                    var index = framework.inArray(instance, _loopingInstances);
+                    var index = FRAMEWORK.inArray(instance, _loopingInstances);
                     if(index > -1) {
                         //remove from loopingInstances list
                         _loopingInstancesIntervalCache.splice(index, 1);
@@ -1853,7 +874,7 @@
                             _loopIsActive = false;
                             globals.autoUpdateLoop = _loopIsActive;
                             if(_loopID !== undefined) {
-                                compatibility.cAF()(_loopID);
+                                COMPATIBILITY.cAF()(_loopID);
                                 _loopID = -1;
                             }
                         }
@@ -1877,15 +898,15 @@
                     return;
 
                 //if passed element is already initialized: set passed options if there are any and return its instance
-                if(instances(pluginTargetElement)) {
-                    var inst = instances(pluginTargetElement);
+                if(INSTANCES(pluginTargetElement)) {
+                    var inst = INSTANCES(pluginTargetElement);
                     inst.options(options);
                     return inst;
                 }
 
                 //make correct instanceof
                 var _base = new window[PLUGINNAME]();
-                var _frameworkProto = framework[LEXICON.p];
+                var _frameworkProto = FRAMEWORK[LEXICON.p];
 
                 //globals:
                 var _nativeScrollbarIsOverlaid;
@@ -1900,6 +921,7 @@
                 var _supportTransform;
                 var _supportPassiveEvents;
                 var _supportResizeObserver;
+                var _supportMutationObserver;
                 var _restrictedMeasuring;
 
                 //general readonly:
@@ -1908,6 +930,7 @@
                 var _isTextarea;
                 var _isBody;
                 var _documentMixed;
+                var _isTextareaHostGenerated;
 
                 //general:
                 var _isBorderBox;
@@ -1925,10 +948,6 @@
                 var _scrollVerticalInfo = { };
                 var _viewportSize = { };
                 var _nativeScrollbarMinSize = { };
-
-                //scroll
-                var _scrollStopDelay = 175;
-                var _scrollStopTimeoutId;
 
                 //naming:
                 var _strMinusHidden = '-hidden';
@@ -2013,6 +1032,9 @@
                 var _classNameDragging = _cassNamesPrefix + 'dragging';
                 var _classNameThemeNone = _cassNamesPrefix + 'theme-none';
 
+                //callbacks:
+                var _callbacksInitQeueue = [ ];
+
                 //options:
                 var _defaultOptions;
                 var _currentOptions;
@@ -2034,15 +1056,15 @@
                 var _documentElement;
                 var _htmlElement;
                 var _bodyElement;
-                var _targetElement;                     //the target element of this hide scrollbars object
-                var _hostElement;                         //the host element of this hide scrollbars object -> may be the same as targetElement
-                var _sizeAutoObserverElement;             //observes size auto changes
+                var _targetElement;                     //the target element of this OverlayScrollbars object
+                var _hostElement;                       //the host element of this OverlayScrollbars object -> may be the same as targetElement
+                var _sizeAutoObserverElement;           //observes size auto changes
                 var _sizeObserverElement;               //observes size and padding changes
-                var _contentGlueElement;                 //has always the size of the content element
-                var _paddingElement;                     //manages the padding
-                var _viewportElement;                     //is the viewport of our scrollbar model
+                var _paddingElement;                    //manages the padding
+                var _viewportElement;                   //is the viewport of our scrollbar model
+                var _contentElement;                    //the element which holds the content
                 var _contentArrangeElement;             //is needed for correct sizing of the content element (only if native scrollbars are overlays)
-                var _contentElement;                     //the element which holds the content
+                var _contentGlueElement;                //has always the size of the content element
                 var _textareaCoverElement;              //only applied if target is a textarea element. Used for correct size calculation and for prevention of uncontrolled scrolling
                 var _scrollbarCornerElement;
                 var _scrollbarHorizontalElement;
@@ -2051,6 +1073,15 @@
                 var _scrollbarVerticalElement;
                 var _scrollbarVerticalTrackElement;
                 var _scrollbarVerticalHandleElement;
+                var _windowElementNative;
+                var _documentElementNative;
+                var _targetElementNative;
+                var _hostElementNative;
+                var _sizeAutoObserverElementNative;
+                var _sizeObserverElementNative;
+                var _paddingElementNative;
+                var _viewportElementNative;
+                var _contentElementNative;
 
                 //Cache:
                 var _hostSizeCache;
@@ -2101,21 +1132,12 @@
                 var _displayIsHiddenCache;
 
                 //MutationObserver:
-                var _mutationObserverContentLag = 11;
                 var _mutationObserverHost;
                 var _mutationObserverContent;
-                var _mutationObserverConnected;
-                var _supportMutationObserver;
+                var _mutationObserversConnected;
 
                 //textarea:
-                var _textareaKeyDownRestrictedKeyCodes = [
-                    112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 123,    //F1 to F12
-                    33, 34,                                                   //page up, page down
-                    37, 38, 39, 40,                                           //left, up, right, down arrows
-                    16, 17, 18, 19, 20, 144                                   //Shift, Ctrl, Alt, Pause, CapsLock, NumLock
-                ];
-                var _textareaKeyDownKeyCodesList = [ ];
-                var _textareaUpdateIntervalID;
+                var _textareaEvents;
                 var _textareaHasFocus;
 
                 //scrollbars:
@@ -2126,8 +1148,8 @@
                 var _scrollbarsAutoHideScroll;
                 var _scrollbarsAutoHideMove;
                 var _scrollbarsAutoHideLeave;
-                var _scrollbarsTouchSupport;
-                var _scrollbarsAutoHideFlagScrollAndHovered;
+                var _scrollbarsHandleHovered;
+                var _scrollbarsHandleAsync;
 
                 //resize
                 var _resizeReconnectMutationObserver;
@@ -2135,11 +1157,10 @@
                 var _resizeBoth;
                 var _resizeHorizontal;
                 var _resizeVertical;
-                var _resizeDragStartPosition = { };
-                var _resizeDragStartSize = { };
+                var _resizeOnMouseTouchDown;
 
 
-                //==== Add / Remove Passive Event Listener ====//
+                //==== Passive Event Listener ====//
 
                 /**
                  * Adds a passive event listener to the given element.
@@ -2166,7 +1187,7 @@
                 }
 
 
-                //==== Add / Remove / Freeze / Unfreeze Resize Observer ====//
+                //==== Resize Observer ====//
 
                 /**
                  * Adds a resize observer to the given element.
@@ -2175,7 +1196,7 @@
                  */
                 function addResizeObserver(targetElement, onElementResizedCallback) {
                     var constMaximum = 3333333;
-                    var resizeObserver = compatibility.rO();
+                    var resizeObserver = COMPATIBILITY.rO();
                     var strAnimationStartEvent = 'animationstart mozAnimationStart webkitAnimationStart MSAnimationStart';
                     var strChildNodes = 'childNodes';
                     var callback = function () {
@@ -2203,9 +1224,9 @@
                             );
 
                             var observerElement = targetElement[0][strChildNodes][0][strChildNodes][0];
-                            var shrinkElement = framework(observerElement[strChildNodes][1]);
-                            var expandElement = framework(observerElement[strChildNodes][0]);
-                            var expandElementChild = framework(expandElement[0][strChildNodes][0]);
+                            var shrinkElement = FRAMEWORK(observerElement[strChildNodes][1]);
+                            var expandElement = FRAMEWORK(observerElement[strChildNodes][0]);
+                            var expandElementChild = FRAMEWORK(expandElement[0][strChildNodes][0]);
                             var widthCache = observerElement[LEXICON.oW];
                             var heightCache = observerElement[LEXICON.oH];
                             var isDirty;
@@ -2245,28 +1266,30 @@
                                 isDirty = currWidth != widthCache || currHeight != heightCache;
 
                                 if (event && isDirty && !rAFId) {
-                                    compatibility.cAF()(rAFId);
-                                    rAFId = compatibility.rAF()(onResized);
+                                    COMPATIBILITY.cAF()(rAFId);
+                                    rAFId = COMPATIBILITY.rAF()(onResized);
                                 }
                                 else if(!event)
                                     onResized();
 
                                 reset();
                                 if (event) {
-                                    compatibility.prvD(event);
-                                    compatibility.stpP(event);
+                                    COMPATIBILITY.prvD(event);
+                                    COMPATIBILITY.stpP(event);
                                 }
                                 return false;
                             };
                             var expandChildCSS = {};
                             var observerElementCSS = {};
 
-                            observerElementCSS[_strTop] = (-((nativeScrollbarSize.y + 1) * factor));
-                            observerElementCSS[_strRight] = (nativeScrollbarSize.x * -factor);
-                            observerElementCSS[_strBottom] = (nativeScrollbarSize.y * -factor);
-                            observerElementCSS[_strLeft] = (-((nativeScrollbarSize.x + 1) * factor));
+                            setTopRightBottomLeft(observerElementCSS, _strEmpty, [
+                                -((nativeScrollbarSize.y + 1) * factor),
+                                nativeScrollbarSize.x * -factor,
+                                nativeScrollbarSize.y * -factor,
+                                -((nativeScrollbarSize.x + 1) * factor)
+                            ]);
 
-                            framework(observerElement).css(observerElementCSS);
+                            FRAMEWORK(observerElement).css(observerElementCSS);
                             expandElement.on(_strScroll, onScroll);
                             shrinkElement.on(_strScroll, onScroll);
                             targetElement.on(strAnimationStartEvent, function () {
@@ -2280,15 +1303,14 @@
                             reset();
                         }
                         else {
-                            var doc = _documentElement[0];
-                            var attachEvent = doc.attachEvent;
+                            var attachEvent = _documentElementNative.attachEvent;
                             var isIE = _msieVersion !== undefined;
                             if (attachEvent) {
                                 targetElement.prepend(generateDiv(_classNameResizeObserverElement));
                                 findFirst(targetElement, _strDot + _classNameResizeObserverElement)[0].attachEvent('onresize', callback);
                             }
                             else {
-                                var obj = doc.createElement(TYPES.o);
+                                var obj = _documentElementNative.createElement(TYPES.o);
                                 obj.setAttribute('tabindex', '-1');
                                 obj.setAttribute(LEXICON.c, _classNameResizeObserverElement);
                                 obj.onload = function () {
@@ -2308,7 +1330,7 @@
                     }
 
                     //direction change detection:
-                    if (targetElement[0] === _sizeObserverElement[0]) {
+                    if (targetElement[0] === _sizeObserverElementNative) {
                         var directionChanged = function () {
                             var dir = _hostElement.css('direction');
                             var css = {};
@@ -2336,8 +1358,8 @@
                         targetElement.on(_strScroll, function (event) {
                             if (directionChanged())
                                 update();
-                            compatibility.prvD(event);
-                            compatibility.stpP(event);
+                            COMPATIBILITY.prvD(event);
+                            COMPATIBILITY.stpP(event);
                             return false;
                         });
                     }
@@ -2404,20 +1426,99 @@
                 }
 
 
-                //==== Connect / Disconnect Mutation Observer ====//
+                //==== Mutation Observers ====//
+
+                /**
+                 * Creates MutationObservers for the host and content Element if they are supported.
+                 */
+                function createMutationObservers() {
+                    if (_supportMutationObserver) {
+                        var mutationObserverContentLag = 11;
+                        var mutationObserver = COMPATIBILITY.mO();
+                        var contentLastUpdate = COMPATIBILITY.now();
+                        var mutationTarget;
+                        var mutationAttrName;
+                        var contentTimeout;
+                        var now;
+                        var sizeAuto;
+                        var action;
+
+                        _mutationObserverHost = new mutationObserver(function (mutations) {
+                            if (!_initialized || _isSleeping)
+                                return;
+
+                            var doUpdate = false;
+                            var mutation;
+                            FRAMEWORK.each(mutations, function () {
+                                mutation = this;
+                                mutationTarget = mutation.target;
+                                mutationAttrName = mutation.attributeName;
+
+                                if (mutationAttrName === LEXICON.c)
+                                    doUpdate = hostClassNamesChanged(mutation.oldValue, mutationTarget.className);
+                                else if (mutationAttrName === LEXICON.s)
+                                    doUpdate = mutation.oldValue !== mutationTarget[LEXICON.s].cssText;
+                                else
+                                    doUpdate = true;
+
+                                if (doUpdate)
+                                    return false;
+                            });
+
+                            if (doUpdate)
+                                _base.update(_strAuto);
+                        });
+                        _mutationObserverContent = new mutationObserver(function (mutations) {
+                            if (!_initialized || _isSleeping)
+                                return;
+
+                            var doUpdate = false;
+                            var mutation;
+                            FRAMEWORK.each(mutations, function () {
+                                mutation = this;
+                                doUpdate = isUnknownMutation(mutation);
+                                return !doUpdate;
+                            });
+
+                            if (doUpdate) {
+                                now = COMPATIBILITY.now();
+                                sizeAuto = (_heightAutoCache || _widthAutoCache);
+                                action = function () {
+                                    if(!_destroyed) {
+                                        contentLastUpdate = now;
+
+                                        //if cols, rows or wrap attr was changed
+                                        if (_isTextarea)
+                                            textareaUpdate();
+
+                                        if (sizeAuto)
+                                            update();
+                                        else
+                                            _base.update(_strAuto);
+                                    }
+                                };
+                                clearTimeout(contentTimeout);
+                                if (mutationObserverContentLag <= 0 || now - contentLastUpdate > mutationObserverContentLag || !sizeAuto)
+                                    action();
+                                else
+                                    contentTimeout = setTimeout(action, mutationObserverContentLag);
+                            }
+                        });
+                    }
+                }
 
                 /**
                  * Connects the MutationObservers if they are supported.
                  */
-                function mutationObserversConnect() {
-                    if (_supportMutationObserver && !_mutationObserverConnected) {
-                        _mutationObserverHost.observe(_hostElement[0], {
+                function connectMutationObservers() {
+                    if (_supportMutationObserver && !_mutationObserversConnected) {
+                        _mutationObserverHost.observe(_hostElementNative, {
                             attributes: true,
                             attributeOldValue: true,
                             attributeFilter: [LEXICON.i, LEXICON.c, LEXICON.s]
                         });
 
-                        _mutationObserverContent.observe(_isTextarea ? _targetElement[0] : _contentElement[0], {
+                        _mutationObserverContent.observe(_isTextarea ? _targetElementNative : _contentElementNative, {
                             attributes: true,
                             attributeOldValue: true,
                             subtree: !_isTextarea,
@@ -2426,19 +1527,19 @@
                             attributeFilter: _isTextarea ? ['wrap', 'cols', 'rows'] : [LEXICON.i, LEXICON.c, LEXICON.s]
                         });
 
-                        _mutationObserverConnected = true;
+                        _mutationObserversConnected = true;
                     }
                 }
 
                 /**
                  * Disconnects the MutationObservers if they are supported.
                  */
-                function mutationObserversDisconnect() {
-                    if (_supportMutationObserver && _mutationObserverConnected) {
+                function disconnectMutationObservers() {
+                    if (_supportMutationObserver && _mutationObserversConnected) {
                         _mutationObserverHost.disconnect();
                         _mutationObserverContent.disconnect();
 
-                        _mutationObserverConnected = false;
+                        _mutationObserversConnected = false;
                     }
                 }
 
@@ -2453,13 +1554,15 @@
                 function hostOnResized() {
                     if (_isSleeping)
                         return;
-                    var measureElement = _sizeObserverElement[0];
+
+                    var changed;
                     var hostSize = {
-                        w: measureElement[LEXICON.sW],
-                        h: measureElement[LEXICON.sH]
+                        w: _sizeObserverElementNative[LEXICON.sW],
+                        h: _sizeObserverElementNative[LEXICON.sH]
                     };
+
                     if (_initialized) {
-                        var changed = checkCacheDouble(hostSize, _hostElementSizeChangeDetectedCache);
+                        changed = checkCacheDouble(hostSize, _hostElementSizeChangeDetectedCache);
                         _hostElementSizeChangeDetectedCache = hostSize;
                         if (changed)
                             update(true, false);
@@ -2500,209 +1603,31 @@
                 }
 
                 /**
-                 * The scroll event of the viewport element. That is the main scroll event. It controls also the "scroll", "scrollStart" and "scrollStop" callbacks.
-                 * @param event The scroll event.
+                 * Adds or removes mouse & touch events of the host element. (for handling auto-hiding of the scrollbars)
+                 * @param destroy Indicates whether the events shall be added or removed.
                  */
-                function viewportOnScroll(event) {
-                    if (_isSleeping)
-                        return;
+                function setupHostMouseTouchEvents(destroy) {
+                    var passiveEvent = destroy ? removePassiveEventListener : addPassiveEventListener;
+                    var strOnOff = destroy ? 'off' : 'on';
+                    var setupEvent = function(target, name, listener) {
+                        if(_supportPassiveEvents)
+                            passiveEvent(target, name, listener);
+                        else
+                            target[strOnOff](name, listener);
+                    };
 
-                    if (_scrollStopTimeoutId !== undefined)
-                        clearTimeout(_scrollStopTimeoutId);
+                    if(_scrollbarsAutoHideMove && !destroy)
+                        setupEvent(_hostElement, _strMouseTouchMoveEvent, hostOnMouseMove);
                     else {
-                        if (_scrollbarsAutoHideScroll || _scrollbarsAutoHideMove)
-                            refreshScrollbarsAutoHide(true);
-
-                        if (!nativeOverlayScrollbarsAreActive())
-                            addClass(_hostElement, _classNameHostScrolling);
-
-                        callCallback("onScrollStart", event);
+                        if(destroy)
+                            setupEvent(_hostElement, _strMouseTouchMoveEvent, hostOnMouseMove);
+                        setupEvent(_hostElement, _strMouseTouchEnter, hostOnMouseEnter);
+                        setupEvent(_hostElement, _strMouseTouchLeave, hostOnMouseLeave);
                     }
 
-                    refreshScrollbarHandleOffset(true, _viewportElement[_strScrollLeft]());
-                    refreshScrollbarHandleOffset(false, _viewportElement[_strScrollTop]());
-                    callCallback("onScroll", event);
-
-                    _scrollStopTimeoutId = setTimeout(function () {
-                        if(!_destroyed) {
-                            viewportOnScrollStop();
-                            callCallback("onScrollStop", event);
-                        }
-                    }, _scrollStopDelay);
-                }
-
-                /**
-                 * This method gets called if the scroll event stopped for a specified amount of time.
-                 */
-                function viewportOnScrollStop() {
-                    clearTimeout(_scrollStopTimeoutId);
-                    _scrollStopTimeoutId = undefined;
-                    if (_scrollbarsAutoHideScroll || _scrollbarsAutoHideMove)
-                        refreshScrollbarsAutoHide(false);
-
-                    if (!nativeOverlayScrollbarsAreActive())
-                        removeClass(_hostElement, _classNameHostScrolling);
-                }
-
-                /**
-                 * The key input event of the textarea element.
-                 */
-                function textareaOnInput() {
-                    textareaUpdate();
-                    _base.update(_strAuto);
-                }
-
-                /**
-                 * The key down event of the textarea element. Is only applied if the input event isn't fully supported.
-                 * @param event The key down event.
-                 */
-                function textareaOnKeyDown(event) {
-                    var keyCode = event.keyCode;
-                    if (textareaIsRestrictedKeyCode(keyCode))
-                        return;
-                    if (_textareaKeyDownKeyCodesList.length === 0) {
-                        var action = function () {
-                            textareaUpdate();
-                            _base.update(_strAuto);
-                        };
-                        action();
-                        _textareaUpdateIntervalID = setInterval(action, 1000 / 60);
-                    }
-                    if (framework.inArray(keyCode, _textareaKeyDownKeyCodesList) === -1)
-                        _textareaKeyDownKeyCodesList.push(keyCode);
-                }
-
-                /**
-                 * The key up event of the textarea element. Is only applied if the input event isn't fully supported.
-                 * @param event The key up event.
-                 */
-                function textareaOnKeyUp(event) {
-                    var keyCode = event.keyCode;
-                    if (textareaIsRestrictedKeyCode(keyCode))
-                        return;
-                    var index = framework.inArray(keyCode, _textareaKeyDownKeyCodesList);
-                    if (index > -1)
-                        _textareaKeyDownKeyCodesList.splice(index, 1);
-                    if (_textareaKeyDownKeyCodesList.length === 0) {
-                        textareaUpdate();
-                        _base.update(_strAuto);
-                        clearInterval(_textareaUpdateIntervalID);
-                    }
-                }
-
-                /**
-                 * The drop event of the textarea element.
-                 */
-                function textareaOnDrop() {
-                    setTimeout(function () {
-                        if(!_destroyed) {
-                            textareaUpdate();
-                            _base.update(_strAuto);
-                        }
-                    }, 50);
-                }
-
-                /**
-                 * The focus event of the textarea element.
-                 */
-                function textareaOnFocus() {
-                    _textareaHasFocus = true;
-                }
-
-                /**
-                 * The focus out event of the textarea element.
-                 */
-                function textareaOnFocusOut() {
-                    _textareaHasFocus = false;
-                    clearInterval(_textareaUpdateIntervalID);
-                    _textareaKeyDownKeyCodesList = [ ];
-                    textareaUpdate();
-                    _base.update(_strAuto);
-                }
-
-                /**
-                 * The scroll event of the textarea element.
-                 * @param event The scroll event.
-                 */
-                function textareaOnScroll(event) {
-                    _targetElement[_strScrollLeft](_rtlScrollBehavior.i && _normalizeRTLCache ? 9999999 : 0);
-                    _targetElement[_strScrollTop](0);
-                    compatibility.prvD(event);
-                    compatibility.stpP(event);
-                    return false;
-                }
-
-                /**
-                 * The mouse down event of the scrollbar corner element.
-                 * @param event The mouse down event.
-                 */
-                function scrollbarCornerOnMouseDown(event) {
-                    if (_isSleeping)
-                        return;
-
-                    var originalEvent = event.originalEvent || event;
-                    var isTouchEvent = originalEvent.touches !== undefined;
-
-                    if (compatibility.mBtn(event) === 1 || isTouchEvent) {
-                        if (_mutationObserverConnected) {
-                            _resizeReconnectMutationObserver = true;
-                            mutationObserversDisconnect();
-                        }
-
-                        _resizeDragStartPosition = compatibility.page(event);
-
-                        _resizeDragStartSize.w = _hostElement[0][LEXICON.oW] - (!_isBorderBox ? _paddingX : 0);
-                        _resizeDragStartSize.h = _hostElement[0][LEXICON.oH] - (!_isBorderBox ? _paddingY : 0);
-
-                        _documentElement.on(_strSelectStartEvent, documentOnSelectStart)
-                            .on(_strMouseTouchMoveEvent, scrollbarCornerOnResize)
-                            .on(_strMouseTouchUpEvent, scrollbarCornerOnResized);
-
-                        addClass(_bodyElement, _classNameDragging);
-                        if (_scrollbarCornerElement.setCapture)
-                            _scrollbarCornerElement.setCapture();
-
-                        compatibility.prvD(event);
-                        compatibility.stpP(event);
-                    }
-                }
-
-                /**
-                 * The mouse move event if the scrollbar corner element is resizable and gets dragged.
-                 * @param event The mouse move event.
-                 */
-                function scrollbarCornerOnResize(event) {
-                    var pageOffset = compatibility.page(event);
-                    var hostElementCSS = { };
-                    if (_resizeHorizontal || _resizeBoth)
-                        hostElementCSS[_strWidth] = (_resizeDragStartSize.w + pageOffset.x - _resizeDragStartPosition.x);
-                    if (_resizeVertical || _resizeBoth)
-                        hostElementCSS[_strHeight] = (_resizeDragStartSize.h + pageOffset.y - _resizeDragStartPosition.y);
-                    _hostElement.css(hostElementCSS);
-                    compatibility.stpP(event);
-                }
-
-                /**
-                 * The mouse up event if the scrollbar corner element is resizable and was dragged and now the mouse button is released.
-                 * @param event The mouse up event.
-                 */
-                function scrollbarCornerOnResized(event) {
-                    var eventIsTrusted = event !== undefined;
-
-                    _documentElement.off(_strSelectStartEvent, documentOnSelectStart)
-                        .off(_strMouseTouchMoveEvent, scrollbarCornerOnResize)
-                        .off(_strMouseTouchUpEvent, scrollbarCornerOnResized);
-
-                    removeClass(_bodyElement, _classNameDragging);
-                    if (_scrollbarCornerElement.releaseCapture)
-                        _scrollbarCornerElement.releaseCapture();
-
-                    if (eventIsTrusted) {
-                        if (_resizeReconnectMutationObserver)
-                            mutationObserversConnect();
-                        _base.update(_strAuto);
-                    }
-                    _resizeReconnectMutationObserver = false;
+                    //if the plugin is initialized and the mouse is over the host element, make the scrollbars visible
+                    if(!_initialized && !destroy)
+                        _hostElement.one("mouseover", hostOnMouseEnter);
                 }
 
                 /**
@@ -2710,7 +1635,7 @@
                  * @param event The select start event.
                  */
                 function documentOnSelectStart(event) {
-                    compatibility.prvD(event);
+                    COMPATIBILITY.prvD(event);
                     return false;
                 }
 
@@ -2718,7 +1643,7 @@
                  * A callback which will be called after a img element has downloaded its src asynchronous.
                  */
                 function imgOnLoad() {
-                    update();
+                    update(false, true);
                 }
 
 
@@ -2731,8 +1656,8 @@
                 function bodyMinSizeChanged() {
                     var bodyMinSize = {};
                     if (_isBody && _contentArrangeElement) {
-                        bodyMinSize.w = parseIntToZeroOrNumber(_contentArrangeElement.css(_strMinMinus + _strWidth));
-                        bodyMinSize.h = parseIntToZeroOrNumber(_contentArrangeElement.css(_strMinMinus + _strHeight));
+                        bodyMinSize.w = parseToZeroOrNumber(_contentArrangeElement.css(_strMinMinus + _strWidth));
+                        bodyMinSize.h = parseToZeroOrNumber(_contentArrangeElement.css(_strMinMinus + _strHeight));
                         bodyMinSize.c = checkCacheDouble(bodyMinSize, _bodyMinSizeCache);
                         bodyMinSize.f = true; //flag for "measured at least once"
                     }
@@ -2757,8 +1682,8 @@
                     var currClassNames = _classNameCache !== undefined && _classNameCache !== null ? _classNameCache.split(_strSpace) : [_strEmpty];
 
                     //remove none theme from diff list to prevent update
-                    var idx = framework.inArray(_classNameThemeNone, diff);
-                    var curr = diff[i];
+                    var idx = FRAMEWORK.inArray(_classNameThemeNone, diff);
+                    var curr;
                     var i;
                     var v;
                     var o;
@@ -2805,9 +1730,13 @@
                     var mutationType = mutation.type;
                     var strClosest = 'closest';
 
-                    if (mutationTarget === _contentElement[0])
+                    if (mutationTarget === _contentElementNative)
                         return attributeName === null;
                     if (mutationType === 'attributes' && (attributeName === LEXICON.c || attributeName === LEXICON.s) && !_isTextarea) {
+                        //ignore className changes by the plugin
+                        if (attributeName === LEXICON.c && FRAMEWORK(mutationTarget).hasClass(_classNameHostElement))
+                            return hostClassNamesChanged(mutation.oldValue, mutationTarget.getAttribute(LEXICON.c));
+
                         //only do it of browser support it natively
                         if (typeof mutationTarget[strClosest] != TYPES.f)
                             return true;
@@ -2829,16 +1758,19 @@
 
                     var float;
                     var textareaValueLength = _isTextarea && _widthAutoCache && !_textareaAutoWrappingCache ? _targetElement.val().length : 0;
-                    var setCSS = !_mutationObserverConnected && _widthAutoCache && !_isTextarea;
+                    var setCSS = !_mutationObserversConnected && _widthAutoCache && !_isTextarea;
                     var viewportScrollSize = { };
                     var css = { };
+                    var bodyMinSizeC;
+                    var changed;
+                    var viewportScrollSizeChanged;
 
                     //fix for https://bugzilla.mozilla.org/show_bug.cgi?id=1439305, it only works with "clipAlways : true"
                     //it can work with "clipAlways : false" too, but we had to set the overflow of the viewportElement to hidden every time before measuring
                     if(_restrictedMeasuring) {
                         viewportScrollSize = {
-                            x : _viewportElement[0][LEXICON.sW],
-                            y : _viewportElement[0][LEXICON.sH]
+                            x : _viewportElementNative[LEXICON.sW],
+                            y : _viewportElementNative[LEXICON.sH]
                         }
                     }
                     if (setCSS) {
@@ -2857,9 +1789,10 @@
                         _contentElement.css(css);
                     }
 
-                    var bodyMinSizeC = bodyMinSizeChanged();
-                    var changed = checkCacheDouble(contentElementScrollSize, _contentElementScrollSizeChangeDetectedCache);
-                    var viewportScrollSizeChanged = checkCacheDouble(viewportScrollSize, _viewportScrollSizeCache, _strX, _strY);
+                    bodyMinSizeC = bodyMinSizeChanged();
+                    changed = checkCacheDouble(contentElementScrollSize, _contentElementScrollSizeChangeDetectedCache);
+                    viewportScrollSizeChanged = checkCacheDouble(viewportScrollSize, _viewportScrollSizeCache, _strX, _strY);
+
                     _contentElementScrollSizeChangeDetectedCache = contentElementScrollSize;
                     _viewportScrollSizeCache = viewportScrollSize;
 
@@ -2871,7 +1804,7 @@
                  * @returns {boolean}
                  */
                 function meaningfulAttrsChanged() {
-                    if (_isSleeping || _mutationObserverConnected)
+                    if (_isSleeping || _mutationObserversConnected)
                         return false;
 
                     var hostElementId = _hostElement.attr(LEXICON.i) || _strEmpty;
@@ -2958,7 +1891,7 @@
                     var checkY = _overflowBehaviorCache.y === _strS || _overflowBehaviorCache.y === _strVS;
                     var sizeIsAffected = false;
                     var checkPropertyName = function (arr, name) {
-                        for (var i = 0; i < arr.length; i++) {
+                        for (var i = 0; i < arr[LEXICON.l]; i++) {
                             if (arr[i] === name)
                                 return true;
                         }
@@ -2989,11 +1922,10 @@
                         return;
 
                     var wrapAttrOff = !_textareaAutoWrappingCache;
-                    var minWidth = _viewportSize.w - (!_isBorderBox && !_paddingAbsoluteCache && _widthAutoCache ? _paddingY + _borderY : 0);
-                    var minHeight = _viewportSize.h - (!_isBorderBox && !_paddingAbsoluteCache && _heightAutoCache ? _paddingY + _borderY : 0);
+                    var minWidth = _viewportSize.w /* - (!_isBorderBox && !_paddingAbsoluteCache && _widthAutoCache ? _paddingY + _borderY : 0) */;
+                    var minHeight = _viewportSize.h /* - (!_isBorderBox && !_paddingAbsoluteCache && _heightAutoCache ? _paddingY + _borderY : 0) */;
                     var css = { };
                     var doMeasure = _widthAutoCache || wrapAttrOff;
-                    var measureElement = _targetElement[0];
                     var origWidth;
                     var width;
                     var origHeight;
@@ -3008,18 +1940,21 @@
                     _targetElement.css(css);
 
                     //measure width
-                    origWidth = measureElement[LEXICON.oW];
-                    width = doMeasure ? Math.max(origWidth, measureElement[LEXICON.sW] - 1) : 1;
-                    width += (_widthAutoCache ? _marginX + (!_isBorderBox ? wrapAttrOff ? 0 : _paddingX + _borderX : 0) : 0);
+                    origWidth = _targetElementNative[LEXICON.oW];
+                    width = doMeasure ? MATH.max(origWidth, _targetElementNative[LEXICON.sW] - 1) : 1;
+                    /*width += (_widthAutoCache ? _marginX + (!_isBorderBox ? wrapAttrOff ? 0 : _paddingX + _borderX : 0) : 0);*/
 
-                    //set measured width and height auto
-                    css[_strWidth] = _widthAutoCache ? width : _strHundredPercent;
-                    css[_strHeight] = _strAuto; //_strAuto
+                    //set measured width
+                    css[_strWidth] = _widthAutoCache ? _strAuto /*width*/ : _strHundredPercent;
+                    css[_strMinMinus + _strWidth] = _strHundredPercent;
+
+                    //set height auto
+                    css[_strHeight] = _strAuto;
                     _targetElement.css(css);
 
                     //measure height
-                    origHeight = measureElement[LEXICON.oH];
-                    height = Math.max(origHeight, measureElement[LEXICON.sH] - 1);
+                    origHeight = _targetElementNative[LEXICON.oH];
+                    height = MATH.max(origHeight, _targetElementNative[LEXICON.sH] - 1);
 
                     //append correct size values
                     css[_strWidth] = width;
@@ -3027,15 +1962,15 @@
                     _textareaCoverElement.css(css);
 
                     //apply min width / min height to prevent textarea collapsing
-                    css[_strMinMinus + _strWidth] = minWidth + (!_isBorderBox && _widthAutoCache ? _paddingX + _borderX : 0);
-                    css[_strMinMinus + _strHeight] = minHeight + (!_isBorderBox && _heightAutoCache ? _paddingY + _borderY : 0);
+                    css[_strMinMinus + _strWidth] = minWidth /*+ (!_isBorderBox && _widthAutoCache ? _paddingX + _borderX : 0)*/;
+                    css[_strMinMinus + _strHeight] = minHeight /*+ (!_isBorderBox && _heightAutoCache ? _paddingY + _borderY : 0)*/;
                     _targetElement.css(css);
 
                     return {
-                        ow: origWidth,
-                        oh: origHeight,
-                        dw: width,
-                        dh: height
+                        _originalWidth: origWidth,
+                        _originalHeight: origHeight,
+                        _dynamicWidth: width,
+                        _dynamicHeight: height
                     };
                 }
 
@@ -3048,17 +1983,17 @@
                  * @param preventSwallowing True if this method shall be executed event if it could be swallowed.
                  */
                 function update(hostSizeChanged, contentSizeChanged, force, preventSwallowing) {
-                    var now = compatibility.now();
+                    var now = COMPATIBILITY.now();
                     var swallow = _swallowUpdateLag > 0 && _initialized && (now - _lastUpdateTime) < _swallowUpdateLag && (!_heightAutoCache && !_widthAutoCache) && !preventSwallowing;
                     var displayIsHidden = _hostElement.is(':hidden');
                     var displayIsHiddenChanged = checkCacheSingle(displayIsHidden, _displayIsHiddenCache, force);
                     _displayIsHiddenCache = displayIsHidden;
                     clearTimeout(_swallowedUpdateTimeout);
-                    
+
                     if (swallow) {
-                        _swallowedUpdateParams.h = hostSizeChanged;
-                        _swallowedUpdateParams.c = contentSizeChanged;
-                        _swallowedUpdateParams.f = force;
+                        _swallowedUpdateParams.h = _swallowedUpdateParams.h || hostSizeChanged;
+                        _swallowedUpdateParams.c = _swallowedUpdateParams.c || contentSizeChanged;
+                        _swallowedUpdateParams.f = _swallowedUpdateParams.f || force;
                         _swallowedUpdateTimeout = setTimeout(update, _swallowUpdateLag);
                     }
 
@@ -3088,7 +2023,7 @@
                     }
                     else {
                         //refresh native scrollbar size (in case of zoom)
-                        _nativeScrollbarSize = extend(true, {}, globals.nativeScrollbarSize);
+                        _nativeScrollbarSize = extendDeep({}, globals.nativeScrollbarSize);
                     }
 
                     // Scrollbar padding is needed for firefox, because firefox hides scrollbar automatically if the size of the div is too small.
@@ -3105,8 +2040,8 @@
 
                     //save current scroll offset
                     var currScroll = {
-                        l: _viewportElement[_strScrollLeft](),
-                        t: _viewportElement[_strScrollTop]()
+                        x: _viewportElement[_strScrollLeft](),
+                        y: _viewportElement[_strScrollTop]()
                     };
                     var currentPreparedOptionsScrollbars = _currentPreparedOptions.scrollbars;
                     var currentPreparedOptionsTextarea = _currentPreparedOptions.textarea;
@@ -3180,9 +2115,6 @@
                     //scrollbars autoHideDelay
                     _scrollbarsAutoHideDelay = currentPreparedOptionsScrollbars.autoHideDelay;
 
-                    //scrollbars support touch
-                    _scrollbarsTouchSupport = currentPreparedOptionsScrollbars.touchSupport;
-
                     //old className
                     _oldClassName = _classNameCache;
 
@@ -3211,7 +2143,7 @@
                     _sizeAutoCapableCache = sizeAutoCapable;
                     _ignoreOverlayScrollbarHidingCache = ignoreOverlayScrollbarHiding;
                     _autoUpdateCache = autoUpdate;
-                    _overflowBehaviorCache = extend(true, {}, overflowBehavior);
+                    _overflowBehaviorCache = extendDeep({}, overflowBehavior);
                     _textareaDynWidthCache = textareaDynWidth;
                     _textareaDynHeightCache = textareaDynHeight;
                     _hasOverflowCache = _hasOverflowCache || { x: false, y: false };
@@ -3225,43 +2157,48 @@
                     //set correct auto Update
                     if (autoUpdateChanged) {
                         if (autoUpdate === true) {
-                            mutationObserversDisconnect();
+                            disconnectMutationObservers();
                             autoUpdateLoop.add(_base);
                         }
                         else if (autoUpdate === null) {
                             if (_autoUpdateRecommended) {
-                                mutationObserversDisconnect();
+                                disconnectMutationObservers();
                                 autoUpdateLoop.add(_base);
                             }
                             else {
                                 autoUpdateLoop.remove(_base);
-                                mutationObserversConnect();
+                                connectMutationObservers();
                             }
                         }
                         else {
                             autoUpdateLoop.remove(_base);
-                            mutationObserversConnect();
+                            connectMutationObservers();
                         }
                     }
 
                     //activate or deactivate size auto capability
                     if (sizeAutoCapableChanged) {
                         if (sizeAutoCapable) {
-                            if (_contentGlueElement === undefined) {
-                                _contentGlueElement = framework(generateDiv(_classNameContentGlueElement));
+                            if (!_contentGlueElement) {
+                                _contentGlueElement = FRAMEWORK(generateDiv(_classNameContentGlueElement));
                                 _paddingElement.before(_contentGlueElement);
+                            }
+                            else {
+                                _contentGlueElement.show();
                             }
                             if (_sizeAutoObserverAdded) {
                                 _sizeAutoObserverElement.show();
                             }
                             else {
-                                _sizeAutoObserverElement = framework(generateDiv(_classNameSizeAutoObserverElement));
+                                _sizeAutoObserverElement = FRAMEWORK(generateDiv(_classNameSizeAutoObserverElement));
+                                _sizeAutoObserverElementNative = _sizeAutoObserverElement[0];
+
                                 _contentGlueElement.before(_sizeAutoObserverElement);
                                 var oldSize = {w: -1, h: -1};
                                 addResizeObserver(_sizeAutoObserverElement, function () {
                                     var newSize = {
-                                        w: _sizeAutoObserverElement[0][LEXICON.oW],
-                                        h: _sizeAutoObserverElement[0][LEXICON.oH]
+                                        w: _sizeAutoObserverElementNative[LEXICON.oW],
+                                        h: _sizeAutoObserverElementNative[LEXICON.oH]
                                     };
                                     if (checkCacheDouble(newSize, oldSize)) {
                                         if (_initialized && (_heightAutoCache && newSize.h > 0) || (_widthAutoCache && newSize.w > 0)) {
@@ -3283,6 +2220,8 @@
                         else {
                             if (_sizeAutoObserverAdded)
                                 _sizeAutoObserverElement.hide();
+                            if (_contentGlueElement)
+                                _contentGlueElement.hide();
                         }
                     }
 
@@ -3304,17 +2243,17 @@
                     //detect padding:
                     var padding = {
                         c: force,
-                        t: parseIntToZeroOrNumber(_hostElement.css(_strPaddingMinus + _strTop)),
-                        r: parseIntToZeroOrNumber(_hostElement.css(_strPaddingMinus + _strRight)),
-                        b: parseIntToZeroOrNumber(_hostElement.css(_strPaddingMinus + _strBottom)),
-                        l: parseIntToZeroOrNumber(_hostElement.css(_strPaddingMinus + _strLeft))
+                        t: parseToZeroOrNumber(_hostElement.css(_strPaddingMinus + _strTop)),
+                        r: parseToZeroOrNumber(_hostElement.css(_strPaddingMinus + _strRight)),
+                        b: parseToZeroOrNumber(_hostElement.css(_strPaddingMinus + _strBottom)),
+                        l: parseToZeroOrNumber(_hostElement.css(_strPaddingMinus + _strLeft))
                     };
 
                     //width + height auto detecting var:
                     var sizeAutoObserverElementBCRect;
                     //exception occurs in IE8 sometimes (unknown exception)
                     try {
-                        sizeAutoObserverElementBCRect = _sizeAutoObserverAdded ? _sizeAutoObserverElement[0].getBoundingClientRect() : null;
+                        sizeAutoObserverElementBCRect = _sizeAutoObserverAdded ? _sizeAutoObserverElementNative.getBoundingClientRect() : null;
                     } catch (ex) {
                         return;
                     }
@@ -3323,23 +2262,21 @@
                     _isBorderBox = (boxSizing === 'border-box');
                     var isRTLLeft = _isRTL ? _strLeft : _strRight;
                     var isRTLRight = _isRTL ? _strRight : _strLeft;
-                    var hostElement = _hostElement[0];
-                    var paddingElement = _paddingElement[0];
 
                     //detect width auto:
                     var widthAutoResizeDetection = false;
-                    var widthAutoObserverDetection = (_sizeAutoObserverAdded && (_hostElement.css(_strFloat) !== 'none' /*|| _isTextarea */)) ? (Math.round(sizeAutoObserverElementBCRect.right - sizeAutoObserverElementBCRect.left) === 0) && (!paddingAbsolute ? (hostElement[LEXICON.cW] - _paddingX) > 0 : true) : false;
+                    var widthAutoObserverDetection = (_sizeAutoObserverAdded && (_hostElement.css(_strFloat) !== 'none' /*|| _isTextarea */)) ? (MATH.round(sizeAutoObserverElementBCRect.right - sizeAutoObserverElementBCRect.left) === 0) && (!paddingAbsolute ? (_hostElementNative[LEXICON.cW] - _paddingX) > 0 : true) : false;
                     if (sizeAutoCapable && !widthAutoObserverDetection) {
-                        var tmpCurrHostWidth = hostElement[LEXICON.oW];
+                        var tmpCurrHostWidth = _hostElementNative[LEXICON.oW];
                         var tmpCurrContentGlueWidth = _contentGlueElement.css(_strWidth);
                         _contentGlueElement.css(_strWidth, _strAuto);
 
-                        var tmpNewHostWidth = hostElement[LEXICON.oW];
+                        var tmpNewHostWidth = _hostElementNative[LEXICON.oW];
                         _contentGlueElement.css(_strWidth, tmpCurrContentGlueWidth);
                         widthAutoResizeDetection = tmpCurrHostWidth !== tmpNewHostWidth;
                         if (!widthAutoResizeDetection) {
                             _contentGlueElement.css(_strWidth, tmpCurrHostWidth + 1);
-                            tmpNewHostWidth = hostElement[LEXICON.oW];
+                            tmpNewHostWidth = _hostElementNative[LEXICON.oW];
                             _contentGlueElement.css(_strWidth, tmpCurrContentGlueWidth);
                             widthAutoResizeDetection = tmpCurrHostWidth !== tmpNewHostWidth;
                         }
@@ -3349,7 +2286,7 @@
                     var wasWidthAuto = !widthAuto && _widthAutoCache;
 
                     //detect height auto:
-                    var heightAuto = _sizeAutoObserverAdded && !displayIsHidden ? (Math.round(sizeAutoObserverElementBCRect.bottom - sizeAutoObserverElementBCRect.top) === 0) /* && (!paddingAbsolute && (_msieVersion > 9 || !_msieVersion) ? true : true) */ : false;
+                    var heightAuto = _sizeAutoObserverAdded && sizeAutoCapable && !displayIsHidden ? (MATH.round(sizeAutoObserverElementBCRect.bottom - sizeAutoObserverElementBCRect.top) === 0) /* && (!paddingAbsolute && (_msieVersion > 9 || !_msieVersion) ? true : true) */ : false;
                     var heightAutoChanged = checkCacheSingle(heightAuto, _heightAutoCache, force);
                     var wasHeightAuto = !heightAuto && _heightAutoCache;
 
@@ -3360,19 +2297,19 @@
                     var updateBorderY = (heightAuto && _isBorderBox) || !_isBorderBox;
                     var border = {
                         c: force,
-                        t: updateBorderY ? parseIntToZeroOrNumber(_hostElement.css(_strBorderMinus + _strTop + strMinusWidth)) : 0,
-                        r: updateBorderX ? parseIntToZeroOrNumber(_hostElement.css(_strBorderMinus + _strRight + strMinusWidth)) : 0,
-                        b: updateBorderY ? parseIntToZeroOrNumber(_hostElement.css(_strBorderMinus + _strBottom + strMinusWidth)) : 0,
-                        l: updateBorderX ? parseIntToZeroOrNumber(_hostElement.css(_strBorderMinus + _strLeft + strMinusWidth)) : 0
+                        t: updateBorderY ? parseToZeroOrNumber(_hostElement.css(_strBorderMinus + _strTop + strMinusWidth), true) : 0,
+                        r: updateBorderX ? parseToZeroOrNumber(_hostElement.css(_strBorderMinus + _strRight + strMinusWidth), true) : 0,
+                        b: updateBorderY ? parseToZeroOrNumber(_hostElement.css(_strBorderMinus + _strBottom + strMinusWidth), true) : 0,
+                        l: updateBorderX ? parseToZeroOrNumber(_hostElement.css(_strBorderMinus + _strLeft + strMinusWidth), true) : 0
                     };
 
                     //detect margin:
                     var margin = {
                         c: force,
-                        t: parseIntToZeroOrNumber(_hostElement.css(_strMarginMinus + _strTop)),
-                        r: parseIntToZeroOrNumber(_hostElement.css(_strMarginMinus + _strRight)),
-                        b: parseIntToZeroOrNumber(_hostElement.css(_strMarginMinus + _strBottom)),
-                        l: parseIntToZeroOrNumber(_hostElement.css(_strMarginMinus + _strLeft))
+                        t: parseToZeroOrNumber(_hostElement.css(_strMarginMinus + _strTop)),
+                        r: parseToZeroOrNumber(_hostElement.css(_strMarginMinus + _strRight)),
+                        b: parseToZeroOrNumber(_hostElement.css(_strMarginMinus + _strBottom)),
+                        l: parseToZeroOrNumber(_hostElement.css(_strMarginMinus + _strLeft))
                     };
 
                     //detect css max width & height:
@@ -3385,13 +2322,31 @@
                     var contentElementCSS = { };
                     var contentGlueElementCSS = { };
 
+                    //funcs
+                    var getHostSize = function() {
+                        //has to be clientSize because offsetSize respect borders
+                        return {
+                            w: _hostElementNative[LEXICON.cW],
+                            h: _hostElementNative[LEXICON.cH]
+                        };
+                    };
+                    var getViewportSize = function() {
+                        //viewport size is padding container because it never has padding, margin and a border
+                        //determine zoom rounding error -> sometimes scrollWidth/Height is smaller than clientWidth/Height
+                        //if this happens add the difference to the viewportSize to compensate the rounding error
+                        return {
+                            w: _paddingElementNative[LEXICON.oW] + MATH.max(0, _contentElementNative[LEXICON.cW] - _contentElementNative[LEXICON.sW]),
+                            h: _paddingElementNative[LEXICON.oH] + MATH.max(0, _contentElementNative[LEXICON.cH] - _contentElementNative[LEXICON.sH])
+                        };
+                    };
+
                     //set info for padding
-                    _paddingX = padding.l + padding.r;
-                    _paddingY = padding.t + padding.b;
-                    padding.ax = paddingAbsolute ? _paddingX : 0;
-                    padding.ay = paddingAbsolute ? _paddingY : 0;
+                    var paddingAbsoluteX = _paddingX = padding.l + padding.r;
+                    var paddingAbsoluteY = _paddingY = padding.t + padding.b;
+                    paddingAbsoluteX *= paddingAbsolute ? 1 : 0;
+                    paddingAbsoluteY *= paddingAbsolute ? 1 : 0;
                     padding.c = checkCacheTRBL(padding, _cssPaddingCache);
-                    
+
                     //set info for border
                     _borderX = border.l + border.r;
                     _borderY = border.t + border.b;
@@ -3403,8 +2358,8 @@
                     margin.c = checkCacheTRBL(margin, _cssMarginCache);
 
                     //set info for css max value
-                    cssMaxValue.ih = parseIntToZeroOrNumber(cssMaxValue.h); //ih = integer height
-                    cssMaxValue.iw = parseIntToZeroOrNumber(cssMaxValue.w); //iw = integer width
+                    cssMaxValue.ih = parseToZeroOrNumber(cssMaxValue.h); //ih = integer height
+                    cssMaxValue.iw = parseToZeroOrNumber(cssMaxValue.w); //iw = integer width
                     cssMaxValue.ch = cssMaxValue.h.indexOf('px') > -1; //ch = correct height
                     cssMaxValue.cw = cssMaxValue.w.indexOf('px') > -1; //cw = correct width
                     cssMaxValue.c = checkCacheDouble(cssMaxValue, _cssMaxValueCache, force);
@@ -3447,35 +2402,36 @@
                     }
 
                     //viewport size is padding container because it never has padding, margin and a border.
-                    _viewportSize = {
-                        w: paddingElement[LEXICON.oW],
-                        h: paddingElement[LEXICON.oH]
-                    };
+                    _viewportSize = getViewportSize();
 
                     //update Textarea
                     var textareaSize = _isTextarea ? textareaUpdate() : false;
+                    var textareaDynOrigSize = _isTextarea && textareaSize ? {
+                        w : textareaDynWidth ? textareaSize._dynamicWidth : textareaSize._originalWidth,
+                        h : textareaDynHeight ? textareaSize._dynamicHeight : textareaSize._originalHeight
+                    } : { };
 
                     //fix height auto / width auto in cooperation with current padding & boxSizing behavior:
                     if (heightAuto && (heightAutoChanged || paddingAbsoluteChanged || boxSizingChanged || cssMaxValue.c || padding.c || border.c)) {
-                        if (cssMaxValue.cw)
-                            contentElementCSS[_strMaxMinus + _strHeight] =
-                                (cssMaxValue.ch ? (cssMaxValue.ih - padding.ay + (_isBorderBox ? -_borderY : _paddingY)) 
+                        //if (cssMaxValue.ch)
+                        contentElementCSS[_strMaxMinus + _strHeight] =
+                            (cssMaxValue.ch ? (cssMaxValue.ih - paddingAbsoluteY + (_isBorderBox ? -_borderY : _paddingY))
                                 : _strEmpty);
                         contentElementCSS[_strHeight] = _strAuto;
-                    } 
+                    }
                     else if (heightAutoChanged || paddingAbsoluteChanged) {
                         contentElementCSS[_strMaxMinus + _strHeight] = _strEmpty;
                         contentElementCSS[_strHeight] = _strHundredPercent;
                     }
                     if (widthAuto && (widthAutoChanged || paddingAbsoluteChanged || boxSizingChanged || cssMaxValue.c || padding.c || border.c || cssDirectionChanged)) {
-                        if (cssMaxValue.cw)
-                            contentElementCSS[_strMaxMinus + _strWidth] =
-                                (cssMaxValue.cw ? (cssMaxValue.iw - padding.ax + (_isBorderBox ? -_borderX : _paddingX)) +
-                                (_nativeScrollbarIsOverlaid.y /*&& _hasOverflowCache.y && widthAuto */ ? _overlayScrollbarDummySize.y : 0) 
+                        //if (cssMaxValue.cw)
+                        contentElementCSS[_strMaxMinus + _strWidth] =
+                            (cssMaxValue.cw ? (cssMaxValue.iw - paddingAbsoluteX + (_isBorderBox ? -_borderX : _paddingX)) +
+                                (_nativeScrollbarIsOverlaid.y /*&& _hasOverflowCache.y && widthAuto */ ? _overlayScrollbarDummySize.y : 0)
                                 : _strEmpty);
                         contentElementCSS[_strWidth] = _strAuto;
                         contentGlueElementCSS[_strMaxMinus + _strWidth] = _strHundredPercent; //IE Fix
-                    } 
+                    }
                     else if (widthAutoChanged || paddingAbsoluteChanged) {
                         contentElementCSS[_strMaxMinus + _strWidth] = _strEmpty;
                         contentElementCSS[_strWidth] = _strHundredPercent;
@@ -3485,17 +2441,23 @@
                     if (widthAuto) {
                         if (!cssMaxValue.cw)
                             contentElementCSS[_strMaxMinus + _strWidth] = _strEmpty;
-                        contentGlueElementCSS[_strWidth] = _isTextarea && textareaDynWidth ? textareaSize.dw : _strAuto;
+                        //textareaDynOrigSize.w || _strAuto :: doesnt works because applied margin will shift width
+                        contentGlueElementCSS[_strWidth] = _strAuto;
 
                         contentElementCSS[_strWidth] = _strAuto;
                         contentElementCSS[_strFloat] = isRTLRight;
                     }
+                    else {
+                        contentGlueElementCSS[_strWidth] = _strEmpty;
+                    }
                     if (heightAuto) {
                         if (!cssMaxValue.ch)
                             contentElementCSS[_strMaxMinus + _strHeight] = _strEmpty;
-                        //fix dyn height collapse bug: (doesn't works for width!)
-                        //contentGlueElementCSS[_strHeight] = _isTextarea && textareaDynHeight ? textareaSize.dh : _strAuto;
-                        contentGlueElementCSS[_strHeight] = _isTextarea ? textareaDynHeight ? textareaSize.dh : _strAuto : _contentElement[0][LEXICON.cH];
+                        //textareaDynOrigSize.h || _contentElementNative[LEXICON.cH] :: use for anti scroll jumping
+                        contentGlueElementCSS[_strHeight] = textareaDynOrigSize.h || _contentElementNative[LEXICON.cH];
+                    }
+                    else {
+                        contentGlueElementCSS[_strHeight] = _strEmpty;
                     }
                     if (sizeAutoCapable)
                         _contentGlueElement.css(contentGlueElementCSS);
@@ -3504,23 +2466,24 @@
                     //CHECKPOINT HERE ~
                     contentElementCSS = {};
                     contentGlueElementCSS = {};
-                    
+
                     //if [content(host) client / scroll size, or target element direction, or content(host) max-sizes] changed, or force is true
-                    if (hostSizeChanged || contentSizeChanged || cssDirectionChanged || boxSizingChanged || paddingAbsoluteChanged || widthAutoChanged || widthAuto || heightAutoChanged || heightAuto || cssMaxValue.c || ignoreOverlayScrollbarHidingChanged || overflowBehaviorChanged || clipAlwaysChanged || resizeChanged || scrollbarsVisibilityChanged || textareaDynWidthChanged || textareaDynHeightChanged || textareaAutoWrappingChanged || force) {
+                    if (hostSizeChanged || contentSizeChanged || cssDirectionChanged || boxSizingChanged || paddingAbsoluteChanged || widthAutoChanged || widthAuto || heightAutoChanged || heightAuto || cssMaxValue.c || ignoreOverlayScrollbarHidingChanged || overflowBehaviorChanged || clipAlwaysChanged || resizeChanged || scrollbarsVisibilityChanged || scrollbarsAutoHideChanged || scrollbarsDragScrollingChanged || scrollbarsClickScrollingChanged || textareaDynWidthChanged || textareaDynHeightChanged || textareaAutoWrappingChanged || force) {
                         var strOverflow = 'overflow';
                         var strOverflowX = strOverflow + '-x';
                         var strOverflowY = strOverflow + '-y';
                         var strHidden = 'hidden';
                         var strVisible = 'visible';
-                        //decide whether the content overflow must get hidden for correct overflow measuring, it MUST be always hidden if the height is auto
+                        //decide whether the content overflow must get hidden for correct overflow measuring, it !MUST! be always hidden if the height is auto
                         var hideOverflow4CorrectMeasuring = _restrictedMeasuring ?
-                        (_nativeScrollbarIsOverlaid.x || _nativeScrollbarIsOverlaid.y) || //it must be hidden if native scrollbars are overlaid
-                        (_viewportSize.w < _nativeScrollbarMinSize.y || _viewportSize.h < _nativeScrollbarMinSize.x) || //it must be hidden if host-element is too small
-                        heightAuto || displayIsHiddenChanged //it must be hidden if height is auto or display was change
+                            (_nativeScrollbarIsOverlaid.x || _nativeScrollbarIsOverlaid.y) || //it must be hidden if native scrollbars are overlaid
+                            (_viewportSize.w < _nativeScrollbarMinSize.y || _viewportSize.h < _nativeScrollbarMinSize.x) || //it must be hidden if host-element is too small
+                            heightAuto || displayIsHiddenChanged //it must be hidden if height is auto or display was change
                             : heightAuto; //if there is not the restricted Measuring bug, it must be hidden if the height is auto
 
                         //Reset the viewport (very important for natively overlaid scrollbars and zoom change
-                        var viewportElementResetCSS = {};
+                        //don't change the overflow prop as it is very expensive and affects performance !A LOT!
+                        var viewportElementResetCSS = { };
                         var resetXTmp = _hasOverflowCache.y && _hideOverflowCache.ys && !ignoreOverlayScrollbarHiding ? (_nativeScrollbarIsOverlaid.y ? _viewportElement.css(isRTLLeft) : -_nativeScrollbarSize.y) : 0;
                         var resetBottomTmp = _hasOverflowCache.x && _hideOverflowCache.xs && !ignoreOverlayScrollbarHiding ? (_nativeScrollbarIsOverlaid.x ? _viewportElement.css(_strBottom) : -_nativeScrollbarSize.x) : 0;
                         setTopRightBottomLeft(viewportElementResetCSS, _strEmpty);
@@ -3531,39 +2494,30 @@
                         //measure several sizes:
                         var contentMeasureElement = getContentMeasureElement();
                         //in Firefox content element has to have overflow hidden, else element margins aren't calculated properly, this element prevents this bug, but only if scrollbars aren't overlaid
-                        var contentMeasureElementGuaranty = _restrictedMeasuring && !hideOverflow4CorrectMeasuring ? _viewportElement[0] : contentMeasureElement;
-                        var clientSize = {
-                            w: contentMeasureElement[LEXICON.cW],
-                            h: contentMeasureElement[LEXICON.cH]
+                        var contentMeasureElementGuaranty = _restrictedMeasuring && !hideOverflow4CorrectMeasuring ? _viewportElementNative : contentMeasureElement;
+                        var contentSize = {
+                            //use clientSize because natively overlaidScrollbars add borders
+                            w: textareaDynOrigSize.w || contentMeasureElement[LEXICON.cW],
+                            h: textareaDynOrigSize.h || contentMeasureElement[LEXICON.cH]
                         };
                         var scrollSize = {
-                            w: Math.max(contentMeasureElement[LEXICON.sW], contentMeasureElementGuaranty[LEXICON.sW]),
-                            h: Math.max(contentMeasureElement[LEXICON.sH], contentMeasureElementGuaranty[LEXICON.sH])
-                        };
-                        var contentClientSize = {
-                            w: _isTextarea && textareaSize && !textareaDynWidth ? textareaSize.ow : widthAuto ? clientSize.w : scrollSize.w,
-                            h: _isTextarea && textareaSize && !textareaDynHeight ? textareaSize.oh : heightAuto ? clientSize.h : scrollSize.h
+                            w: MATH.max(contentMeasureElement[LEXICON.sW], contentMeasureElementGuaranty[LEXICON.sW]),
+                            h: MATH.max(contentMeasureElement[LEXICON.sH], contentMeasureElementGuaranty[LEXICON.sH])
                         };
 
                         //apply the correct viewport style and measure viewport size
                         viewportElementResetCSS[_strBottom] = wasHeightAuto ? _strEmpty : resetBottomTmp;
                         viewportElementResetCSS[isRTLLeft] = wasWidthAuto ? _strEmpty : resetXTmp;
                         _viewportElement.css(viewportElementResetCSS);
-                        //viewport size is padding container because it never has padding, margin and a border.
-                        _viewportSize = {
-                            w: paddingElement[LEXICON.oW],
-                            h: paddingElement[LEXICON.oH]
-                        };
-                        
+                        _viewportSize = getViewportSize();
+
                         //measure and correct several sizes
-                        //has to be clientSize because offsetSize respect borders.
-                        var hostSize = {
-                            w: hostElement[LEXICON.cW],
-                            h: hostElement[LEXICON.cH]
-                        };
+                        var hostSize = getHostSize();
                         var contentGlueSize = {
-                            w: Math.max(contentClientSize.w + padding.ax, hostSize.w - _paddingX) - (textareaDynWidth ? (_isTextarea && widthAuto ? _marginX + (!_isBorderBox ? _paddingX + _borderX : 0) : 0) : 0),
-                            h: Math.max(contentClientSize.h + padding.ay, hostSize.h - _paddingY)
+                            //client/scrollSize + AbsolutePadding -> because padding is only applied to the paddingElement if its absolute, so you have to add it manually
+                            //hostSize is clientSize -> so padding should be added manually, right? FALSE! Because content glue is inside hostElement, so we don't have to worry about padding
+                            w: MATH.max((widthAuto ? contentSize.w : scrollSize.w) + paddingAbsoluteX, hostSize.w),
+                            h: MATH.max((heightAuto ? contentSize.h : scrollSize.h) + paddingAbsoluteY, hostSize.h)
                         };
                         contentGlueSize.c = checkCacheDouble(contentGlueSize, _contentGlueSizeCache, force);
                         _contentGlueSizeCache = contentGlueSize;
@@ -3574,41 +2528,48 @@
                             if (contentGlueSize.c || (heightAuto || widthAuto)) {
                                 contentGlueElementCSS[_strWidth] = contentGlueSize.w;
                                 contentGlueElementCSS[_strHeight] = contentGlueSize.h;
-                            }
 
-                            var maxWidth = contentGlueElementCSS[_strWidth] + (_isBorderBox ? _borderX : -_paddingX);
-                            var maxHeight = contentGlueElementCSS[_strHeight] + (_isBorderBox ? _borderY : -_paddingX);
+                                //textarea-sizes are already calculated correctly at this point
+                                if(!_isTextarea) {
+                                    contentSize = {
+                                        //use clientSize because natively overlaidScrollbars add borders
+                                        w: contentMeasureElement[LEXICON.cW],
+                                        h: contentMeasureElement[LEXICON.cH]
+                                    };
+                                }
+                            }
                             var textareaCoverCSS = {};
+                            var setContentGlueElementCSSfunction = function(horizontal) {
+                                var scrollbarVars = getScrollbarVars(horizontal);
+                                var wh = scrollbarVars._w_h;
+                                var strWH = scrollbarVars._width_height;
+                                var autoSize = horizontal ? widthAuto : heightAuto;
+                                var borderSize = horizontal ? _borderX : _borderY;
+                                var paddingSize = horizontal ? _paddingX : _paddingY;
+                                var marginSize = horizontal ? _marginX : _marginY;
+                                var maxSize = contentGlueElementCSS[strWH] + (_isBorderBox ? borderSize : -paddingSize);
 
-                            //make contentGlue size -1 if element is not auto sized, to make sure that a resize event happens when the element shrinks
-                            if (!widthAuto || (!widthAuto && border.c))
-                                contentGlueElementCSS[_strWidth] = hostSize.w - (_isBorderBox ? 0 : _paddingX + _borderX) - 1 - _marginX;
-                            if (!heightAuto || (!heightAuto && border.c))
-                                contentGlueElementCSS[_strHeight] = hostSize.h - (_isBorderBox ? 0 : _paddingY + _borderY) - 1 - _marginY;
+                                //make contentGlue size -1 if element is not auto sized, to make sure that a resize event happens when the element shrinks
+                                if (!autoSize || (!autoSize && border.c))
+                                    contentGlueElementCSS[strWH] = hostSize[wh] - (_isBorderBox ? 0 : paddingSize + borderSize) - 1 - marginSize;
 
-                            //if size is auto and host is same size as max size, make content glue size +1 to make sure size changes will be detected
-                            if (cssMaxValue.cw && cssMaxValue.iw === maxWidth)
-                                contentGlueElementCSS[_strWidth] = maxWidth + (_isBorderBox ? 0 : _paddingX) + 1;
-                            if (cssMaxValue.ch && cssMaxValue.ih === maxHeight)
-                                contentGlueElementCSS[_strHeight] = maxHeight + (_isBorderBox ? 0 : _paddingY) + 1;
+                                //if size is auto and host is same size as max size, make content glue size +1 to make sure size changes will be detected
+                                if (autoSize && cssMaxValue['c' + wh] && cssMaxValue['i' + wh] === maxSize)
+                                    contentGlueElementCSS[strWH] = maxSize + (_isBorderBox ? 0 : paddingSize) + 1;
 
-                            //if size is auto and host is smaller than size as min size, make content glue size -1 to make sure size changes will be detected (this is only needed if padding is 0)
-                            if (widthAuto && (clientSize.w < _viewportSize.w || _isTextarea && !textareaAutoWrapping) && _paddingX === 0) {
-                                if (_isTextarea)
-                                    textareaCoverCSS[_strWidth] = parseIntToZeroOrNumber(_textareaCoverElement.css(_strWidth)) - 1;
-                                contentGlueElementCSS[_strWidth] -= 1;
-                            }
-                            if (heightAuto && (clientSize.h < _viewportSize.h || _isTextarea) && _paddingY === 0) {
-                                if (_isTextarea)
-                                    textareaCoverCSS[_strHeight] = parseIntToZeroOrNumber(_textareaCoverElement.css(_strHeight)) - 1;
-                                contentGlueElementCSS[_strHeight] -= 1;
-                            }
+                                //if size is auto and host is smaller than size as min size, make content glue size -1 to make sure size changes will be detected (this is only needed if padding is 0)
+                                if (autoSize && (contentSize[wh] < _viewportSize[wh]) && (horizontal ? (_isTextarea ? !textareaAutoWrapping : false) : true)) {
+                                    if (_isTextarea)
+                                        textareaCoverCSS[strWH] = parseToZeroOrNumber(_textareaCoverElement.css(strWH)) - 1;
+                                    contentGlueElementCSS[strWH] -= 1;
+                                }
 
-                            //make sure content glue size at least 1
-                            if (contentClientSize.h > 0) {
-                                contentGlueElementCSS[_strWidth] = Math.max(1, contentGlueElementCSS[_strWidth]);
-                                contentGlueElementCSS[_strHeight] = Math.max(1, contentGlueElementCSS[_strHeight]);
-                            }
+                                //make sure content glue size is at least 1
+                                if (contentSize[wh] > 0)
+                                    contentGlueElementCSS[strWH] = MATH.max(1, contentGlueElementCSS[strWH]);
+                            };
+                            setContentGlueElementCSSfunction(true);
+                            setContentGlueElementCSSfunction(false);
 
                             if (_isTextarea)
                                 _textareaCoverElement.css(textareaCoverCSS);
@@ -3616,87 +2577,69 @@
                         }
                         if (widthAuto)
                             contentElementCSS[_strWidth] = _strHundredPercent;
-                        if (widthAuto && !_isBorderBox && !_mutationObserverConnected)
+                        if (widthAuto && !_isBorderBox && !_mutationObserversConnected)
                             contentElementCSS[_strFloat] = 'none';
-
 
                         //apply and reset content style
                         _contentElement.css(contentElementCSS);
                         contentElementCSS = {};
 
                         //measure again, but this time all correct sizes:
-                        var contentBCRect = contentMeasureElement.getBoundingClientRect();
                         var contentScrollSize = {
-                            w: Math.max(contentMeasureElement[LEXICON.sW], contentMeasureElementGuaranty[LEXICON.sW]),
-                            h: Math.max(contentMeasureElement[LEXICON.sH], contentMeasureElementGuaranty[LEXICON.sH])
+                            w: MATH.max(contentMeasureElement[LEXICON.sW], contentMeasureElementGuaranty[LEXICON.sW]),
+                            h: MATH.max(contentMeasureElement[LEXICON.sH], contentMeasureElementGuaranty[LEXICON.sH])
                         };
-                        if(hideOverflow4CorrectMeasuring)
-                            _contentElement.css(strOverflow, _strEmpty);
-                        if (contentBCRect.width) {
-                            var contentBCRectW = contentBCRect.width;
-                            var contentBCRectH = contentBCRect.height;
-                            var contentBCRectMargin = 0.001;
-                            contentScrollSize.w += parseIntToZeroOrNumber(contentBCRectW + contentBCRectMargin) - contentBCRectW;
-                            contentScrollSize.h += parseIntToZeroOrNumber(contentBCRectH + contentBCRectMargin) - contentBCRectH;
-                        }
                         contentScrollSize.c = contentSizeChanged = checkCacheDouble(contentScrollSize, _contentScrollSizeCache, force);
                         _contentScrollSizeCache = contentScrollSize;
 
-                        //has to be clientSize because offsetSize respect borders.
-                        hostSize = {
-                            w: hostElement[LEXICON.cW],
-                            h: hostElement[LEXICON.cH]
-                        };
+                        //remove overflow hidden to restore overflow
+                        if(hideOverflow4CorrectMeasuring)
+                            _contentElement.css(strOverflow, _strEmpty);
+
+                        //refresh viewport size after correct measuring
+                        _viewportSize = getViewportSize();
+
+                        hostSize = getHostSize();
                         hostSizeChanged = checkCacheDouble(hostSize, _hostSizeCache);
                         _hostSizeCache = hostSize;
 
-                        var overflowBehaviorIsVS = {
-                            x: overflowBehavior.x === 'v-s',
-                            y: overflowBehavior.y === 'v-s'
-                        };
-                        var overflowBehaviorIsVH = {
-                            x: overflowBehavior.x === 'v-h',
-                            y: overflowBehavior.y === 'v-h'
-                        };
-                        var overflowBehaviorIsS = {
-                            x: overflowBehavior.x === 's',
-                            y: overflowBehavior.y === 's'
-                        };
-                        /*
-                         * var overflowBehaviorIsH = {
-                         *     x : overflowBehavior.x === 'h',
-                         *     y : overflowBehavior.y === 'h'
-                         * };
-                         */
-                        var overflowAmount = {
-                            x: Math.max(0, Math.round((contentScrollSize.w - hostSize.w + padding.ax) * 100) / 100),
-                            y: Math.max(0, Math.round((contentScrollSize.h - hostSize.h + padding.ay) * 100) / 100)
-                        };
                         var hideOverflowForceTextarea = _isTextarea && (_viewportSize.w === 0 || _viewportSize.h === 0);
-                        if (hideOverflowForceTextarea) {
-                            overflowAmount.x = 0;
-                            overflowAmount.y = 0;
-                        }
-                        var hasOverflow = {
-                            x: overflowAmount.x > 0,
-                            y: overflowAmount.y > 0
-                        };
-                        //hideOverflow:
-                        //x || y : true === overflow is hidden by "overflow: scroll" OR "overflow: hidden"
-                        //xs || ys : true === overflow is hidden by "overflow: scroll"
-                        var hideOverflow = {x: hasOverflow.x, y: hasOverflow.y};
-                        if (overflowBehaviorIsVS.x || overflowBehaviorIsVH.x)
-                            hideOverflow.x = (hasOverflow.y && !overflowBehaviorIsVS.y && !overflowBehaviorIsVH.y);
-                        if (overflowBehaviorIsVS.y || overflowBehaviorIsVH.y)
-                            hideOverflow.y = (hasOverflow.x && !overflowBehaviorIsVS.x && !overflowBehaviorIsVH.x);
-                        hideOverflow.xs = hideOverflow.x ? (overflowBehaviorIsS.x || overflowBehaviorIsVS.x) : false;
-                        hideOverflow.ys = hideOverflow.y ? (overflowBehaviorIsS.y || overflowBehaviorIsVS.y) : false;
-
-                        var canScroll = {
-                            x: hasOverflow.x && hideOverflow.xs,
-                            y: hasOverflow.y && hideOverflow.ys
-                        };
                         var previousOverflow = _overflowAmountCache;
+                        var overflowBehaviorIsVS = { };
+                        var overflowBehaviorIsVH = { };
+                        var overflowBehaviorIsS = { };
+                        var overflowAmount = { };
+                        var hasOverflow = { };
+                        var hideOverflow = { };
+                        var canScroll = { };
+                        var viewportRect = _paddingElementNative.getBoundingClientRect();
+                        var setOverflowVariables = function(horizontal) {
+                            var scrollbarVars = getScrollbarVars(horizontal);
+                            var scrollbarVarsInverted = getScrollbarVars(!horizontal);
+                            var xyI = scrollbarVarsInverted._x_y;
+                            var xy = scrollbarVars._x_y;
+                            var wh = scrollbarVars._w_h;
+                            var widthHeight = scrollbarVars._width_height;
+                            var scrollMax = _strScroll + scrollbarVars._Left_Top + 'Max';
+                            var fractionalOverflowAmount = viewportRect[widthHeight] ? MATH.abs(viewportRect[widthHeight] - _viewportSize[wh]) : 0;
+                            overflowBehaviorIsVS[xy] = overflowBehavior[xy] === 'v-s';
+                            overflowBehaviorIsVH[xy] = overflowBehavior[xy] === 'v-h';
+                            overflowBehaviorIsS[xy] = overflowBehavior[xy] === 's';
+                            overflowAmount[xy] = MATH.max(0, MATH.round((contentScrollSize[wh] - _viewportSize[wh]) * 100) / 100);
+                            overflowAmount[xy] *= (hideOverflowForceTextarea || (_viewportElementNative[scrollMax] === 0 && fractionalOverflowAmount > 0 && fractionalOverflowAmount < 1)) ? 0 : 1;
+                            hasOverflow[xy] = overflowAmount[xy] > 0;
+
+                            //hideOverflow:
+                            //x || y : true === overflow is hidden by "overflow: scroll" OR "overflow: hidden"
+                            //xs || ys : true === overflow is hidden by "overflow: scroll"
+                            hideOverflow[xy] = overflowBehaviorIsVS[xy] || overflowBehaviorIsVH[xy] ? (hasOverflow[xyI] && !overflowBehaviorIsVS[xyI] && !overflowBehaviorIsVH[xyI]) : hasOverflow[xy];
+                            hideOverflow[xy + 's'] = hideOverflow[xy] ? (overflowBehaviorIsS[xy] || overflowBehaviorIsVS[xy]) : false;
+
+                            canScroll[xy] = hasOverflow[xy] && hideOverflow[xy + 's'];
+                        };
+                        setOverflowVariables(true);
+                        setOverflowVariables(false);
+
                         overflowAmount.c = checkCacheDouble(overflowAmount, _overflowAmountCache, _strX, _strY, force);
                         _overflowAmountCache = overflowAmount;
                         hasOverflow.c = checkCacheDouble(hasOverflow, _hasOverflowCache, _strX, _strY, force);
@@ -3710,6 +2653,8 @@
                             var contentArrangeElementCSS = { };
                             var arrangeContent = { };
                             var arrangeChanged = force;
+                            var setContentElementCSS;
+
                             if (hasOverflow.x || hasOverflow.y) {
                                 arrangeContent.w = _nativeScrollbarIsOverlaid.y && hasOverflow.y ? contentScrollSize.w + _overlayScrollbarDummySize.y : _strEmpty;
                                 arrangeContent.h = _nativeScrollbarIsOverlaid.x && hasOverflow.x ? contentScrollSize.h + _overlayScrollbarDummySize.x : _strEmpty;
@@ -3719,37 +2664,46 @@
 
                             if (hasOverflow.c || hideOverflow.c || contentScrollSize.c || cssDirectionChanged || widthAutoChanged || heightAutoChanged || widthAuto || heightAuto || ignoreOverlayScrollbarHidingChanged) {
                                 contentElementCSS[_strMarginMinus + isRTLRight] = contentElementCSS[_strBorderMinus + isRTLRight] = _strEmpty;
-                                if (_nativeScrollbarIsOverlaid.x && hasOverflow.x && hideOverflow.xs) {
-                                    contentElementCSS[_strMarginMinus + _strBottom] = heightAuto ? (ignoreOverlayScrollbarHiding ? _strEmpty : _overlayScrollbarDummySize.x) : _strEmpty;
-                                    contentElementCSS[_strBorderMinus + _strBottom] = (!heightAuto && !ignoreOverlayScrollbarHiding) ? (_overlayScrollbarDummySize.x + borderDesign) : _strEmpty;
+                                setContentElementCSS = function(horizontal) {
+                                    var scrollbarVars = getScrollbarVars(horizontal);
+                                    var scrollbarVarsInverted = getScrollbarVars(!horizontal);
+                                    var xy = scrollbarVars._x_y;
+                                    var strDirection = horizontal ? _strBottom : isRTLLeft;
+                                    var invertedAutoSize = horizontal ? heightAuto : widthAuto;
+
+                                    if (_nativeScrollbarIsOverlaid[xy] && hasOverflow[xy] && hideOverflow[xy + 's']) {
+                                        contentElementCSS[_strMarginMinus + strDirection] = invertedAutoSize ? (ignoreOverlayScrollbarHiding ? _strEmpty : _overlayScrollbarDummySize[xy]) : _strEmpty;
+                                        contentElementCSS[_strBorderMinus + strDirection] = ((horizontal ? !invertedAutoSize : true) && !ignoreOverlayScrollbarHiding) ? (_overlayScrollbarDummySize[xy] + borderDesign) : _strEmpty;
+                                    }
+                                    else {
+                                        arrangeContent[scrollbarVarsInverted._w_h] =
+                                            contentElementCSS[_strMarginMinus + strDirection] =
+                                                contentElementCSS[_strBorderMinus + strDirection] = _strEmpty;
+                                        arrangeChanged = true;
+                                    }
+                                };
+
+                                if (_nativeScrollbarStyling) {
+                                    if (ignoreOverlayScrollbarHiding)
+                                        removeClass(_viewportElement, _classNameViewportNativeScrollbarsInvisible);
+                                    else
+                                        addClass(_viewportElement, _classNameViewportNativeScrollbarsInvisible);
                                 }
                                 else {
-                                    arrangeContent.h = 
-                                    contentElementCSS[_strMarginMinus + _strBottom] = 
-                                    contentElementCSS[_strBorderMinus + _strBottom] = _strEmpty;
-                                    arrangeChanged = true;
-                                }
-                                if (_nativeScrollbarIsOverlaid.y && hasOverflow.y && hideOverflow.ys) {
-                                    contentElementCSS[_strMarginMinus + isRTLLeft] = widthAuto ? (ignoreOverlayScrollbarHiding ? _strEmpty : _overlayScrollbarDummySize.y) : _strEmpty;
-                                    contentElementCSS[_strBorderMinus + isRTLLeft] = (/* !widthAuto && */ !ignoreOverlayScrollbarHiding) ? (_overlayScrollbarDummySize.y + borderDesign) : _strEmpty;
-                                }
-                                else {
-                                    arrangeContent.w = 
-                                    contentElementCSS[_strMarginMinus + isRTLLeft] = 
-                                    contentElementCSS[_strBorderMinus + isRTLLeft] = _strEmpty;
-                                    arrangeChanged = true;
+                                    setContentElementCSS(true);
+                                    setContentElementCSS(false);
                                 }
                             }
                             if (ignoreOverlayScrollbarHiding) {
                                 arrangeContent.w = arrangeContent.h = _strEmpty;
                                 arrangeChanged = true;
                             }
-                            if (arrangeChanged) {
+                            if (arrangeChanged && !_nativeScrollbarStyling) {
                                 contentArrangeElementCSS[_strWidth] = hideOverflow.y ? arrangeContent.w : _strEmpty;
                                 contentArrangeElementCSS[_strHeight] = hideOverflow.x ? arrangeContent.h : _strEmpty;
 
                                 if (!_contentArrangeElement) {
-                                    _contentArrangeElement = framework(generateDiv(_classNameContentArrangeElement));
+                                    _contentArrangeElement = FRAMEWORK(generateDiv(_classNameContentArrangeElement));
                                     _viewportElement.prepend(_contentArrangeElement);
                                 }
                                 _contentArrangeElement.css(contentArrangeElementCSS);
@@ -3759,47 +2713,44 @@
 
                         var viewportElementCSS = {};
                         var paddingElementCSS = {};
+                        var setViewportCSS;
                         if (hostSizeChanged || hasOverflow.c || hideOverflow.c || contentScrollSize.c || overflowBehaviorChanged || boxSizingChanged || ignoreOverlayScrollbarHidingChanged || cssDirectionChanged || clipAlwaysChanged || heightAutoChanged) {
                             viewportElementCSS[isRTLRight] = _strEmpty;
-                            var resetScrollbarHidingX = function () {
-                                viewportElementCSS[_strBottom] = _strEmpty;
-                                _contentBorderSize.h = 0;
-                            };
-                            var resetScrollbarHidingY = function () {
-                                viewportElementCSS[isRTLLeft] = _strEmpty;
-                                _contentBorderSize.w = 0;
-                            };
-                            if (hasOverflow.x && hideOverflow.xs) {
-                                viewportElementCSS[strOverflowX] = _strScroll;
-                                if (!ignoreOverlayScrollbarHiding) {
-                                    viewportElementCSS[_strBottom] = -(_nativeScrollbarIsOverlaid.x ? _overlayScrollbarDummySize.x : _nativeScrollbarSize.x);
-                                    _contentBorderSize.h = _nativeScrollbarIsOverlaid.x ? _overlayScrollbarDummySize.y : 0;
-                                }
-                                else
-                                    resetScrollbarHidingX();
-                            } else {
-                                viewportElementCSS[strOverflowX] = _strEmpty;
-                                resetScrollbarHidingX();
-                            }
-                            if (hasOverflow.y && hideOverflow.ys) {
-                                viewportElementCSS[strOverflowY] = _strScroll;
-                                if (!ignoreOverlayScrollbarHiding) {
-                                    viewportElementCSS[isRTLLeft] = -(_nativeScrollbarIsOverlaid.y ? _overlayScrollbarDummySize.y : _nativeScrollbarSize.y);
-                                    _contentBorderSize.w = _nativeScrollbarIsOverlaid.y ? _overlayScrollbarDummySize.x : 0;
-                                }
-                                else
-                                    resetScrollbarHidingY();
-                            } else {
-                                viewportElementCSS[strOverflowY] = _strEmpty;
-                                resetScrollbarHidingY();
-                            }
+                            setViewportCSS = function(horizontal) {
+                                var scrollbarVars = getScrollbarVars(horizontal);
+                                var scrollbarVarsInverted = getScrollbarVars(!horizontal);
+                                var xy = scrollbarVars._x_y;
+                                var XY = scrollbarVars._X_Y;
+                                var strDirection = horizontal ? _strBottom : isRTLLeft;
 
+                                var reset = function () {
+                                    viewportElementCSS[strDirection] = _strEmpty;
+                                    _contentBorderSize[scrollbarVarsInverted._w_h] = 0;
+                                };
+                                if (hasOverflow[xy] && hideOverflow[xy + 's']) {
+                                    viewportElementCSS[strOverflow + XY] = _strScroll;
+                                    if (ignoreOverlayScrollbarHiding || _nativeScrollbarStyling) {
+                                        reset();
+                                    }
+                                    else {
+                                        viewportElementCSS[strDirection] =  -(_nativeScrollbarIsOverlaid[xy] ? _overlayScrollbarDummySize[xy] : _nativeScrollbarSize[xy]);
+                                        _contentBorderSize[scrollbarVarsInverted._w_h] = _nativeScrollbarIsOverlaid[xy] ? _overlayScrollbarDummySize[scrollbarVarsInverted._x_y] : 0;
+                                    }
+                                } else {
+                                    viewportElementCSS[strOverflow + XY] = _strEmpty;
+                                    reset();
+                                }
+                            };
+                            setViewportCSS(true);
+                            setViewportCSS(false);
 
-                            // if the scroll container is too small and if there is any overflow with not overlay scrollbar, make viewport element greater in size (Firefox hide Scrollbars fix)
+                            // if the scroll container is too small and if there is any overflow with no overlay scrollbar (and scrollbar styling isn't possible),
+                            // make viewport element greater in size (Firefox hide Scrollbars fix)
                             // because firefox starts hiding scrollbars on too small elements
                             // with this behavior the overflow calculation may be incorrect or the scrollbars would appear suddenly
                             // https://bugzilla.mozilla.org/show_bug.cgi?id=292284
-                            if ((_viewportSize.h < _nativeScrollbarMinSize.x || _viewportSize.w < _nativeScrollbarMinSize.y)
+                            if (!_nativeScrollbarStyling
+                                && (_viewportSize.h < _nativeScrollbarMinSize.x || _viewportSize.w < _nativeScrollbarMinSize.y)
                                 && ((hasOverflow.x && hideOverflow.x && !_nativeScrollbarIsOverlaid.x) || (hasOverflow.y && hideOverflow.y && !_nativeScrollbarIsOverlaid.y))) {
                                 viewportElementCSS[_strPaddingMinus + _strTop] = _nativeScrollbarMinSize.x;
                                 viewportElementCSS[_strMarginMinus + _strTop] = -_nativeScrollbarMinSize.x;
@@ -3808,31 +2759,31 @@
                                 viewportElementCSS[_strMarginMinus + isRTLRight] = -_nativeScrollbarMinSize.y;
                             }
                             else {
-                                viewportElementCSS[_strPaddingMinus + _strTop] = 
-                                viewportElementCSS[_strMarginMinus + _strTop] = 
-                                viewportElementCSS[_strPaddingMinus + isRTLRight] = 
-                                viewportElementCSS[_strMarginMinus + isRTLRight] = _strEmpty;
+                                viewportElementCSS[_strPaddingMinus + _strTop] =
+                                    viewportElementCSS[_strMarginMinus + _strTop] =
+                                        viewportElementCSS[_strPaddingMinus + isRTLRight] =
+                                            viewportElementCSS[_strMarginMinus + isRTLRight] = _strEmpty;
                             }
-                            viewportElementCSS[_strPaddingMinus + isRTLLeft] = 
-                            viewportElementCSS[_strMarginMinus + isRTLLeft] = _strEmpty;
+                            viewportElementCSS[_strPaddingMinus + isRTLLeft] =
+                                viewportElementCSS[_strMarginMinus + isRTLLeft] = _strEmpty;
 
                             //if there is any overflow (x OR y axis) and this overflow shall be hidden, make overflow hidden, else overflow visible
                             if ((hasOverflow.x && hideOverflow.x) || (hasOverflow.y && hideOverflow.y) || hideOverflowForceTextarea) {
                                 //only hide if is Textarea
                                 if (_isTextarea && hideOverflowForceTextarea) {
-                                    paddingElementCSS[strOverflowX] = 
-                                    paddingElementCSS[strOverflowY] = strHidden;
+                                    paddingElementCSS[strOverflowX] =
+                                        paddingElementCSS[strOverflowY] = strHidden;
                                 }
                             }
                             else {
                                 if (!clipAlways || (overflowBehaviorIsVH.x || overflowBehaviorIsVS.x || overflowBehaviorIsVH.y || overflowBehaviorIsVS.y)) {
                                     //only un-hide if Textarea
                                     if (_isTextarea) {
-                                        paddingElementCSS[strOverflowX] = 
-                                        paddingElementCSS[strOverflowY] = _strEmpty;
+                                        paddingElementCSS[strOverflowX] =
+                                            paddingElementCSS[strOverflowY] = _strEmpty;
                                     }
-                                    viewportElementCSS[strOverflowX] = 
-                                    viewportElementCSS[strOverflowY] = strVisible;
+                                    viewportElementCSS[strOverflowX] =
+                                        viewportElementCSS[strOverflowY] = strVisible;
                                 }
                             }
 
@@ -3842,21 +2793,22 @@
 
                             //force soft redraw in webkit because without the scrollbars will may appear because DOM wont be redrawn under special conditions
                             if ((hasOverflow.c || boxSizingChanged || widthAutoChanged || heightAutoChanged) && !(_nativeScrollbarIsOverlaid.x && _nativeScrollbarIsOverlaid.y)) {
-                                var element = _contentElement[0];
-                                var elementStyle = element[LEXICON.s];
+                                var elementStyle = _contentElementNative[LEXICON.s];
                                 var dump;
                                 elementStyle.webkitTransform = 'scale(1)';
                                 elementStyle.display = 'run-in';
-                                dump = element[LEXICON.oH];
+                                dump = _contentElementNative[LEXICON.oH];
                                 elementStyle.display = _strEmpty; //|| dump; //use dump to prevent it from deletion if minify
                                 elementStyle.webkitTransform = _strEmpty;
                             }
+                            /*
                             //force hard redraw in webkit if native overlaid scrollbars shall appear
                             if (ignoreOverlayScrollbarHidingChanged && ignoreOverlayScrollbarHiding) {
-                                //_hostElement.hide();
-                                //var dump = hostElement[LEXICON.oH];
-                                //_hostElement.show();
+                                _hostElement.hide();
+                                var dump = _hostElementNative[LEXICON.oH];
+                                _hostElement.show();
                             }
+                            */
                         }
 
                         //change to direction RTL and width auto Bugfix in Webkit
@@ -3865,9 +2817,9 @@
                         if (cssDirectionChanged || widthAutoChanged || heightAutoChanged) {
                             if (_isRTL && widthAuto) {
                                 var floatTmp = _contentElement.css(_strFloat);
-                                var posLeftWithoutFloat = Math.round(_contentElement.css(_strFloat, _strEmpty).css(_strLeft, _strEmpty).position().left);
+                                var posLeftWithoutFloat = MATH.round(_contentElement.css(_strFloat, _strEmpty).css(_strLeft, _strEmpty).position().left);
                                 _contentElement.css(_strFloat, floatTmp);
-                                var posLeftWithFloat = Math.round(_contentElement.position().left);
+                                var posLeftWithFloat = MATH.round(_contentElement.position().left);
 
                                 if (posLeftWithoutFloat !== posLeftWithFloat)
                                     contentElementCSS[_strLeft] = posLeftWithoutFloat;
@@ -3878,15 +2830,45 @@
                         }
                         _contentElement.css(contentElementCSS);
 
+                        //handle scroll position
+                        if (_isTextarea && contentSizeChanged) {
+                            var textareaInfo = getTextareaInfo();
+                            if (textareaInfo) {
+                                var textareaRowsChanged = _textareaInfoCache === undefined ? true : textareaInfo._rows !== _textareaInfoCache._rows;
+                                var cursorRow = textareaInfo._cursorRow;
+                                var cursorCol = textareaInfo._cursorColumn;
+                                var widestRow = textareaInfo._widestRow;
+                                var lastRow = textareaInfo._rows;
+                                var lastCol = textareaInfo._columns;
+                                var cursorPos = textareaInfo._cursorPosition;
+                                var cursorMax = textareaInfo._cursorMax;
+                                var cursorIsLastPosition = (cursorPos >= cursorMax && _textareaHasFocus);
+                                var textareaScrollAmount = {
+                                    x: (!textareaAutoWrapping && (cursorCol === lastCol && cursorRow === widestRow)) ? _overflowAmountCache.x : -1,
+                                    y: (textareaAutoWrapping ? cursorIsLastPosition || textareaRowsChanged && (previousOverflow !== undefined ? (currScroll.y === previousOverflow.y) : false) : (cursorIsLastPosition || textareaRowsChanged) && cursorRow === lastRow) ? _overflowAmountCache.y : -1
+                                };
+                                currScroll.x = textareaScrollAmount.x > -1 ? (_isRTL && _normalizeRTLCache && _rtlScrollBehavior.i ? 0 : textareaScrollAmount.x) : currScroll.x; //if inverted, scroll to 0 -> normalized this means to max scroll offset.
+                                currScroll.y = textareaScrollAmount.y > -1 ? textareaScrollAmount.y : currScroll.y;
+                            }
+                            _textareaInfoCache = textareaInfo;
+                        }
+                        if (_isRTL && _rtlScrollBehavior.i && _nativeScrollbarIsOverlaid.y && hasOverflow.x && _normalizeRTLCache)
+                            currScroll.x += _contentBorderSize.w || 0;
+                        if(widthAuto)
+                            _hostElement[_strScrollLeft](0);
+                        if(heightAuto)
+                            _hostElement[_strScrollTop](0);
+                        _viewportElement[_strScrollLeft](currScroll.x)[_strScrollTop](currScroll.y);
+
                         //scrollbars management:
                         var scrollbarsVisibilityVisible = scrollbarsVisibility === 'v';
                         var scrollbarsVisibilityHidden = scrollbarsVisibility === 'h';
                         var scrollbarsVisibilityAuto = scrollbarsVisibility === 'a';
 
-                        var showScrollbarH = compatibility.bind(refreshScrollbarAppearance, 0, true, true, canScroll.x);
-                        var showScrollbarV = compatibility.bind(refreshScrollbarAppearance, 0, false, true, canScroll.y);
-                        var hideScrollbarH = compatibility.bind(refreshScrollbarAppearance, 0, true, false, canScroll.x);
-                        var hideScrollbarV = compatibility.bind(refreshScrollbarAppearance, 0, false, false, canScroll.y);
+                        var showScrollbarH = COMPATIBILITY.bind(refreshScrollbarAppearance, 0, true, true, canScroll.x);
+                        var showScrollbarV = COMPATIBILITY.bind(refreshScrollbarAppearance, 0, false, true, canScroll.y);
+                        var hideScrollbarH = COMPATIBILITY.bind(refreshScrollbarAppearance, 0, true, false, canScroll.x);
+                        var hideScrollbarV = COMPATIBILITY.bind(refreshScrollbarAppearance, 0, false, false, canScroll.y);
 
                         //manage class name which indicates scrollable overflow
                         if (hideOverflow.x || hideOverflow.y)
@@ -3914,19 +2896,19 @@
                         if (_isBody)
                             addClass(_hostElement, _classNameHostResizeDisabled);
                         if (resizeChanged) {
-                            var addCornerEvents = function () { _scrollbarCornerElement.on(_strMouseTouchDownEvent, scrollbarCornerOnMouseDown); };
-                            var removeCornerEvents = function () { _scrollbarCornerElement.off(_strMouseTouchDownEvent, scrollbarCornerOnMouseDown); };
+                            var addCornerEvents = function () { _scrollbarCornerElement.on(_strMouseTouchDownEvent, _resizeOnMouseTouchDown); };
+                            var removeCornerEvents = function () { _scrollbarCornerElement.off(_strMouseTouchDownEvent, _resizeOnMouseTouchDown); };
+                            removeClass(_scrollbarCornerElement, [
+                                _classNameHostResizeDisabled,
+                                _classNameScrollbarCornerResize,
+                                _classNameScrollbarCornerResizeB,
+                                _classNameScrollbarCornerResizeH,
+                                _classNameScrollbarCornerResizeV].join(_strSpace));
                             if (_resizeNone) {
                                 addClass(_hostElement, _classNameHostResizeDisabled);
-                                removeClass(_scrollbarCornerElement, [
-                                    _classNameScrollbarCornerResize,
-                                    _classNameScrollbarCornerResizeB,
-                                    _classNameScrollbarCornerResizeH,
-                                    _classNameScrollbarCornerResizeV].join(_strSpace));
                                 removeCornerEvents();
                             }
                             else {
-                                removeClass(_hostElement, _classNameHostResizeDisabled);
                                 addClass(_scrollbarCornerElement, _classNameScrollbarCornerResize);
                                 if (_resizeBoth)
                                     addClass(_scrollbarCornerElement, _classNameScrollbarCornerResizeB);
@@ -3974,46 +2956,12 @@
 
                         //manage the scrollbars auto hide feature (auto hide them after specific actions)
                         if (scrollbarsAutoHideChanged || ignoreOverlayScrollbarHidingChanged) {
-                            var addMouseTouchEvents = function (move) {
-                                if (_supportPassiveEvents) {
-                                    if(move)
-                                        addPassiveEventListener(_hostElement, _strMouseTouchMoveEvent, hostOnMouseMove);
-                                    else {
-                                        addPassiveEventListener(_hostElement, _strMouseTouchEnter, hostOnMouseEnter);
-                                        addPassiveEventListener(_hostElement, _strMouseTouchLeave, hostOnMouseLeave);
-                                    }
-                                }
-                                else {
-                                    if(move)
-                                        _hostElement.on(_strMouseTouchMoveEvent, hostOnMouseMove);
-                                    else {
-                                        _hostElement.on(_strMouseTouchEnter, hostOnMouseEnter)
-                                            .on(_strMouseTouchLeave, hostOnMouseLeave);
-                                    }
-                                }
-
-                                //if the plugin is initialized and the mouse is over the host element, make the scrollbars visible
-                                if(!_initialized)
-                                    _hostElement.one("mouseover", hostOnMouseEnter);
-                            };
-                            var removeMouseTouchEvents = function () {
-                                if (_supportPassiveEvents) {
-                                    removePassiveEventListener(_hostElement, _strMouseTouchMoveEvent, hostOnMouseMove);
-                                    removePassiveEventListener(_hostElement, _strMouseTouchEnter, hostOnMouseEnter);
-                                    removePassiveEventListener(_hostElement, _strMouseTouchLeave, hostOnMouseLeave);
-                                }
-                                else {
-                                    _hostElement.off(_strMouseTouchMoveEvent, hostOnMouseMove)
-                                        .off(_strMouseTouchEnter, hostOnMouseEnter)
-                                        .off(_strMouseTouchLeave, hostOnMouseLeave);
-                                }
-                            };
                             if (_scrollbarsAutoHideLeave || _scrollbarsAutoHideMove) {
-                                removeMouseTouchEvents();
-                                addMouseTouchEvents(_scrollbarsAutoHideMove);
+                                setupHostMouseTouchEvents(true);
+                                setupHostMouseTouchEvents();
                             }
                             else {
-                                removeMouseTouchEvents();
+                                setupHostMouseTouchEvents(true);
                             }
 
                             if (_scrollbarsAutoHideNever)
@@ -4022,12 +2970,12 @@
                                 refreshScrollbarsAutoHide(false, true);
                         }
 
-                        //manage scrollbars handle length and offset
+                        //manage scrollbars handle length & offset - don't remove!
                         if (hostSizeChanged || overflowAmount.c || heightAutoChanged || widthAutoChanged || resizeChanged || boxSizingChanged || paddingAbsoluteChanged || ignoreOverlayScrollbarHidingChanged || cssDirectionChanged) {
                             refreshScrollbarHandleLength(true);
-                            refreshScrollbarHandleOffset(true, currScroll.l);
+                            refreshScrollbarHandleOffset(true);
                             refreshScrollbarHandleLength(false);
-                            refreshScrollbarHandleOffset(false, currScroll.t);
+                            refreshScrollbarHandleOffset(false);
                         }
 
                         //manage interactivity
@@ -4036,66 +2984,27 @@
                         if (scrollbarsDragScrollingChanged)
                             refreshScrollbarsInteractive(false, scrollbarsDragScrolling);
 
-                        //handle scroll
-                        if (_isTextarea && contentSizeChanged) {
-                            var textareaInfo = getTextareaInfo();
-                            if (textareaInfo) {
-                                var textareaRowsChanged = _textareaInfoCache === undefined ? true : textareaInfo.rows !== _textareaInfoCache.rows;
-                                var cursorRow = textareaInfo.cR;
-                                var cursorCol = textareaInfo.cC;
-                                var widestRow = textareaInfo.w;
-                                var lastRow = textareaInfo.r;
-                                var lastCol = textareaInfo.c;
-                                var cursorPos = textareaInfo.p;
-                                var cursorMax = textareaInfo.m;
-                                var cursorIsLastPosition = (cursorMax === cursorPos && _textareaHasFocus);
-                                var doScroll = {
-                                    x: (!textareaAutoWrapping && (cursorCol === lastCol && cursorRow === widestRow)) ? _overflowAmountCache.x : -1,
-                                    y: (textareaAutoWrapping ? cursorIsLastPosition || textareaRowsChanged && (previousOverflow !== undefined ? (currScroll.t === previousOverflow.y) : false) : (cursorIsLastPosition || textareaRowsChanged) && cursorRow === lastRow) ? _overflowAmountCache.y : -1
-                                };
-                                var doScrollX = doScroll.x > -1;
-                                var doScrollY = doScroll.y > -1;
-
-                                if (doScrollX || doScrollY) {
-                                    if (doScrollY)
-                                        _viewportElement[_strScrollTop](doScroll.y);
-                                    if (doScrollX) {
-                                        if (_isRTL && _normalizeRTLCache && _rtlScrollBehavior.i)
-                                            _viewportElement[_strScrollLeft](0); //if inverted, scroll to 0 -> normalized this means to max scroll offset.
-                                        else
-                                            _viewportElement[_strScrollLeft](doScroll.x);
-                                    }
-                                }
-                            }
-                            _textareaInfoCache = textareaInfo;
-                        }
-                        else if (!_isTextarea) {
-                            if (_isRTL && _rtlScrollBehavior.i && _nativeScrollbarIsOverlaid.y && hasOverflow.x && _normalizeRTLCache)
-                                currScroll.l += _contentBorderSize.w || 0;
-                            _viewportElement[_strScrollLeft](currScroll.l);
-                            _viewportElement[_strScrollTop](currScroll.t);
-                        }
-
+                        //callbacks:
                         if (cssDirectionChanged) {
-                            callCallback("onDirectionChanged", {
+                            dispatchCallback("onDirectionChanged", {
                                 isRTL: _isRTL,
                                 dir: cssDirection
                             });
                         }
                         if (hostSizeChanged) {
-                            callCallback("onHostSizeChanged", {
+                            dispatchCallback("onHostSizeChanged", {
                                 width: _hostSizeCache.w,
                                 height: _hostSizeCache.h
                             });
                         }
                         if (contentSizeChanged) {
-                            callCallback("onContentSizeChanged", {
+                            dispatchCallback("onContentSizeChanged", {
                                 width: _contentScrollSizeCache.w,
                                 height: _contentScrollSizeCache.h
                             });
                         }
                         if (hasOverflow.c || hideOverflow.c) {
-                            callCallback("onOverflowChanged", {
+                            dispatchCallback("onOverflowChanged", {
                                 x: hasOverflow.x,
                                 y: hasOverflow.y,
                                 xScrollable: hideOverflow.xs,
@@ -4104,7 +3013,7 @@
                             });
                         }
                         if (overflowAmount.c) {
-                            callCallback("onOverflowAmountChanged", {
+                            dispatchCallback("onOverflowAmountChanged", {
                                 x: overflowAmount.x,
                                 y: overflowAmount.y
                             });
@@ -4126,7 +3035,7 @@
                     unfreezeResizeObserver(_sizeObserverElement);
                     unfreezeResizeObserver(_sizeAutoObserverElement);
 
-                    callCallback("onUpdated", { forced: force });
+                    dispatchCallback("onUpdated", { forced: force });
                 }
 
 
@@ -4137,168 +3046,462 @@
                  * @param newOptions The object which contains the new options.
                  */
                 function setOptions(newOptions) {
-                    _currentOptions = extend(true, {}, _currentOptions, _pluginsOptions.v(newOptions, _pluginsOptions.t, true));
-                    _currentPreparedOptions = extend(true, {}, _currentPreparedOptions, _pluginsOptions.v(newOptions, _pluginsOptions.t, false, true));
+                    _currentOptions = extendDeep({}, _currentOptions, _pluginsOptions._validate(newOptions, _pluginsOptions._template, true));
+                    _currentPreparedOptions = extendDeep({}, _currentPreparedOptions, _pluginsOptions._validate(newOptions, _pluginsOptions._template, false, true));
                 }
+
+
+                //==== Structure ====//
+
+                /**
+                 * Builds or destroys the wrapper and helper DOM elements.
+                 * @param destroy Indicates whether the DOM shall be build or destroyed.
+                 */
+                function setupStructureDOM(destroy) {
+                    var adoptAttrs = _currentPreparedOptions.textarea.inheritedAttrs;
+                    var adoptAttrsMap = { };
+                    var applyAdoptedAttrs = function() {
+                        var applyAdoptedAttrsElm = destroy ? _targetElement : _hostElement;
+                        FRAMEWORK.each(adoptAttrsMap, function(k, v) {
+                            if(type(v) == TYPES.s) {
+                                if(k == LEXICON.c)
+                                    applyAdoptedAttrsElm.addClass(v);
+                                else
+                                    applyAdoptedAttrsElm.attr(k, v);
+                            }
+                        });
+                    };
+                    var hostElementClassNames = [
+                        _classNameHostElement,
+                        _classNameHostTextareaElement,
+                        _classNameHostResizeDisabled,
+                        _classNameHostRTL,
+                        _classNameHostScrollbarHorizontalHidden,
+                        _classNameHostScrollbarVerticalHidden,
+                        _classNameHostTransition,
+                        _classNameHostScrolling,
+                        _classNameHostOverflow,
+                        _classNameHostOverflowX,
+                        _classNameHostOverflowY,
+                        _classNameThemeNone,
+                        _classNameTextareaElement,
+                        _classNameTextInherit,
+                        _classNameCache].join(_strSpace);
+                    adoptAttrs = type(adoptAttrs) == TYPES.s ? adoptAttrs.split(' ') : adoptAttrs;
+                    if(type(adoptAttrs) == TYPES.a) {
+                        FRAMEWORK.each(adoptAttrs, function(i, v) {
+                            if(type(v) == TYPES.s)
+                                adoptAttrsMap[v] = destroy ? _hostElement.attr(v) : _targetElement.attr(v);
+                        });
+                    }
+
+                    if(!destroy) {
+                        if (_isTextarea) {
+                            var hostElementCSS = {};
+                            var parent = _targetElement.parent();
+                            _isTextareaHostGenerated = !(parent.hasClass(_classNameHostTextareaElement) && parent.children()[LEXICON.l] === 1);
+
+                            if (!_currentPreparedOptions.sizeAutoCapable) {
+                                hostElementCSS[_strWidth] = _targetElement.css(_strWidth);
+                                hostElementCSS[_strHeight] = _targetElement.css(_strHeight);
+                            }
+                            if(_isTextareaHostGenerated)
+                                _targetElement.wrap(generateDiv(_classNameHostTextareaElement));
+
+                            _hostElement = _targetElement.parent();
+                            _hostElement.css(hostElementCSS)
+                                .wrapInner(generateDiv(_classNameContentElement + _strSpace + _classNameTextInherit))
+                                .wrapInner(generateDiv(_classNameViewportElement + _strSpace + _classNameTextInherit))
+                                .wrapInner(generateDiv(_classNamePaddingElement + _strSpace + _classNameTextInherit));
+                            _contentElement = findFirst(_hostElement, _strDot + _classNameContentElement);
+                            _viewportElement = findFirst(_hostElement, _strDot + _classNameViewportElement);
+                            _paddingElement = findFirst(_hostElement, _strDot + _classNamePaddingElement);
+                            _textareaCoverElement = FRAMEWORK(generateDiv(_classNameTextareaCoverElement));
+                            _contentElement.prepend(_textareaCoverElement);
+
+                            addClass(_targetElement, _classNameTextareaElement + _strSpace + _classNameTextInherit);
+
+                            if(_isTextareaHostGenerated)
+                                applyAdoptedAttrs();
+                        }
+                        else {
+                            _hostElement = _targetElement;
+                            _hostElement.wrapInner(generateDiv(_classNameContentElement))
+                                .wrapInner(generateDiv(_classNameViewportElement))
+                                .wrapInner(generateDiv(_classNamePaddingElement));
+                            _contentElement = findFirst(_hostElement, _strDot + _classNameContentElement);
+                            _viewportElement = findFirst(_hostElement, _strDot + _classNameViewportElement);
+                            _paddingElement = findFirst(_hostElement, _strDot + _classNamePaddingElement);
+
+                            addClass(_targetElement, _classNameHostElement);
+                        }
+
+                        if (_nativeScrollbarStyling)
+                            addClass(_viewportElement, _classNameViewportNativeScrollbarsInvisible);
+                        if(_nativeScrollbarIsOverlaid.x && _nativeScrollbarIsOverlaid.y)
+                            addClass(_viewportElement, _classNameViewportNativeScrollbarsOverlaid);
+                        if (_isBody)
+                            addClass(_htmlElement, _classNameHTMLElement);
+
+                        _sizeObserverElement = FRAMEWORK(generateDiv('os-resize-observer-host'));
+                        _hostElement.prepend(_sizeObserverElement);
+
+                        _sizeObserverElementNative = _sizeObserverElement[0];
+                        _hostElementNative = _hostElement[0];
+                        _paddingElementNative = _paddingElement[0];
+                        _viewportElementNative = _viewportElement[0];
+                        _contentElementNative = _contentElement[0];
+                    }
+                    else {
+                        _contentElement.contents()
+                            .unwrap()
+                            .unwrap()
+                            .unwrap();
+
+                        removeClass(_hostElement, hostElementClassNames);
+                        if (_isTextarea) {
+                            _targetElement.removeAttr(LEXICON.s);
+
+                            if(_isTextareaHostGenerated)
+                                applyAdoptedAttrs();
+
+                            removeClass(_targetElement, hostElementClassNames);
+                            remove(_textareaCoverElement);
+
+                            if(_isTextareaHostGenerated) {
+                                _targetElement.unwrap();
+                                remove(_hostElement);
+                            }
+                            else {
+                                addClass(_hostElement, _classNameHostTextareaElement);
+                            }
+                        }
+                        else {
+                            removeClass(_targetElement, _classNameHostElement);
+                        }
+
+                        if (_isBody)
+                            removeClass(_htmlElement, _classNameHTMLElement);
+
+                        remove(_sizeObserverElement);
+                    }
+                }
+
+                /**
+                 * Adds or removes all wrapper elements interactivity events.
+                 * @param destroy Indicates whether the Events shall be added or removed.
+                 */
+                function setupStructureEvents(destroy) {
+                    var textareaKeyDownRestrictedKeyCodes = [
+                        112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 123,    //F1 to F12
+                        33, 34,                                                   //page up, page down
+                        37, 38, 39, 40,                                           //left, up, right, down arrows
+                        16, 17, 18, 19, 20, 144                                   //Shift, Ctrl, Alt, Pause, CapsLock, NumLock
+                    ];
+                    var textareaKeyDownKeyCodesList = [ ];
+                    var textareaUpdateIntervalID;
+                    var scrollStopDelay = 175;
+                    var scrollStopTimeoutId;
+                    var strOnOff = destroy ? 'off' : 'on';
+                    var updateTextarea;
+                    var viewportOnScroll;
+
+                    if(!destroy && _isTextarea) {
+                        _textareaEvents = { };
+                        updateTextarea = function(doClearInterval) {
+                            textareaUpdate();
+                            _base.update(_strAuto);
+                            if(doClearInterval)
+                                clearInterval(textareaUpdateIntervalID);
+                        };
+                        _textareaEvents[_strScroll] = function(event) {
+                            _targetElement[_strScrollLeft](_rtlScrollBehavior.i && _normalizeRTLCache ? 9999999 : 0);
+                            _targetElement[_strScrollTop](0);
+                            COMPATIBILITY.prvD(event);
+                            COMPATIBILITY.stpP(event);
+                            return false;
+                        };
+                        _textareaEvents['drop'] = function() {
+                            setTimeout(function () {
+                                if(!_destroyed)
+                                    updateTextarea();
+                            }, 50);
+                        };
+                        _textareaEvents['focus'] = function() {
+                            _textareaHasFocus = true;
+                        };
+                        _textareaEvents['focusout'] = function() {
+                            _textareaHasFocus = false;
+                            textareaKeyDownKeyCodesList = [ ];
+                            updateTextarea(true);
+                        };
+                        if (_msieVersion > 9 || !_autoUpdateRecommended) {
+                            _textareaEvents['input'] = function textareaOnInput() {
+                                updateTextarea();
+                            }
+                        }
+                        else {
+                            _textareaEvents[_strKeyDownEvent] = function textareaOnKeyDown(event) {
+                                var keyCode = event.keyCode;
+                                if (FRAMEWORK.inArray(keyCode, textareaKeyDownRestrictedKeyCodes) > -1)
+                                    return;
+                                if (!textareaKeyDownKeyCodesList.length) {
+                                    updateTextarea();
+                                    textareaUpdateIntervalID = setInterval(updateTextarea, 1000 / 60);
+                                }
+                                if (FRAMEWORK.inArray(keyCode, textareaKeyDownKeyCodesList) === -1)
+                                    textareaKeyDownKeyCodesList.push(keyCode);
+                            };
+                            _textareaEvents[_strKeyUpEvent] = function(event) {
+                                var keyCode = event.keyCode;
+                                var index = FRAMEWORK.inArray(keyCode, textareaKeyDownKeyCodesList);
+
+                                if (FRAMEWORK.inArray(keyCode, textareaKeyDownRestrictedKeyCodes) > -1)
+                                    return;
+                                if (index > -1)
+                                    textareaKeyDownKeyCodesList.splice(index, 1);
+                                if (!textareaKeyDownKeyCodesList.length)
+                                    updateTextarea(true);
+                            };
+                        }
+                    }
+
+                    if (_isTextarea) {
+                        FRAMEWORK.each(_textareaEvents, function(key, value) {
+                            _targetElement[strOnOff](key, value);
+                        });
+                    }
+                    else {
+                        _contentElement[strOnOff](_strTransitionEndEvent, function (event) {
+                            if (_autoUpdateCache === true)
+                                return;
+                            event = event.originalEvent || event;
+                            if (isSizeAffectingCSSProperty(event.propertyName))
+                                update(_strAuto);
+                        });
+                    }
+
+                    if(!destroy) {
+                        viewportOnScroll = function(event) {
+                            if (_isSleeping)
+                                return;
+
+                            if (scrollStopTimeoutId !== undefined)
+                                clearTimeout(scrollStopTimeoutId);
+                            else {
+                                if (_scrollbarsAutoHideScroll || _scrollbarsAutoHideMove)
+                                    refreshScrollbarsAutoHide(true);
+
+                                if (!nativeOverlayScrollbarsAreActive())
+                                    addClass(_hostElement, _classNameHostScrolling);
+
+                                dispatchCallback("onScrollStart", event);
+                            }
+
+                            //if a scrollbars handle gets dragged, the mousemove event is responsible for refreshing the handle offset
+                            //because if CSS scroll-snap is used, the handle offset gets only refreshed on every snap point
+                            //this looks laggy & clunky, it looks much better if the offset refreshes with the mousemove
+                            if(!_scrollbarsHandleAsync) {
+                                refreshScrollbarHandleOffset(true);
+                                refreshScrollbarHandleOffset(false);
+                            }
+                            dispatchCallback("onScroll", event);
+
+                            scrollStopTimeoutId = setTimeout(function () {
+                                if(!_destroyed) {
+                                    //OnScrollStop:
+                                    clearTimeout(scrollStopTimeoutId);
+                                    scrollStopTimeoutId = undefined;
+
+                                    if (_scrollbarsAutoHideScroll || _scrollbarsAutoHideMove)
+                                        refreshScrollbarsAutoHide(false);
+
+                                    if (!nativeOverlayScrollbarsAreActive())
+                                        removeClass(_hostElement, _classNameHostScrolling);
+
+                                    dispatchCallback("onScrollStop", event);
+                                }
+                            }, scrollStopDelay);
+                        };
+
+                        if (_supportPassiveEvents)
+                            addPassiveEventListener(_viewportElement, _strScroll, viewportOnScroll);
+                        else
+                            _viewportElement.on(_strScroll, viewportOnScroll);
+                    }
+                }
+
 
 
                 //==== Scrollbars ====//
 
                 /**
-                 * Builds all scrollbars if they aren't already build.
+                 * Builds or destroys all scrollbar DOM elements (scrollbar, track, handle)
+                 * @param destroy Indicates whether the DOM shall be build or destroyed.
                  */
-                function buildScrollbars() {
-                    _scrollbarHorizontalElement = framework(generateDiv(_classNameScrollbar + _strSpace + _classNameScrollbarHorizontal));
-                    _scrollbarHorizontalTrackElement = framework(generateDiv(_classNameScrollbarTrack));
-                    _scrollbarHorizontalHandleElement = framework(generateDiv(_classNameScrollbarHandle));
-                    _scrollbarVerticalElement = framework(generateDiv(_classNameScrollbar + _strSpace + _classNameScrollbarVertical));
-                    _scrollbarVerticalTrackElement = framework(generateDiv(_classNameScrollbarTrack));
-                    _scrollbarVerticalHandleElement = framework(generateDiv(_classNameScrollbarHandle));
+                function setupScrollbarsDOM(destroy) {
+                    if(!destroy) {
+                        _scrollbarHorizontalElement = FRAMEWORK(generateDiv(_classNameScrollbar + _strSpace + _classNameScrollbarHorizontal));
+                        _scrollbarHorizontalTrackElement = FRAMEWORK(generateDiv(_classNameScrollbarTrack));
+                        _scrollbarHorizontalHandleElement = FRAMEWORK(generateDiv(_classNameScrollbarHandle));
+                        _scrollbarVerticalElement = FRAMEWORK(generateDiv(_classNameScrollbar + _strSpace + _classNameScrollbarVertical));
+                        _scrollbarVerticalTrackElement = FRAMEWORK(generateDiv(_classNameScrollbarTrack));
+                        _scrollbarVerticalHandleElement = FRAMEWORK(generateDiv(_classNameScrollbarHandle));
 
-                    _scrollbarHorizontalElement.append(_scrollbarHorizontalTrackElement);
-                    _scrollbarHorizontalTrackElement.append(_scrollbarHorizontalHandleElement);
-                    _scrollbarVerticalElement.append(_scrollbarVerticalTrackElement);
-                    _scrollbarVerticalTrackElement.append(_scrollbarVerticalHandleElement);
+                        _scrollbarHorizontalElement.append(_scrollbarHorizontalTrackElement);
+                        _scrollbarHorizontalTrackElement.append(_scrollbarHorizontalHandleElement);
+                        _scrollbarVerticalElement.append(_scrollbarVerticalTrackElement);
+                        _scrollbarVerticalTrackElement.append(_scrollbarVerticalHandleElement);
 
-                    _paddingElement.after(_scrollbarVerticalElement);
-                    _paddingElement.after(_scrollbarHorizontalElement);
-
-                    //scrollbar events
-                    if (_supportTransition) {
-                        _scrollbarHorizontalElement.on(_strTransitionEndEvent, function (event) {
-                            if (event.target !== _scrollbarHorizontalElement[0])
-                                return;
-                            refreshScrollbarHandleLength(true);
-                            refreshScrollbarHandleOffset(true, _viewportElement[_strScrollLeft]());
-                        });
-                        _scrollbarVerticalElement.on(_strTransitionEndEvent, function (event) {
-                            if (event.target !== _scrollbarVerticalElement[0])
-                                return;
-                            refreshScrollbarHandleLength(false);
-                            refreshScrollbarHandleOffset(false, _viewportElement[_strScrollTop]());
-                        });
+                        _paddingElement.after(_scrollbarVerticalElement);
+                        _paddingElement.after(_scrollbarHorizontalElement);
                     }
-                    initScrollbarInteractivity(true);
-                    initScrollbarInteractivity(false);
-                    _scrollbarCornerElement = framework(generateDiv(_classNameScrollbarCorner));
-                    _hostElement.append(_scrollbarCornerElement);
+                    else {
+                        remove(_scrollbarHorizontalElement);
+                        remove(_scrollbarVerticalElement);
+                    }
                 }
 
                 /**
-                 * Initializes all scrollbar interactivity. (track and handle dragging, clicking, scrolling)
+                 * Initializes all scrollbar interactivity events. (track and handle dragging, clicking, scrolling)
                  * @param isHorizontal True if the target scrollbar is the horizontal scrollbar, false if the target scrollbar is the vertical scrollbar.
                  */
-                function initScrollbarInteractivity(isHorizontal) {
+                function setupScrollbarEvents(isHorizontal) {
                     var scrollbarVars = getScrollbarVars(isHorizontal);
-                    var insideIFrame = _windowElement.top !== _windowElement;
-                    var mouseDownScroll;
-                    var mouseDownOffset;
-                    var xy = scrollbarVars.xy;
-                    var XY = scrollbarVars.XY;
-                    var scroll = _strScroll + scrollbarVars.LT;
+                    var scrollbarVarsInfo = scrollbarVars._info;
+                    var insideIFrame = _windowElementNative.top !== _windowElementNative;
+                    var xy = scrollbarVars._x_y;
+                    var XY = scrollbarVars._X_Y;
+                    var scroll = _strScroll + scrollbarVars._Left_Top;
                     var strActive = 'active';
-                    var trackTimeout;
+                    var strSnapHandle = 'snapHandle';
                     var scrollDurationFactor = 1;
                     var increaseDecreaseScrollAmountKeyCodes = [ 16, 17 ]; //shift, ctrl
+                    var trackTimeout;
+                    var mouseDownScroll;
+                    var mouseDownOffset;
+                    var mouseDownInvertedScale;
+
+                    function getPointerPosition(event) {
+                        return _msieVersion && insideIFrame ? event['screen' + XY] : COMPATIBILITY.page(event)[xy]; //use screen coordinates in EDGE & IE because the page values are incorrect in frames.
+                    }
+                    function getPreparedScrollbarsOption(name) {
+                        return _currentPreparedOptions.scrollbars[name];
+                    }
                     function increaseTrackScrollAmount() {
                         scrollDurationFactor = 0.5;
-                    };
+                    }
                     function decreaseTrackScrollAmount() {
                         scrollDurationFactor = 1;
-                    };
+                    }
                     function documentKeyDown(event) {
-                        if (framework.inArray(event.keyCode, increaseDecreaseScrollAmountKeyCodes) > -1)
+                        if (FRAMEWORK.inArray(event.keyCode, increaseDecreaseScrollAmountKeyCodes) > -1)
                             increaseTrackScrollAmount();
-                    };
+                    }
                     function documentKeyUp(event) {
-                        if (framework.inArray(event.keyCode, increaseDecreaseScrollAmountKeyCodes) > -1)
+                        if (FRAMEWORK.inArray(event.keyCode, increaseDecreaseScrollAmountKeyCodes) > -1)
                             decreaseTrackScrollAmount();
-                    };
+                    }
                     function onMouseTouchDownContinue(event) {
                         var originalEvent = event.originalEvent || event;
                         var isTouchEvent = originalEvent.touches !== undefined;
-                        return _isSleeping || nativeOverlayScrollbarsAreActive() || !_scrollbarsDragScrollingCache || (isTouchEvent && !_scrollbarsTouchSupport) ? false : compatibility.mBtn(event) === 1 || isTouchEvent;
-                    };
-                    function handleDragMove(event) {
-                        if(!onMouseTouchDownContinue(event)) {
-                            documentMouseTouchUp(event);
-                            return;
-                        }
-                            
-                        var trackLength = scrollbarVars.i.tl;
-                        var handleLength = scrollbarVars.i.hl;
-                        var scrollRange = scrollbarVars.i.ms;
-                        var scrollRaw = (_msieVersion && insideIFrame ? event['screen' + XY] : compatibility.page(event)[xy]) - mouseDownOffset; //use screen coordinates in EDGE & IE because the page values are incorrect in frames.
-                        var scrollDeltaPercent = scrollRaw / (trackLength - handleLength);
-                        var scrollDelta = (scrollRange * scrollDeltaPercent);
-                        scrollDelta = isFinite(scrollDelta) ? scrollDelta : 0;
-                        if (_isRTL && isHorizontal && !_rtlScrollBehavior.i)
-                            scrollDelta *= -1;
-                        _viewportElement[scroll](mouseDownScroll + scrollDelta);
+                        return _isSleeping || _destroyed || nativeOverlayScrollbarsAreActive() || !_scrollbarsDragScrollingCache || (isTouchEvent && !getPreparedScrollbarsOption('touchSupport')) ? false : COMPATIBILITY.mBtn(event) === 1 || isTouchEvent;
+                    }
+                    function documentDragMove(event) {
+                        if(onMouseTouchDownContinue(event)) {
+                            var trackLength = scrollbarVarsInfo._trackLength;
+                            var handleLength = scrollbarVarsInfo._handleLength;
+                            var scrollRange = scrollbarVarsInfo._maxScroll;
+                            var scrollRaw = (getPointerPosition(event) - mouseDownOffset) * mouseDownInvertedScale;
+                            var scrollDeltaPercent = scrollRaw / (trackLength - handleLength);
+                            var scrollDelta = (scrollRange * scrollDeltaPercent);
+                            scrollDelta = isFinite(scrollDelta) ? scrollDelta : 0;
+                            if (_isRTL && isHorizontal && !_rtlScrollBehavior.i)
+                                scrollDelta *= -1;
 
-                        if (!_supportPassiveEvents)
-                            compatibility.prvD(event);
-                    };
+                            _viewportElement[scroll](MATH.round(mouseDownScroll + scrollDelta));
+
+                            if(_scrollbarsHandleAsync)
+                                refreshScrollbarHandleOffset(isHorizontal, mouseDownScroll + scrollDelta);
+
+                            if (!_supportPassiveEvents)
+                                COMPATIBILITY.prvD(event);
+                        }
+                        else
+                            documentMouseTouchUp(event);
+                    }
                     function documentMouseTouchUp(event) {
                         event = event || event.originalEvent;
 
-                        removeClass(_bodyElement, _classNameDragging);
-                        removeClass(scrollbarVars.h, strActive);
-                        removeClass(scrollbarVars.t, strActive);
-                        removeClass(scrollbarVars.s, strActive);
-
-                        _documentElement.off(_strMouseTouchMoveEvent, handleDragMove)
+                        _documentElement.off(_strMouseTouchMoveEvent, documentDragMove)
                             .off(_strMouseTouchUpEvent, documentMouseTouchUp)
                             .off(_strKeyDownEvent, documentKeyDown)
                             .off(_strKeyUpEvent, documentKeyUp)
                             .off(_strSelectStartEvent, documentOnSelectStart);
 
-                        decreaseTrackScrollAmount();
+                        if(_scrollbarsHandleAsync)
+                            refreshScrollbarHandleOffset(isHorizontal, true);
+
+                        _scrollbarsHandleAsync = false;
+                        removeClass(_bodyElement, _classNameDragging);
+                        removeClass(scrollbarVars._handle, strActive);
+                        removeClass(scrollbarVars._track, strActive);
+                        removeClass(scrollbarVars._scrollbar, strActive);
+
                         mouseDownScroll = undefined;
                         mouseDownOffset = undefined;
+                        mouseDownInvertedScale = 1;
+
+                        decreaseTrackScrollAmount();
+
                         if (trackTimeout !== undefined) {
                             _base.scrollStop();
                             clearTimeout(trackTimeout);
                             trackTimeout = undefined;
                         }
-                        
-                        var rect = _hostElement[0].getBoundingClientRect();
-                        var mouseInsideHost = event.clientX >= rect.left && event.clientX <= rect.right && event.clientY >= rect.top && event.clientY <= rect.bottom;
 
-                        //if mouse is outside host element
-                        if (!mouseInsideHost)
-                            hostOnMouseLeave();
-                    
-                        if (_scrollbarsAutoHideScroll || _scrollbarsAutoHideMove)
-                            refreshScrollbarsAutoHide(false);
-                    };
+                        if(event) {
+                            var rect = _hostElementNative.getBoundingClientRect();
+                            var mouseInsideHost = event.clientX >= rect.left && event.clientX <= rect.right && event.clientY >= rect.top && event.clientY <= rect.bottom;
+
+                            //if mouse is outside host element
+                            if (!mouseInsideHost)
+                                hostOnMouseLeave();
+
+                            if (_scrollbarsAutoHideScroll || _scrollbarsAutoHideMove)
+                                refreshScrollbarsAutoHide(false);
+                        }
+                    }
                     function onHandleMouseTouchDown(event) {
                         mouseDownScroll = _viewportElement[scroll]();
-                        mouseDownScroll = mouseDownScroll === undefined ? 0 : mouseDownScroll;
+                        mouseDownScroll = isNaN(mouseDownScroll) ? 0 : mouseDownScroll;
                         if (_isRTL && isHorizontal && !_rtlScrollBehavior.n || !_isRTL)
                             mouseDownScroll = mouseDownScroll < 0 ? 0 : mouseDownScroll;
-                        mouseDownOffset = _msieVersion && insideIFrame ? event['screen' + XY] : compatibility.page(event)[xy]; //use screen coordinates in EDGE & IE because the page values are incorrect in frames.
 
+                        mouseDownInvertedScale = getHostElementInvertedScale()[xy];
+                        mouseDownOffset = getPointerPosition(event);
+
+                        _scrollbarsHandleAsync = !getPreparedScrollbarsOption(strSnapHandle);
                         addClass(_bodyElement, _classNameDragging);
-                        addClass(scrollbarVars.h, strActive);
-                        addClass(scrollbarVars.s, strActive);
+                        addClass(scrollbarVars._handle, strActive);
+                        addClass(scrollbarVars._scrollbar, strActive);
 
-                        _documentElement.on(_strMouseTouchMoveEvent, handleDragMove)
+                        _documentElement.on(_strMouseTouchMoveEvent, documentDragMove)
                             .on(_strMouseTouchUpEvent, documentMouseTouchUp)
                             .on(_strSelectStartEvent, documentOnSelectStart);
 
                         if(_msieVersion || !_documentMixed)
-                            compatibility.prvD(event);
-                        compatibility.stpP(event);
-                    };
-                    scrollbarVars.h.on(_strMouseTouchDownEvent, function(event) {
+                            COMPATIBILITY.prvD(event);
+                        COMPATIBILITY.stpP(event);
+                    }
+                    scrollbarVars._handle.on(_strMouseTouchDownEvent, function(event) {
                         if (onMouseTouchDownContinue(event))
                             onHandleMouseTouchDown(event);
                     });
-                    scrollbarVars.t.on(_strMouseTouchDownEvent, function(event) {
+                    scrollbarVars._track.on(_strMouseTouchDownEvent, function(event) {
                         if (onMouseTouchDownContinue(event)) {
-                            var scrollDistance = _viewportSize[scrollbarVars._wh];
-                            var trackOffset = scrollbarVars.t.offset()[scrollbarVars.lt];
+                            var scrollDistance = MATH.round(_viewportSize[scrollbarVars._w_h]);
+                            var trackOffset = scrollbarVars._track.offset()[scrollbarVars._left_top];
                             var ctrlKey = event.ctrlKey;
                             var instantScroll = event.shiftKey;
                             var instantScrollTransition = instantScroll && ctrlKey;
@@ -4306,60 +3509,97 @@
                             var easing = 'linear';
                             var decreaseScroll;
                             var finishedCondition;
+                            var scrollActionFinsished = function(transition) {
+                                if(_scrollbarsHandleAsync)
+                                    refreshScrollbarHandleOffset(isHorizontal, transition);
+                            };
+                            var scrollActionInstantFinished = function() {
+                                scrollActionFinsished();
+                                onHandleMouseTouchDown(event);
+                            };
                             var scrollAction = function () {
                                 if(!_destroyed) {
-                                    var mouseOffset = mouseDownOffset - trackOffset;
-                                    var trackLength = scrollbarVars.i.tl;
-                                    var handleOffset = scrollbarVars.i.ho;
-                                    var handleLength = scrollbarVars.i.hl;
-                                    var scrollRange = scrollbarVars.i.ms;
+                                    var mouseOffset = (mouseDownOffset - trackOffset) * mouseDownInvertedScale;
+                                    var handleOffset = scrollbarVarsInfo._handleOffset;
+                                    var trackLength = scrollbarVarsInfo._trackLength;
+                                    var handleLength = scrollbarVarsInfo._handleLength;
+                                    var scrollRange = scrollbarVarsInfo._maxScroll;
+                                    var currScroll = scrollbarVarsInfo._currentScroll;
                                     var scrollDuration = 270 * scrollDurationFactor;
-                                    var timeoutDelay = isFirstIteration ? Math.max(400, scrollDuration) : scrollDuration;
+                                    var timeoutDelay = isFirstIteration ? MATH.max(400, scrollDuration) : scrollDuration;
                                     var instantScrollPosition = scrollRange * ((mouseOffset - (handleLength / 2)) / (trackLength - handleLength)); // 100% * positionPercent
                                     var rtlIsNormal = _isRTL && isHorizontal && ((!_rtlScrollBehavior.i && !_rtlScrollBehavior.n) || _normalizeRTLCache);
                                     var decreaseScrollCondition = rtlIsNormal ? handleOffset < mouseOffset : handleOffset > mouseOffset;
                                     var scrollObj = { };
+                                    var animationObj = {
+                                        easing : easing,
+                                        step : function(now) {
+                                            if(_scrollbarsHandleAsync) {
+                                                _viewportElement[scroll](now); //https://github.com/jquery/jquery/issues/4340
+                                                refreshScrollbarHandleOffset(isHorizontal, now);
+                                            }
+                                        }
+                                    };
+                                    instantScrollPosition = isFinite(instantScrollPosition) ? instantScrollPosition : 0;
+                                    instantScrollPosition = _isRTL && isHorizontal && !_rtlScrollBehavior.i ? (scrollRange - instantScrollPosition) : instantScrollPosition;
+
+                                    //_base.scrollStop();
 
                                     if(instantScroll) {
-                                        instantScrollPosition = isFinite(instantScrollPosition) ? instantScrollPosition : 0;
-                                        if (_isRTL && isHorizontal && !_rtlScrollBehavior.i)
-                                            instantScrollPosition = (scrollRange - instantScrollPosition);
+                                        _viewportElement[scroll](instantScrollPosition); //scroll instantly to new position
                                         if(instantScrollTransition) {
-                                            scrollObj.n = false;
+                                            //get the scroll position after instant scroll (in case CSS Snap Points are used) to get the correct snapped scroll position
+                                            //and the animation stops at the correct point
+                                            instantScrollPosition = _viewportElement[scroll]();
+                                            //scroll back to the position before instant scrolling so animation can be performed
+                                            _viewportElement[scroll](currScroll);
+
+                                            instantScrollPosition = rtlIsNormal && _rtlScrollBehavior.i ? (scrollRange - instantScrollPosition) : instantScrollPosition;
+                                            instantScrollPosition = rtlIsNormal && _rtlScrollBehavior.n ? -instantScrollPosition : instantScrollPosition;
+
                                             scrollObj[xy] = instantScrollPosition;
-                                            _base.scroll(scrollObj, 130, easing, function() { onHandleMouseTouchDown(event); });
+                                            _base.scroll(scrollObj, extendDeep(animationObj, {
+                                                duration : 130,
+                                                complete : scrollActionInstantFinished
+                                            }));
                                         }
-                                        else {
-                                            _viewportElement[scroll](instantScrollPosition);
-                                            onHandleMouseTouchDown(event);
-                                        }
+                                        else
+                                            scrollActionInstantFinished();
                                     }
                                     else {
                                         decreaseScroll = isFirstIteration ? decreaseScrollCondition : decreaseScroll;
-                                        finishedCondition = rtlIsNormal ? decreaseScroll ? handleOffset + handleLength >= mouseOffset : handleOffset <= mouseOffset : decreaseScroll ? handleOffset <= mouseOffset : handleOffset + handleLength >= mouseOffset;
-
-                                        scrollObj[xy] = decreaseScroll ? '-=' + scrollDistance : '+=' + scrollDistance;
-                                        _base.scrollStop();
-                                        _base.scroll(scrollObj, scrollDuration, easing);
+                                        finishedCondition = rtlIsNormal
+                                            ? (decreaseScroll ? handleOffset + handleLength >= mouseOffset : handleOffset <= mouseOffset)
+                                            : (decreaseScroll ? handleOffset <= mouseOffset : handleOffset + handleLength >= mouseOffset);
 
                                         if (finishedCondition) {
                                             clearTimeout(trackTimeout);
                                             _base.scrollStop();
                                             trackTimeout = undefined;
+                                            scrollActionFinsished(true);
                                         }
-                                        else
+                                        else {
                                             trackTimeout = setTimeout(scrollAction, timeoutDelay);
+
+                                            scrollObj[xy] = (decreaseScroll ? '-=' : '+=') + scrollDistance;
+                                            _base.scroll(scrollObj, extendDeep(animationObj, {
+                                                duration: scrollDuration
+                                            }));
+                                        }
                                         isFirstIteration = false;
                                     }
                                 }
                             };
                             if (ctrlKey)
                                 increaseTrackScrollAmount();
-                            mouseDownOffset = compatibility.page(event)[xy];
 
+                            mouseDownInvertedScale = getHostElementInvertedScale()[xy];
+                            mouseDownOffset = COMPATIBILITY.page(event)[xy];
+
+                            _scrollbarsHandleAsync = !getPreparedScrollbarsOption(strSnapHandle);
                             addClass(_bodyElement, _classNameDragging);
-                            addClass(scrollbarVars.t, strActive);
-                            addClass(scrollbarVars.s, strActive);
+                            addClass(scrollbarVars._track, strActive);
+                            addClass(scrollbarVars._scrollbar, strActive);
 
                             _documentElement.on(_strMouseTouchUpEvent, documentMouseTouchUp)
                                 .on(_strKeyDownEvent, documentKeyDown)
@@ -4367,23 +3607,30 @@
                                 .on(_strSelectStartEvent, documentOnSelectStart);
 
                             scrollAction();
-                            compatibility.prvD(event);
-                            compatibility.stpP(event);
+                            COMPATIBILITY.prvD(event);
+                            COMPATIBILITY.stpP(event);
                         }
-                    }).hover(function() { //make sure both scrollbars will stay visible if one scrollbar is hovered if autoHide is "scroll".
-                        if (_scrollbarsAutoHideScroll || _scrollbarsAutoHideMove) {
-                            _scrollbarsAutoHideFlagScrollAndHovered = true;
+                    }).on(_strMouseTouchEnter, function() { //make sure both scrollbars will stay visible if one scrollbar is hovered if autoHide is "scroll" or "move".
+                        _scrollbarsHandleHovered = true;
+                        if (_scrollbarsAutoHideScroll || _scrollbarsAutoHideMove)
                             refreshScrollbarsAutoHide(true);
-                        }
-                    }, function() {
-                        if (_scrollbarsAutoHideScroll || _scrollbarsAutoHideMove) {
-                            _scrollbarsAutoHideFlagScrollAndHovered = false;
+
+                    }).on(_strMouseTouchLeave, function() {
+                        _scrollbarsHandleHovered = false;
+                        if (_scrollbarsAutoHideScroll || _scrollbarsAutoHideMove)
                             refreshScrollbarsAutoHide(false);
-                        }
                     });
-                    scrollbarVars.s.on(_strMouseTouchDownEvent, function(event) {
-                        compatibility.stpP(event);
+                    scrollbarVars._scrollbar.on(_strMouseTouchDownEvent, function(event) {
+                        COMPATIBILITY.stpP(event);
                     });
+                    if (_supportTransition) {
+                        scrollbarVars._scrollbar.on(_strTransitionEndEvent, function(event) {
+                            if (event.target !== scrollbarVars._scrollbar[0])
+                                return;
+                            refreshScrollbarHandleLength(isHorizontal);
+                            refreshScrollbarHandleOffset(isHorizontal);
+                        });
+                    }
                 }
 
                 /**
@@ -4421,10 +3668,11 @@
                         removeClass(_scrollbarVerticalElement, _classNameScrollbarAutoHidden);
                     }
                     else {
+                        var anyActive;
                         var strActive = 'active';
                         var hide = function () {
-                            if (!_scrollbarsAutoHideFlagScrollAndHovered && !_destroyed) {
-                                var anyActive = _scrollbarHorizontalHandleElement.hasClass(strActive) || _scrollbarVerticalHandleElement.hasClass(strActive);
+                            if (!_scrollbarsHandleHovered && !_destroyed) {
+                                anyActive = _scrollbarHorizontalHandleElement.hasClass(strActive) || _scrollbarVerticalHandleElement.hasClass(strActive);
                                 if (!anyActive && (_scrollbarsAutoHideScroll || _scrollbarsAutoHideMove || _scrollbarsAutoHideLeave))
                                     addClass(_scrollbarHorizontalElement, _classNameScrollbarAutoHidden);
                                 if (!anyActive && (_scrollbarsAutoHideScroll || _scrollbarsAutoHideMove || _scrollbarsAutoHideLeave))
@@ -4445,80 +3693,99 @@
                 function refreshScrollbarHandleLength(isHorizontal) {
                     var handleCSS = {};
                     var scrollbarVars = getScrollbarVars(isHorizontal);
+                    var scrollbarVarsInfo = scrollbarVars._info;
                     var digit = 1000000;
                     //get and apply intended handle length
-                    var handleRatio = Math.min(1, (_hostSizeCache[scrollbarVars._wh] - (_paddingAbsoluteCache ? (isHorizontal ? _paddingX : _paddingY) : 0)) / _contentScrollSizeCache[scrollbarVars._wh]);
-                    handleCSS[scrollbarVars.wh] = (Math.floor(handleRatio * 100 * digit) / digit) + "%"; //the last * digit / digit is for flooring to the 4th digit
+                    var handleRatio = MATH.min(1, (_hostSizeCache[scrollbarVars._w_h] - (_paddingAbsoluteCache ? (isHorizontal ? _paddingX : _paddingY) : 0)) / _contentScrollSizeCache[scrollbarVars._w_h]);
+                    handleCSS[scrollbarVars._width_height] = (MATH.floor(handleRatio * 100 * digit) / digit) + "%"; //the last * digit / digit is for flooring to the 4th digit
 
                     if (!nativeOverlayScrollbarsAreActive())
-                        scrollbarVars.h.css(handleCSS);
+                        scrollbarVars._handle.css(handleCSS);
 
                     //measure the handle length to respect min & max length
-                    scrollbarVars.i.hl = scrollbarVars.h[0]['offset' + scrollbarVars.WH];   //hl = handle length
-                    scrollbarVars.i.hlr = handleRatio;                                      //hr = handle length ratio
+                    scrollbarVarsInfo._handleLength = scrollbarVars._handle[0]['offset' + scrollbarVars._Width_Height];
+                    scrollbarVarsInfo._handleLengthRatio = handleRatio;
                 }
 
                 /**
                  * Refreshes the handle offset of the given scrollbar.
                  * @param isHorizontal True if the horizontal scrollbar handle shall be refreshed, false if the vertical one shall be refreshed.
-                 * @param currentScroll The current scroll offset of the given scrollbar axis. (if isHorizontal ? scrollLeft : scrollTop)
+                 * @param scrollOrTransition The scroll position of the given scrollbar axis to which the handle shall be moved or a boolean which indicates whether a transition shall be applied. If undefined or boolean if the current scroll-offset is taken. (if isHorizontal ? scrollLeft : scrollTop)
                  */
-                function refreshScrollbarHandleOffset(isHorizontal, currentScroll) {
+                function refreshScrollbarHandleOffset(isHorizontal, scrollOrTransition) {
+                    var transition = type(scrollOrTransition) == TYPES.b;
+                    var transitionDuration = 250;
                     var isRTLisHorizontal = _isRTL && isHorizontal;
-                    var handleCSS = {};
                     var scrollbarVars = getScrollbarVars(isHorizontal);
+                    var scrollbarVarsInfo = scrollbarVars._info;
                     var strTranslateBrace = 'translate(';
-                    var strTransform = 'transform';
-                    var translateValue;
+                    var strTransform = VENDORS._cssProperty('transform');
+                    var strTransition = VENDORS._cssProperty('transition');
+                    var nativeScroll = isHorizontal ? _viewportElement[_strScrollLeft]() : _viewportElement[_strScrollTop]();
+                    var currentScroll = scrollOrTransition === undefined || transition ? nativeScroll : scrollOrTransition;
 
                     //measure the handle length to respect min & max length
-                    //DONT use the variable '_contentScrollSizeCache[scrollbarVars._wh]' instead of '_viewportElement[0]['scroll' + scrollbarVars.WH]'
-                    // because its a bit behind during the small delay when content size updates
-                    //(delay = _mutationObserverContentLag, if its 0 then this var could be used)
-                    var maxScroll = _viewportElement[0][_strScroll + scrollbarVars.WH] - _viewportElement[0]['client' + scrollbarVars.WH];
-                    var handleLength = scrollbarVars.i.hl;
-                    var trackLength = scrollbarVars.t[0]['offset' + scrollbarVars.WH];
+                    var handleLength = scrollbarVarsInfo._handleLength;
+                    var trackLength = scrollbarVars._track[0]['offset' + scrollbarVars._Width_Height];
                     var handleTrackDiff = trackLength - handleLength;
-                    var offset = handleTrackDiff;
+                    var handleCSS = {};
                     var transformOffset;
-                    var posRatio;
+                    var translateValue;
 
-                    //if rtl scroll max is negative
-                    if (_rtlScrollBehavior.n && isRTLisHorizontal)
-                        maxScroll *= -1;
+                    //DONT use the variable '_contentScrollSizeCache[scrollbarVars._w_h]' instead of '_viewportElement[0]['scroll' + scrollbarVars._Width_Height]'
+                    // because its a bit behind during the small delay when content size updates
+                    //(delay = mutationObserverContentLag, if its 0 then this var could be used)
+                    var maxScroll = (_viewportElementNative[_strScroll + scrollbarVars._Width_Height] - _viewportElementNative['client' + scrollbarVars._Width_Height]) * (_rtlScrollBehavior.n && isRTLisHorizontal ? -1 : 1); //* -1 if rtl scroll max is negative
+                    var getScrollRatio = function(base) {
+                        return isNaN(base / maxScroll) ? 0 : MATH.max(0, MATH.min(1, base / maxScroll));
+                    };
+                    var getHandleOffset = function(scrollRatio) {
+                        var offset = handleTrackDiff * scrollRatio;
+                        offset = isNaN(offset) ? 0 : offset;
+                        offset = (isRTLisHorizontal && !_rtlScrollBehavior.i) ? (trackLength - handleLength - offset) : offset;
+                        offset = MATH.max(0, offset);
+                        return offset;
+                    };
+                    var scrollRatio = getScrollRatio(nativeScroll);
+                    var unsnappedScrollRatio = getScrollRatio(currentScroll);
+                    var handleOffset = getHandleOffset(unsnappedScrollRatio);
+                    var snappedHandleOffset = getHandleOffset(scrollRatio);
 
-                    posRatio = currentScroll / maxScroll;
-                    posRatio = isNaN(posRatio) ? 0 : Math.min(1, posRatio);
-
-                    scrollbarVars.i.ms = maxScroll;       //ms = max scroll
-                    scrollbarVars.i.cs = currentScroll;   //cs = current scroll
-                    scrollbarVars.i.csr = posRatio;       //csr = current scroll Ratio
-
-                    offset *= posRatio;
-                    offset = isNaN(offset) ? 0 : offset;
-                    if (isRTLisHorizontal && !_rtlScrollBehavior.i)
-                        offset = trackLength - handleLength - offset;
-                    offset = Math.max(0, offset);
+                    scrollbarVarsInfo._maxScroll = maxScroll;
+                    scrollbarVarsInfo._currentScroll = nativeScroll;
+                    scrollbarVarsInfo._currentScrollRatio = scrollRatio;
 
                     if (_supportTransform) {
-                        transformOffset = isRTLisHorizontal ? -(trackLength - handleLength - offset) : offset; //in px
-                        transformOffset = (transformOffset / trackLength * 100) * (trackLength / handleLength); //in %
-                        translateValue = isHorizontal ? strTranslateBrace + transformOffset + '%, 0)' : strTranslateBrace + '0, ' + transformOffset + '%)';
-                        handleCSS['-webkit-' + strTransform] = translateValue;
-                        handleCSS['-moz-' + strTransform] = translateValue;
-                        handleCSS['-ms-' + strTransform] = translateValue;
-                        handleCSS['-o-' + strTransform] = translateValue;
+                        transformOffset = isRTLisHorizontal ? -(trackLength - handleLength - handleOffset) : handleOffset; //in px
+                        //transformOffset = (transformOffset / trackLength * 100) * (trackLength / handleLength); //in %
+                        translateValue = isHorizontal ? strTranslateBrace + transformOffset + 'px, 0)' : strTranslateBrace + '0, ' + transformOffset + 'px)';
+
                         handleCSS[strTransform] = translateValue;
+
+                        //apply or clear up transition
+                        if(_supportTransition)
+                            handleCSS[strTransition] = transition && MATH.abs(handleOffset - scrollbarVarsInfo._handleOffset) > 1 ? getCSSTransitionString(scrollbarVars._handle) + ', ' +  (strTransform + _strSpace + transitionDuration + 'ms') : _strEmpty;
                     }
                     else
-                        handleCSS[scrollbarVars.lt] = offset;
+                        handleCSS[scrollbarVars._left_top] = handleOffset;
+
 
                     //only apply css if offset has changed and overflow exists.
-                    if (!nativeOverlayScrollbarsAreActive())
-                        scrollbarVars.h.css(handleCSS);
+                    if (!nativeOverlayScrollbarsAreActive()) {
+                        scrollbarVars._handle.css(handleCSS);
 
-                    scrollbarVars.i.ho = offset;                        //ho = handle offset
-                    scrollbarVars.i.tl = trackLength;                   //tl = track length
+                        //clear up transition
+                        if(_supportTransform && _supportTransition && transition) {
+                            scrollbarVars._handle.one(_strTransitionEndEvent, function() {
+                                if(!_destroyed)
+                                    scrollbarVars._handle.css(strTransition, _strEmpty);
+                            });
+                        }
+                    }
+
+                    scrollbarVarsInfo._handleOffset = handleOffset;
+                    scrollbarVarsInfo._snappedHandleOffset = snappedHandleOffset;
+                    scrollbarVarsInfo._trackLength = trackLength;
                 }
 
                 /**
@@ -4543,19 +3810,113 @@
                  */
                 function getScrollbarVars(isHorizontal) {
                     return {
-                        wh: isHorizontal ? _strWidth : _strHeight,
-                        WH: isHorizontal ? 'Width' : 'Height',
-                        lt: isHorizontal ? _strLeft : _strTop,
-                        LT: isHorizontal ? 'Left' : 'Top',
-                        xy: isHorizontal ? _strX : _strY,
-                        XY: isHorizontal ? 'X' : 'Y',
-                        _wh: isHorizontal ? 'w' : 'h',
-                        _lt: isHorizontal ? 'l' : 't',
-                        t: isHorizontal ? _scrollbarHorizontalTrackElement : _scrollbarVerticalTrackElement,
-                        h: isHorizontal ? _scrollbarHorizontalHandleElement : _scrollbarVerticalHandleElement,
-                        s: isHorizontal ? _scrollbarHorizontalElement : _scrollbarVerticalElement,
-                        i: isHorizontal ? _scrollHorizontalInfo : _scrollVerticalInfo
+                        _width_height: isHorizontal ? _strWidth : _strHeight,
+                        _Width_Height: isHorizontal ? 'Width' : 'Height',
+                        _left_top: isHorizontal ? _strLeft : _strTop,
+                        _Left_Top: isHorizontal ? 'Left' : 'Top',
+                        _x_y: isHorizontal ? _strX : _strY,
+                        _X_Y: isHorizontal ? 'X' : 'Y',
+                        _w_h: isHorizontal ? 'w' : 'h',
+                        _l_t: isHorizontal ? 'l' : 't',
+                        _track: isHorizontal ? _scrollbarHorizontalTrackElement : _scrollbarVerticalTrackElement,
+                        _handle: isHorizontal ? _scrollbarHorizontalHandleElement : _scrollbarVerticalHandleElement,
+                        _scrollbar: isHorizontal ? _scrollbarHorizontalElement : _scrollbarVerticalElement,
+                        _info: isHorizontal ? _scrollHorizontalInfo : _scrollVerticalInfo
                     };
+                }
+
+
+                //==== Scrollbar Corner ====//
+
+                /**
+                 * Builds or destroys the scrollbar corner DOM element.
+                 * @param destroy Indicates whether the DOM shall be build or destroyed.
+                 */
+                function setupScrollbarCornerDOM(destroy) {
+                    if(!destroy) {
+                        _scrollbarCornerElement = FRAMEWORK(generateDiv(_classNameScrollbarCorner));
+                        _hostElement.append(_scrollbarCornerElement);
+                    }
+                    else {
+                        remove(_scrollbarCornerElement);
+                    }
+                }
+
+                /**
+                 * Initializes all scrollbar corner interactivity events.
+                 */
+                function setupScrollbarCornerEvents() {
+                    var insideIFrame = _windowElementNative.top !== _windowElementNative;
+                    var mouseDownPosition = { };
+                    var mouseDownSize = { };
+                    var mouseDownInvertedScale = { };
+
+                    _resizeOnMouseTouchDown = function(event) {
+                        if (onMouseTouchDownContinue(event)) {
+                            if (_mutationObserversConnected) {
+                                _resizeReconnectMutationObserver = true;
+                                disconnectMutationObservers();
+                            }
+
+                            mouseDownPosition = getCoordinates(event);
+
+                            mouseDownSize.w = _hostElementNative[LEXICON.oW] - (!_isBorderBox ? _paddingX : 0);
+                            mouseDownSize.h = _hostElementNative[LEXICON.oH] - (!_isBorderBox ? _paddingY : 0);
+                            mouseDownInvertedScale = getHostElementInvertedScale();
+
+                            _documentElement.on(_strSelectStartEvent, documentOnSelectStart)
+                                .on(_strMouseTouchMoveEvent, documentDragMove)
+                                .on(_strMouseTouchUpEvent, documentMouseTouchUp);
+
+                            addClass(_bodyElement, _classNameDragging);
+                            if (_scrollbarCornerElement.setCapture)
+                                _scrollbarCornerElement.setCapture();
+
+                            COMPATIBILITY.prvD(event);
+                            COMPATIBILITY.stpP(event);
+                        }
+                    };
+                    function documentDragMove(event) {
+                        if (onMouseTouchDownContinue(event)) {
+                            var pageOffset = getCoordinates(event);
+                            var hostElementCSS = { };
+                            if (_resizeHorizontal || _resizeBoth)
+                                hostElementCSS[_strWidth] = (mouseDownSize.w + (pageOffset.x - mouseDownPosition.x) * mouseDownInvertedScale.x);
+                            if (_resizeVertical || _resizeBoth)
+                                hostElementCSS[_strHeight] = (mouseDownSize.h + (pageOffset.y - mouseDownPosition.y) * mouseDownInvertedScale.y);
+                            _hostElement.css(hostElementCSS);
+                            COMPATIBILITY.stpP(event);
+                        }
+                        else {
+                            documentMouseTouchUp(event);
+                        }
+                    }
+                    function documentMouseTouchUp(event) {
+                        var eventIsTrusted = event !== undefined;
+
+                        _documentElement.off(_strSelectStartEvent, documentOnSelectStart)
+                            .off(_strMouseTouchMoveEvent, documentDragMove)
+                            .off(_strMouseTouchUpEvent, documentMouseTouchUp);
+
+                        removeClass(_bodyElement, _classNameDragging);
+                        if (_scrollbarCornerElement.releaseCapture)
+                            _scrollbarCornerElement.releaseCapture();
+
+                        if (eventIsTrusted) {
+                            if (_resizeReconnectMutationObserver)
+                                connectMutationObservers();
+                            _base.update(_strAuto);
+                        }
+                        _resizeReconnectMutationObserver = false;
+                    }
+                    function onMouseTouchDownContinue(event) {
+                        var originalEvent = event.originalEvent || event;
+                        var isTouchEvent = originalEvent.touches !== undefined;
+                        return _isSleeping || _destroyed ? false : COMPATIBILITY.mBtn(event) === 1 || isTouchEvent;
+                    }
+                    function getCoordinates(event) {
+                        return _msieVersion && insideIFrame ? { x : event.screenX , y : event.screenY } : COMPATIBILITY.page(event);
+                    }
                 }
 
 
@@ -4566,7 +3927,7 @@
                  * @param name The name of the target which shall be called.
                  * @param args The args with which the callback shall be called.
                  */
-                function callCallback(name, args) {
+                function dispatchCallback(name, args) {
                     if(_initialized) {
                         var callback = _currentPreparedOptions.callbacks[name];
                         var extensionOnName = name;
@@ -4578,12 +3939,14 @@
                         if(type(callback) == TYPES.f)
                             callback.call(_base, args);
 
-                        framework.each(_extensions, function() {
+                        FRAMEWORK.each(_extensions, function() {
                             ext = this;
                             if(type(ext.on) == TYPES.f)
                                 ext.on(extensionOnName, args);
                         });
                     }
+                    else if(!_destroyed)
+                        _callbacksInitQeueue.push({ n : name, a : args });
                 }
 
                 /**
@@ -4604,6 +3967,56 @@
                 }
 
                 /**
+                 * Returns the computed CSS transition string from the given element.
+                 * @param element The element from which the transition string shall be returned.
+                 * @returns {string} The CSS transition string from the given element.
+                 */
+                function getCSSTransitionString(element) {
+                    var transitionStr = VENDORS._cssProperty('transition');
+                    var assembledValue = element.css(transitionStr);
+                    if(assembledValue)
+                        return assembledValue;
+                    var regExpString = '\\s*(' + '([^,(]+(\\(.+?\\))?)+' + ')[\\s,]*';
+                    var regExpMain = new RegExp(regExpString);
+                    var regExpValidate = new RegExp('^(' + regExpString + ')+$');
+                    var properties = 'property duration timing-function delay'.split(' ');
+                    var result = [ ];
+                    var strResult;
+                    var valueArray;
+                    var i = 0;
+                    var j;
+                    var splitCssStyleByComma = function(str) {
+                        strResult = [ ];
+                        if (!str.match(regExpValidate))
+                            return str;
+                        while (str.match(regExpMain)) {
+                            strResult.push(RegExp.$1);
+                            str = str.replace(regExpMain, _strEmpty);
+                        }
+
+                        return strResult;
+                    };
+                    for (; i < properties[LEXICON.l]; i++) {
+                        valueArray = splitCssStyleByComma(element.css(transitionStr + '-' + properties[i]));
+                        for (j = 0; j < valueArray[LEXICON.l]; j++)
+                            result[j] = (result[j] ? result[j] + _strSpace : _strEmpty) + valueArray[j];
+                    }
+                    return result.join(', ');
+                }
+
+                /**
+                 * Calculates the host-elements inverted scale. (invertedScale = 1 / scale)
+                 * @returns {{x: number, y: number}} The scale of the host-element.
+                 */
+                function getHostElementInvertedScale() {
+                    var rect = _paddingElementNative.getBoundingClientRect();
+                    return {
+                        x :  _supportTransform ? 1 / (MATH.round(rect.width) / _paddingElementNative[LEXICON.oW]) : 1,
+                        y :  _supportTransform ? 1 / (MATH.round(rect.height) / _paddingElementNative[LEXICON.oH]) : 1
+                    };
+                }
+
+                /**
                  * Checks whether the given object is a HTMLElement.
                  * @param o The object which shall be checked.
                  * @returns {boolean} True the given object is a HTMLElement, false otherwise.
@@ -4614,7 +4027,7 @@
                     var wnd = o && o[strOwnerDocument] ? (o[strOwnerDocument].parentWindow || window) : window;
                     return (
                         typeof wnd[strHTMLElement] == TYPES.o ? o instanceof wnd[strHTMLElement] : //DOM2
-                        o && typeof o == TYPES.o && o !== null && o.nodeType === 1 && typeof o.nodeName == TYPES.s
+                            o && typeof o == TYPES.o && o !== null && o.nodeType === 1 && typeof o.nodeName == TYPES.s
                     );
                 }
 
@@ -4645,9 +4058,10 @@
                 /**
                  * Returns Zero or the number to which the value can be parsed.
                  * @param value The value which shall be parsed.
+                 * @param toFloat Indicates whether the number shall be parsed to a float.
                  */
-                function parseIntToZeroOrNumber(value) {
-                    var num = window.parseInt(value);
+                function parseToZeroOrNumber(value, toFloat) {
+                    var num = toFloat ? parseFloat(value) : parseInt(value, 10);
                     return isNaN(num) ? 0 : num;
                 }
 
@@ -4657,7 +4071,7 @@
                  */
                 function getTextareaInfo() {
                     //read needed values
-                    var textareaCursorPosition = _targetElement[0].selectionStart;
+                    var textareaCursorPosition = _targetElementNative.selectionStart;
                     if (textareaCursorPosition === undefined)
                         return;
 
@@ -4684,27 +4098,14 @@
                     }
 
                     return {
-                        cR: cursorRow, //cursorRow
-                        cC: cursorCol, //cursorCol
-                        r: textareaLastRow, //rows
-                        c: textareaLastCol, //cols
-                        w: widestRow, //wRow
-                        p: textareaCursorPosition, //pos
-                        m: textareaLength //max
+                        _cursorRow: cursorRow, //cursorRow
+                        _cursorColumn: cursorCol, //cursorCol
+                        _rows: textareaLastRow, //rows
+                        _columns: textareaLastCol, //cols
+                        _widestRow: widestRow, //wRow
+                        _cursorPosition: textareaCursorPosition, //pos
+                        _cursorMax: textareaLength //max
                     };
-                }
-
-                /**
-                 * Checks the given key code and returns a boolean which is indicating if the given key code is a restricted one.
-                 * @param keyCode The key code which shall be checked.
-                 * @returns {boolean} True if the given key code is restricted, false otherwise.
-                 */
-                function textareaIsRestrictedKeyCode(keyCode) {
-                    for (var i = 0; i < _textareaKeyDownRestrictedKeyCodes.length; i++) {
-                        if (keyCode === _textareaKeyDownRestrictedKeyCodes[i])
-                            return true;
-                    }
-                    return false;
                 }
 
                 /**
@@ -4720,7 +4121,7 @@
                  * @returns {*} TextareaCover if target element is textarea else the ContentElement.
                  */
                 function getContentMeasureElement() {
-                    return _isTextarea ? _textareaCoverElement[0] : _contentElement[0];
+                    return _isTextarea ? _textareaCoverElement[0] : _contentElementNative;
                 }
 
                 /**
@@ -4732,16 +4133,16 @@
                 function generateDiv(classesOrAttrs, content) {
                     return '<div ' + (classesOrAttrs ? type(classesOrAttrs) == TYPES.s ?
                         'class="' + classesOrAttrs + '"' :
-                            (function() {
-                                var key;
-                                var attrs = '';
-                                if(framework.isPlainObject(classesOrAttrs)) {
-                                    for (key in classesOrAttrs)
-                                        attrs += (key === 'className' ? 'class' : key) + '="' + classesOrAttrs[key] + '" ';
-                                }
-                                return attrs;
-                            })() :
-                            _strEmpty) +
+                        (function() {
+                            var key;
+                            var attrs = '';
+                            if(FRAMEWORK.isPlainObject(classesOrAttrs)) {
+                                for (key in classesOrAttrs)
+                                    attrs += (key === 'className' ? 'class' : key) + '="' + classesOrAttrs[key] + '" ';
+                            }
+                            return attrs;
+                        })() :
+                        _strEmpty) +
                         '>' +
                         (content ? content : _strEmpty) +
                         '</div>';
@@ -4781,8 +4182,9 @@
                     var extendObjRoot = extendObj;
                     for(; i < splitsLength; i++)
                         extendObj = extendObj[splits[i]] = i + 1 < splitsLength ? { } : val;
-                    framework.extend(obj, extendObjRoot, true);
+                    FRAMEWORK.extend(obj, extendObjRoot, true);
                 }
+
 
                 //==== Utils Cache ====//
 
@@ -4854,14 +4256,14 @@
                  * jQuery type method shortcut.
                  */
                 function type(obj) {
-                    return framework.type(obj);
+                    return COMPATIBILITY.type(obj);
                 }
 
                 /**
-                 * jQuery extend method shortcut.
+                 * jQuery extend method shortcut with a appended "true" as first argument.
                  */
-                function extend() {
-                    return framework.extend.apply(this, arguments);
+                function extendDeep() {
+                    return FRAMEWORK.extend.apply(this, [ true ].concat([].slice.call(arguments)));
                 }
 
                 /**
@@ -4919,12 +4321,13 @@
                     var isString = type(force) == TYPES.s;
                     var imgElementSelector = 'img';
                     var imgElementLoadEvent = 'load';
+                    var isPlus = isString && force.slice(-1) == '+';
                     if(isString) {
                         if (force.indexOf(_strAuto) === 0) {
                             attrsChanged = meaningfulAttrsChanged();
                             contentSizeC = updateAutoContentSizeChanged();
-                            if (attrsChanged || contentSizeC)
-                                update(false, contentSizeC, false, force.slice(-1) == "+");
+                            if (attrsChanged || contentSizeC || isPlus)
+                                update(false, contentSizeC, false, isPlus);
                         }
                         else if (force === 'zoom')
                             update(true, true);
@@ -4936,9 +4339,9 @@
                     }
                     if(!_isTextarea) {
                         _contentElement.find(imgElementSelector).each(function(i, el) {
-                            var index = compatibility.inA(el, _imgs);
+                            var index = COMPATIBILITY.inA(el, _imgs);
                             if (index === -1)
-                                framework(el).off(imgElementLoadEvent, imgOnLoad).on(imgElementLoadEvent, imgOnLoad);
+                                FRAMEWORK(el).off(imgElementLoadEvent, imgOnLoad).on(imgElementLoadEvent, imgOnLoad);
                         });
                     }
                 };
@@ -4951,9 +4354,9 @@
                  */
                 _base.options = function (newOptions, value) {
                     //return current options if newOptions are undefined or empty
-                    if (framework.isEmptyObject(newOptions) || !framework.isPlainObject(newOptions)) {
+                    if (FRAMEWORK.isEmptyObject(newOptions) || !FRAMEWORK.isPlainObject(newOptions)) {
                         if (type(newOptions) == TYPES.s) {
-                            if (arguments.length >= 2) {
+                            if (arguments.length > 1) {
                                 var option = { };
                                 setObjectPropVal(option, newOptions, value);
                                 setOptions(option);
@@ -4979,92 +4382,50 @@
                 _base.destroy = function () {
                     _destroyed = true;
 
+                    //remove this instance from auto update loop
                     autoUpdateLoop.remove(_base);
-                    mutationObserversDisconnect();
+
+                    //disconnect all mutation observers
+                    disconnectMutationObservers();
+
+                    //remove all resize observers
                     removeResizeObserver(_sizeObserverElement);
                     if (_sizeAutoObserverAdded)
                         removeResizeObserver(_sizeAutoObserverElement);
 
+                    //remove all extensions
                     for(var extName in _extensions)
                         _base.removeExt(extName);
 
-                    remove(_sizeObserverElement);
-                    if (_contentGlueElement !== undefined)
+                    //remove all events from host element
+                    setupHostMouseTouchEvents(true);
+
+                    //remove all events from structure
+                    setupStructureEvents(true);
+
+                    //remove all helper / detection elements
+                    if (_contentGlueElement)
                         remove(_contentGlueElement);
-                    if (_contentArrangeElement !== undefined)
+                    if (_contentArrangeElement)
                         remove(_contentArrangeElement);
                     if (_sizeAutoObserverAdded)
                         remove(_sizeAutoObserverElement);
 
-                    if (_supportPassiveEvents) {
-                        removePassiveEventListener(_hostElement, _strMouseTouchMoveEvent, hostOnMouseMove);
-                        removePassiveEventListener(_hostElement, _strMouseTouchEnter, hostOnMouseEnter);
-                        removePassiveEventListener(_hostElement, _strMouseTouchLeave, hostOnMouseLeave);
-                    }
-                    else {
-                        _hostElement.off(_strMouseTouchMoveEvent, hostOnMouseMove)
-                            .off(_strMouseTouchEnter, hostOnMouseEnter)
-                            .off(_strMouseTouchLeave, hostOnMouseLeave);
-                    }
+                    //remove all generated DOM
+                    setupScrollbarsDOM(true);
+                    setupScrollbarCornerDOM(true);
+                    setupStructureDOM(true);
 
-                    remove(_scrollbarHorizontalElement);
-                    remove(_scrollbarVerticalElement);
-                    if(_scrollbarCornerElement)
-                        remove(_scrollbarCornerElement);
-                    if (!_resizeNone)
-                        scrollbarCornerOnResized();
-
-                    _contentElement.contents()
-                        .unwrap()
-                        .unwrap()
-                        .unwrap();
-
-                    if (_isBody)
-                        removeClass(_htmlElement, _classNameHTMLElement);
-
-
-                    if (_isTextarea) {
-                        _targetElement.off(_strScroll, textareaOnScroll)
-                            .off('drop', textareaOnDrop)
-                            .off('focus', textareaOnFocus)
-                            .off('focusout', textareaOnFocusOut);
-                        if (_msieVersion > 9 || !_autoUpdateRecommended)
-                            _targetElement.off('input', textareaOnInput);
-                        else {
-                            _targetElement.off(_strKeyDownEvent, textareaOnKeyDown)
-                                .off(_strKeyUpEvent, textareaOnKeyUp);
-                        }
-
-                        remove(_textareaCoverElement);
-                        removeClass(_targetElement, _classNameTextareaElement + _strSpace + _classNameTextInherit)
-                            .unwrap()
-                            .removeAttr(LEXICON.s);
-                        remove(_hostElement);
-                    }
-                    else {
-                        removeClass(_targetElement, _classNameHostElement);
-                        removeClass(_hostElement, [
-                            _classNameHostElement,
-                            _classNameHostResizeDisabled,
-                            _classNameHostRTL,
-                            _classNameHostScrollbarHorizontalHidden,
-                            _classNameHostScrollbarVerticalHidden,
-                            _classNameHostTransition,
-                            _classNameHostScrolling,
-                            _classNameHostOverflow,
-                            _classNameHostOverflowX,
-                            _classNameHostOverflowY,
-                            _classNameThemeNone,
-                            _classNameCache].join(_strSpace));
-                    }
-
-                    for(var i = 0; i < _imgs.length; i++)
-                        framework(_imgs[i]).off('load', imgOnLoad);
+                    //remove all generated image load events
+                    for(var i = 0; i < _imgs[LEXICON.l]; i++)
+                        FRAMEWORK(_imgs[i]).off('load', imgOnLoad);
                     _imgs = undefined;
 
-                    instances(pluginTargetElement, 0);
-                    callCallback("onDestroyed");
+                    //remove this instance from the instances list
+                    INSTANCES(pluginTargetElement, 0);
+                    dispatchCallback("onDestroyed");
 
+                    //remove all properties and methods
                     for (var property in _base)
                         delete _base[property];
                     _base = undefined;
@@ -5103,10 +4464,10 @@
                  *
                  * 3. Can be a object with a HTML or jQuery element with additional settings:
                  *    {
-                 *      el : [HTMLElement, jQuery element],            MUST be specified, else this object isn't valid.
-                 *      scroll : [string, array, object],              Default value is 'always'.
-                 *      block : [string, array, object],               Default value is 'begin'.
-                 *      margin : [number, boolean array, object]       Default value is false.
+                 *      el : [HTMLElement, jQuery element],             MUST be specified, else this object isn't valid.
+                 *      scroll : [string, array, object],               Default value is 'always'.
+                 *      block : [string, array, object],                Default value is 'begin'.
+                 *      margin : [number, boolean, array, object]       Default value is false.
                  *    }
                  *
                  *    Possible scroll settings are:
@@ -5127,11 +4488,17 @@
                  * @param duration The duration of the scroll animation, OR a jQuery animation configuration object.
                  * @param easing The animation easing.
                  * @param complete The animation complete callback.
-                 * @returns
-                 * {
-                 *    x: {position: *, ratio: (number|*), max: (number|*), handleOffset: (number|*), handleLength: *, handleLengthRatio: (number|*), trackLength: *, isRTL: *, isRTLNormalized: *},
-                 *    y: {position: *, ratio: (number|*), max: (number|*), handleOffset: (number|*), handleLength: *, handleLengthRatio: (number|*), trackLength: *}
-                 * }
+                 * @returns {{
+                 *   position: {x: number, y: number},
+                 *   ratio: {x: number, y: number},
+                 *   max: {x: number, y: number},
+                 *   handleOffset: {x: number, y: number},
+                 *   handleLength: {x: number, y: number},
+                 *   handleLengthRatio: {x: number, y: number}, t
+                 *   rackLength: {x: number, y: number},
+                 *   isRTL: boolean,
+                 *   isRTLNormalized: boolean
+                 *  }}
                  */
                 _base.scroll = function (coordinates, duration, easing, complete) {
                     if (arguments.length === 0 || coordinates === undefined) {
@@ -5139,34 +4506,49 @@
                         var infoY = _scrollVerticalInfo;
                         var normalizeInvert = _normalizeRTLCache && _isRTL && _rtlScrollBehavior.i;
                         var normalizeNegate = _normalizeRTLCache && _isRTL && _rtlScrollBehavior.n;
-                        var scrollX = infoX.cs;
-                        var scrollXRatio = infoX.csr;
-                        var maxScrollX = infoX.ms;
+                        var scrollX = infoX._currentScroll;
+                        var scrollXRatio = infoX._currentScrollRatio;
+                        var maxScrollX = infoX._maxScroll;
                         scrollXRatio = normalizeInvert ? 1 - scrollXRatio : scrollXRatio;
                         scrollX = normalizeInvert ? maxScrollX - scrollX : scrollX;
                         scrollX *= normalizeNegate ? -1 : 1;
                         maxScrollX *= normalizeNegate ? -1 : 1;
+
                         return {
-                            x: {
-                                position: scrollX,
-                                ratio: scrollXRatio,
-                                max: maxScrollX,
-                                handleOffset: infoX.ho,
-                                handleLength: infoX.hl,
-                                handleLengthRatio: infoX.hlr,
-                                trackLength: infoX.tl,
-                                isRTL: _isRTL,
-                                isRTLNormalized: _normalizeRTLCache
+                            position : {
+                                x : scrollX,
+                                y : infoY._currentScroll
                             },
-                            y: {
-                                position: infoY.cs,
-                                ratio: infoY.csr,
-                                max: infoY.ms,
-                                handleOffset: infoY.ho,
-                                handleLength: infoY.hl,
-                                handleLengthRatio: infoY.hlr,
-                                trackLength: infoY.tl
-                            }
+                            ratio : {
+                                x : scrollXRatio,
+                                y : infoY._currentScrollRatio
+                            },
+                            max : {
+                                x : maxScrollX,
+                                y : infoY._maxScroll
+                            },
+                            handleOffset : {
+                                x : infoX._handleOffset,
+                                y : infoY._handleOffset
+                            },
+                            handleLength : {
+                                x : infoX._handleLength,
+                                y : infoY._handleLength
+                            },
+                            handleLengthRatio : {
+                                x : infoX._handleLengthRatio,
+                                y : infoY._handleLengthRatio
+                            },
+                            trackLength : {
+                                x : infoX._trackLength,
+                                y : infoY._trackLength
+                            },
+                            snappedHandleOffset : {
+                                x : infoX._snappedHandleOffset,
+                                y : infoY._snappedHandleOffset
+                            },
+                            isRTL: _isRTL,
+                            isRTLNormalized: _normalizeRTLCache
                         };
                     }
 
@@ -5174,12 +4556,14 @@
                     var coordinatesXAxisProps = [_strX, _strLeft, 'l'];
                     var coordinatesYAxisProps = [_strY, _strTop, 't'];
                     var coordinatesOperators = ['+=', '-=', '*=', '/='];
+                    var durationIsObject = type(duration) == TYPES.o;
+                    var completeCallback = durationIsObject ? duration.complete : complete;
                     var i;
                     var finalScroll = { };
+                    var specialEasing = {};
                     var doScrollLeft;
                     var doScrollTop;
                     var animationOptions;
-                    var durationIsObject = type(duration) == TYPES.o;
                     var strEnd = 'end';
                     var strBegin = 'begin';
                     var strCenter = 'center';
@@ -5198,8 +4582,15 @@
                     var elementObjSettingsScrollValues = [strAlways, strNever, strIfNeeded];
                     var coordinatesIsElementObj = coordinates.hasOwnProperty('el');
                     var possibleElement = coordinatesIsElementObj ? coordinates.el : coordinates;
-                    var possibleElementIsJQuery = possibleElement instanceof framework || JQUERY ? possibleElement instanceof JQUERY : false;
+                    var possibleElementIsJQuery = possibleElement instanceof FRAMEWORK || JQUERY ? possibleElement instanceof JQUERY : false;
                     var possibleElementIsHTMLElement = possibleElementIsJQuery ? false : isHTMLElement(possibleElement);
+                    var proxyCompleteCallback = type(completeCallback) != TYPES.f ? undefined : function() {
+                        if(doScrollLeft)
+                            refreshScrollbarHandleOffset(true);
+                        if(doScrollTop)
+                            refreshScrollbarHandleOffset(false);
+                        completeCallback();
+                    };
                     var checkSettingsStringValue = function (currValue, allowedValues) {
                         for (i = 0; i < allowedValues[strLength]; i++) {
                             if (currValue === allowedValues[i])
@@ -5207,77 +4598,56 @@
                         }
                         return false;
                     };
-                    var getRawScroll = function (coordinates) {
-                        var rawScroll = {};
-                        if (type(coordinates) == TYPES.a && coordinates[strLength] > 0) {
-                            rawScroll.x = coordinates[0];
-                            rawScroll.y = coordinates[1];
-                        }
-                        else if (type(coordinates) == TYPES.s || type(coordinates) == TYPES.n) {
-                            rawScroll.x = coordinates;
-                            rawScroll.y = coordinates;
-                        }
+                    var getRawScroll = function (isX, coordinates) {
+                        var coordinateProps = isX ? coordinatesXAxisProps : coordinatesYAxisProps;
+                        coordinates = type(coordinates) == TYPES.s || type(coordinates) == TYPES.n ? [ coordinates, coordinates ] : coordinates;
+
+                        if (type(coordinates) == TYPES.a)
+                            return isX ? coordinates[0] : coordinates[1];
                         else if (type(coordinates) == TYPES.o) {
-                            normalizeRTL = type(coordinates.n) == TYPES.b ? coordinates.n : normalizeRTL;
-                            coordinates = extend({}, coordinates);
-                            i = 0;
-                            for (var key in coordinates) {
-                                if (coordinates.hasOwnProperty(key)) {
-                                    if (i > 2)
-                                        delete coordinates[key];
-                                    i++;
-                                }
-                            }
-                            var getRawScrollValue = function (isX) {
-                                var coordinateProps = isX ? coordinatesXAxisProps : coordinatesYAxisProps;
-                                for (i = 0; i < coordinateProps[strLength]; i++) {
-                                    if (coordinateProps[i] in coordinates) {
-                                        return coordinates[coordinateProps[i]];
-                                    }
-                                }
-                            };
-                            rawScroll.x = getRawScrollValue(true);
-                            rawScroll.y = getRawScrollValue(false);
+                            //decides RTL normalization "hack" with .n
+                            //normalizeRTL = type(coordinates.n) == TYPES.b ? coordinates.n : normalizeRTL;
+                            for (i = 0; i < coordinateProps[strLength]; i++)
+                                if (coordinateProps[i] in coordinates)
+                                    return coordinates[coordinateProps[i]];
                         }
-                        return rawScroll;
                     };
                     var getFinalScroll = function (isX, rawScroll) {
                         var isString = type(rawScroll) == TYPES.s;
                         if(isString)
-                            _base.update(_strAuto + "+");
+                            _base.update(_strAuto + '+');
                         var operator;
                         var amount;
                         var scrollInfo = isX ? _scrollHorizontalInfo : _scrollVerticalInfo;
-                        var currScroll = scrollInfo.cs;
-                        var maxScroll = scrollInfo.ms;
+                        var currScroll = scrollInfo._currentScroll;
+                        var maxScroll = scrollInfo._maxScroll;
                         var mult = ' * ';
                         var finalValue;
                         var isRTLisX = _isRTL && isX;
                         var normalizeShortcuts = isRTLisX && _rtlScrollBehavior.n && !normalizeRTL;
                         var strReplace = 'replace';
+                        var evalFunc = eval;
+                        var possibleOperator;
                         if (isString) {
                             //check operator
                             if (rawScroll[strLength] > 2) {
-                                var possibleOperator = rawScroll.substr(0, 2);
-                                for (i = 0; i < coordinatesOperators[strLength]; i++) {
-                                    if (possibleOperator === coordinatesOperators[i]) {
-                                        operator = coordinatesOperators[i];
-                                        break;
-                                    }
-                                }
+                                possibleOperator = rawScroll.substr(0, 2);
+                                if(FRAMEWORK.inArray(possibleOperator, coordinatesOperators) > -1)
+                                    operator = possibleOperator;
                             }
 
                             //calculate units and shortcuts
-                            rawScroll = operator !== undefined ? rawScroll.substr(2) : rawScroll;
-                            rawScroll = rawScroll[strReplace](/min/g, 0); //'min' = 0%
-                            rawScroll = rawScroll[strReplace](/</g, 0);   //'<'   = 0%
-                            rawScroll = rawScroll[strReplace](/max/g, (normalizeShortcuts ? '-' : _strEmpty) + _strHundredPercent);    //'max' = 100%
-                            rawScroll = rawScroll[strReplace](/>/g, (normalizeShortcuts ? '-' : _strEmpty) + _strHundredPercent);      //'>'   = 100%
-                            rawScroll = rawScroll[strReplace](/px/g, _strEmpty);
-                            rawScroll = rawScroll[strReplace](/%/g, mult + (maxScroll * (isRTLisX && _rtlScrollBehavior.n ? -1 : 1) / 100.0));
-                            rawScroll = rawScroll[strReplace](/vw/g, mult + _viewportSize.w);
-                            rawScroll = rawScroll[strReplace](/vh/g, mult + _viewportSize.h);
-                            amount = parseIntToZeroOrNumber(window.parseFloat(window.eval(rawScroll)).toFixed());
+                            rawScroll = operator ? rawScroll.substr(2) : rawScroll;
+                            rawScroll = rawScroll
+                                [strReplace](/min/g, 0) //'min' = 0%
+                                [strReplace](/</g, 0)   //'<'   = 0%
+                                [strReplace](/max/g, (normalizeShortcuts ? '-' : _strEmpty) + _strHundredPercent)    //'max' = 100%
+                                [strReplace](/>/g, (normalizeShortcuts ? '-' : _strEmpty) + _strHundredPercent)      //'>'   = 100%
+                                [strReplace](/px/g, _strEmpty)
+                                [strReplace](/%/g, mult + (maxScroll * (isRTLisX && _rtlScrollBehavior.n ? -1 : 1) / 100.0))
+                                [strReplace](/vw/g, mult + _viewportSize.w)
+                                [strReplace](/vh/g, mult + _viewportSize.h);
+                            amount = parseToZeroOrNumber(isNaN(rawScroll) ? parseToZeroOrNumber(evalFunc(rawScroll), true).toFixed() : rawScroll);
                         }
                         else {
                             amount = rawScroll;
@@ -5308,7 +4678,7 @@
                             }
                             finalValue = invert ? maxScroll - finalValue : finalValue;
                             finalValue *= negate ? -1 : 1;
-                            finalValue = isRTLisX && _rtlScrollBehavior.n ? Math.min(0, Math.max(maxScroll, finalValue)) : Math.max(0, Math.min(maxScroll, finalValue));
+                            finalValue = isRTLisX && _rtlScrollBehavior.n ? MATH.min(0, MATH.max(maxScroll, finalValue)) : MATH.max(0, MATH.min(maxScroll, finalValue));
                         }
                         return finalValue === currScroll ? undefined : finalValue;
                     };
@@ -5355,13 +4725,13 @@
                             currValue = marginTopRightBottomLeftArray[i];
                             currValueType = type(currValue);
                             if(currValueType == TYPES.b)
-                                result.push(currValue ? parseIntToZeroOrNumber(finalElement.css(_strMarginMinus + valueDirections[i])) : 0);
+                                result.push(currValue ? parseToZeroOrNumber(finalElement.css(_strMarginMinus + valueDirections[i])) : 0);
                             else
                                 result.push(currValueType == TYPES.n ? currValue : 0);
                         }
                         return result;
                     };
-    
+
                     if (possibleElementIsJQuery || possibleElementIsHTMLElement) {
                         //get settings
                         var margin = coordinatesIsElementObj ? coordinates.margin : 0;
@@ -5371,12 +4741,12 @@
                         var marginDefault = [ 0, 0, 0, 0 ];
                         var marginType = type(margin);
                         var marginLength;
-                        finalElement = possibleElementIsJQuery ? possibleElement : framework(possibleElement);
+                        finalElement = possibleElementIsJQuery ? possibleElement : FRAMEWORK(possibleElement);
                         if (finalElement[strLength] === 0)
                             return;
 
-                        _base.update(_strAuto + "+");
-                        
+                        _base.update(_strAuto + '+');
+
                         //margin can be [ boolean, number, array of 2, array of 4, object ]
                         if (marginType == TYPES.n || marginType == TYPES.b)
                             margin = generateMargin([margin, margin, margin, margin]);
@@ -5401,12 +4771,12 @@
                         settingsMargin = margin;
 
                         var viewportScroll = {
-                            l: _scrollHorizontalInfo.cs,
-                            t: _scrollVerticalInfo.cs
+                            l: _scrollHorizontalInfo._currentScroll,
+                            t: _scrollVerticalInfo._currentScroll
                         };
                         // use padding element instead of viewport element because padding element has never padding, margin or position applied.
-                        var viewportOffset = _paddingElement.offset(); 
-                        
+                        var viewportOffset = _paddingElement.offset();
+
                         //get coordinates
                         var elementOffset = finalElement.offset();
                         var doNotScroll = {
@@ -5416,22 +4786,22 @@
                         elementOffset[_strTop] -= settingsMargin[0];
                         elementOffset[_strLeft] -= settingsMargin[3];
                         var elementScrollCoordinates = {
-                            x: Math.round(elementOffset[_strLeft] - viewportOffset[_strLeft] + viewportScroll.l),
-                            y: Math.round(elementOffset[_strTop] - viewportOffset[_strTop] + viewportScroll.t)
+                            x: MATH.round(elementOffset[_strLeft] - viewportOffset[_strLeft] + viewportScroll.l),
+                            y: MATH.round(elementOffset[_strTop] - viewportOffset[_strTop] + viewportScroll.t)
                         };
                         if (_isRTL) {
                             if (!_rtlScrollBehavior.n && !_rtlScrollBehavior.i)
-                                elementScrollCoordinates.x = Math.round(viewportOffset[_strLeft] - elementOffset[_strLeft] + viewportScroll.l);
+                                elementScrollCoordinates.x = MATH.round(viewportOffset[_strLeft] - elementOffset[_strLeft] + viewportScroll.l);
                             if (_rtlScrollBehavior.n && normalizeRTL)
                                 elementScrollCoordinates.x *= -1;
                             if (_rtlScrollBehavior.i && normalizeRTL)
-                                elementScrollCoordinates.x = Math.round(viewportOffset[_strLeft] - elementOffset[_strLeft] + (_scrollHorizontalInfo.ms - viewportScroll.l));
+                                elementScrollCoordinates.x = MATH.round(viewportOffset[_strLeft] - elementOffset[_strLeft] + (_scrollHorizontalInfo._maxScroll - viewportScroll.l));
                         }
 
                         //measuring is required
                         if (settingsBlock.x != strBegin || settingsBlock.y != strBegin || settingsScroll.x == strIfNeeded || settingsScroll.y == strIfNeeded || _isRTL) {
                             var measuringElm = finalElement[0];
-                            var rawElementSize = _supportTransform ? measuringElm.getBoundingClientRect() : { 
+                            var rawElementSize = _supportTransform ? measuringElm.getBoundingClientRect() : {
                                 width : measuringElm[LEXICON.oW],
                                 height : measuringElm[LEXICON.oH]
                             };
@@ -5441,9 +4811,9 @@
                             };
                             var finalizeBlock = function(isX) {
                                 var vars = getScrollbarVars(isX);
-                                var wh = vars._wh;
-                                var lt = vars.lt;
-                                var xy = vars.xy;
+                                var wh = vars._w_h;
+                                var lt = vars._left_top;
+                                var xy = vars._x_y;
                                 var blockIsEnd = settingsBlock[xy] == (isX ? _isRTL ? strBegin : strEnd : strEnd);
                                 var blockIsCenter = settingsBlock[xy] == strCenter;
                                 var blockIsNearest = settingsBlock[xy] == strNearest;
@@ -5482,24 +4852,25 @@
 
                         coordinates = elementScrollCoordinates;
                     }
-                    
-                    finalScroll[_strScrollLeft] = getFinalScroll(true, getRawScroll(coordinates).x);
-                    finalScroll[_strScrollTop] = getFinalScroll(false, getRawScroll(coordinates).y);
+
+                    finalScroll[_strScrollLeft] = getFinalScroll(true, getRawScroll(true, coordinates));
+                    finalScroll[_strScrollTop] = getFinalScroll(false, getRawScroll(false, coordinates));
                     doScrollLeft = finalScroll[_strScrollLeft] !== undefined;
                     doScrollTop = finalScroll[_strScrollTop] !== undefined;
 
                     if ((doScrollLeft || doScrollTop) && (duration > 0 || durationIsObject)) {
-                        if (durationIsObject)
+                        if (durationIsObject) {
+                            duration.complete = proxyCompleteCallback;
                             _viewportElement.animate(finalScroll, duration);
+                        }
                         else {
                             animationOptions = {
                                 duration: duration,
-                                complete: complete
+                                complete: proxyCompleteCallback
                             };
-                            if (type(easing) == TYPES.a) {
-                                var specialEasing = {};
-                                specialEasing[_strScrollLeft] = easing[0];
-                                specialEasing[_strScrollTop] = easing[1];
+                            if (type(easing) == TYPES.a || FRAMEWORK.isPlainObject(easing)) {
+                                specialEasing[_strScrollLeft] = easing[0] || easing.x;
+                                specialEasing[_strScrollTop] = easing[1] || easing.y;
                                 animationOptions.specialEasing = specialEasing;
                             }
                             else {
@@ -5532,11 +4903,11 @@
                  */
                 _base.getElements = function (elementName) {
                     var obj = {
-                        target: _targetElement[0],
-                        host: _hostElement[0],
-                        padding: _paddingElement[0],
-                        viewport: _viewportElement[0],
-                        content: _contentElement[0],
+                        target: _targetElementNative,
+                        host: _hostElementNative,
+                        padding: _paddingElementNative,
+                        viewport: _viewportElementNative,
+                        content: _contentElementNative,
                         scrollbarHorizontal: {
                             scrollbar: _scrollbarHorizontalElement[0],
                             track: _scrollbarHorizontalTrackElement[0],
@@ -5559,9 +4930,9 @@
                  */
                 _base.getState = function (stateProperty) {
                     var prepare = function (obj) {
-                        if (!framework.isPlainObject(obj))
+                        if (!FRAMEWORK.isPlainObject(obj))
                             return obj;
-                        var extended = extend(true, {}, obj);
+                        var extended = extendDeep({}, obj);
                         var changePropertyName = function (from, to) {
                             if (extended.hasOwnProperty(from)) {
                                 extended[to] = extended[from];
@@ -5575,7 +4946,7 @@
                     };
                     var obj = {
                         sleeping: prepare(_isSleeping) || false,
-                        autoUpdate: prepare(!_mutationObserverConnected),
+                        autoUpdate: prepare(!_mutationObserversConnected),
                         widthAuto: prepare(_widthAutoCache),
                         heightAuto: prepare(_heightAutoCache),
                         padding: prepare(_cssPaddingCache),
@@ -5601,7 +4972,7 @@
                     var i = 0;
                     if(type(extName) == TYPES.s) {
                         if(_extensions.hasOwnProperty(extName)) {
-                            result = extend(true, {}, _extensions[extName]);
+                            result = extendDeep({}, _extensions[extName]);
                             for (; i < privateMethods.length; i++)
                                 delete result[privateMethods[i]];
                         }
@@ -5609,7 +4980,7 @@
                     else {
                         result = { };
                         for(i in _extensions)
-                            result[i] = extend(true, { }, _base.ext(i));
+                            result[i] = extendDeep({ }, _base.ext(i));
                     }
                     return result;
                 };
@@ -5629,10 +5000,10 @@
                     var contractFulfilled = true;
                     if(registeredExtensionObj) {
                         if(!_extensions.hasOwnProperty(extName)) {
-                            instance = registeredExtensionObj.extension.call(_base,
-                                extend(true, { }, registeredExtensionObj.defaultOptions),
-                                framework,
-                                compatibility);
+                            instance = registeredExtensionObj.extensionFactory.call(_base,
+                                extendDeep({ }, registeredExtensionObj.defaultOptions),
+                                FRAMEWORK,
+                                COMPATIBILITY);
 
                             if (instance) {
                                 instanceContract = instance.contract;
@@ -5687,17 +5058,17 @@
                 function construct(targetElement, options, extensions) {
                     _defaultOptions = globals.defaultOptions;
                     _nativeScrollbarStyling = globals.nativeScrollbarStyling;
-                    _nativeScrollbarSize = extend(true, {}, globals.nativeScrollbarSize);
-                    _nativeScrollbarIsOverlaid = extend(true, {}, globals.nativeScrollbarIsOverlaid);
-                    _overlayScrollbarDummySize = extend(true, {}, globals.overlayScrollbarDummySize);
-                    _rtlScrollBehavior = extend(true, {}, globals.rtlScrollBehavior);
+                    _nativeScrollbarSize = extendDeep({}, globals.nativeScrollbarSize);
+                    _nativeScrollbarIsOverlaid = extendDeep({}, globals.nativeScrollbarIsOverlaid);
+                    _overlayScrollbarDummySize = extendDeep({}, globals.overlayScrollbarDummySize);
+                    _rtlScrollBehavior = extendDeep({}, globals.rtlScrollBehavior);
 
                     //parse & set options but don't update
-                    setOptions(extend(true, { }, _defaultOptions, options));
+                    setOptions(extendDeep({ }, _defaultOptions, _pluginsOptions._validate(options, _pluginsOptions._template, true)));
 
                     //check if the plugin hasn't to be initialized
                     if (_nativeScrollbarIsOverlaid.x && _nativeScrollbarIsOverlaid.x && !_currentPreparedOptions.nativeScrollbarsOverlaid.initialize) {
-                        callCallback("onInitializationWithdrawn");
+                        dispatchCallback("onInitializationWithdrawn");
                         return false;
                     }
 
@@ -5710,206 +5081,94 @@
                     _supportResizeObserver = globals.supportResizeObserver;
                     _supportMutationObserver = globals.supportMutationObserver;
                     _restrictedMeasuring = globals.restrictedMeasuring;
-                    _documentElement = framework(targetElement.ownerDocument);
-                    _windowElement = framework(_documentElement[0].defaultView || _documentElement[0].parentWindow);
+                    _documentElement = FRAMEWORK(targetElement.ownerDocument);
+                    _documentElementNative = _documentElement[0];
+                    _windowElement = FRAMEWORK(_documentElementNative.defaultView || _documentElementNative.parentWindow);
+                    _windowElementNative = _windowElement[0];
                     _htmlElement = findFirst(_documentElement, 'html');
                     _bodyElement =  findFirst(_htmlElement, 'body');
-                    _targetElement = framework(targetElement);
+                    _targetElement = FRAMEWORK(targetElement);
+                    _targetElementNative = _targetElement[0];
                     _isTextarea = _targetElement.is('textarea');
                     _isBody = _targetElement.is('body');
-                    _documentMixed = _documentElement[0] !== document;
+                    _documentMixed = _documentElementNative !== document;
 
                     var initBodyScroll;
                     if (_isBody) {
                         initBodyScroll = {};
-                        initBodyScroll.l = Math.max(_targetElement[_strScrollLeft](), _htmlElement[_strScrollLeft](), _windowElement[_strScrollLeft]());
-                        initBodyScroll.t = Math.max(_targetElement[_strScrollTop](), _htmlElement[_strScrollTop](), _windowElement[_strScrollTop]());
+                        initBodyScroll.l = MATH.max(_targetElement[_strScrollLeft](), _htmlElement[_strScrollLeft](), _windowElement[_strScrollLeft]());
+                        initBodyScroll.t = MATH.max(_targetElement[_strScrollTop](), _htmlElement[_strScrollTop](), _windowElement[_strScrollTop]());
                     }
 
-                    //build Hide-scrollbars DOM
-                    if (_isTextarea) {
-                        _targetElement.wrap(generateDiv(_classNameHostTextareaElement));
-                        addClass(_targetElement, _classNameTextareaElement + _strSpace + _classNameTextInherit);
-                        _hostElement = _targetElement.parent();
-                        var hostElementCSS = {};
-                        if (!_currentPreparedOptions.sizeAutoCapable) {
-                            hostElementCSS[_strWidth] = _targetElement.css(_strWidth);
-                            hostElementCSS[_strHeight] = _targetElement.css(_strHeight);
-                        }
-                        _hostElement.css(hostElementCSS)
-                            .wrapInner(generateDiv(_classNameContentElement + _strSpace + _classNameTextInherit))
-                            .wrapInner(generateDiv(_classNameViewportElement + _strSpace + _classNameTextInherit))
-                            .wrapInner(generateDiv(_classNamePaddingElement + _strSpace + _classNameTextInherit));
-                        _contentElement = findFirst(_hostElement, _strDot + _classNameContentElement);
-                        _viewportElement = findFirst(_hostElement, _strDot + _classNameViewportElement);
-                        _paddingElement = findFirst(_hostElement, _strDot + _classNamePaddingElement);
-                        _textareaCoverElement = framework(generateDiv(_classNameTextareaCoverElement));
-                        _contentElement.prepend(_textareaCoverElement);
+                    //build OverlayScrollbars DOM and Events
+                    setupStructureDOM();
+                    setupStructureEvents();
 
-                        _targetElement.on(_strScroll, textareaOnScroll)
-                            .on('drop', textareaOnDrop)
-                            .on('focus', textareaOnFocus)
-                            .on('focusout', textareaOnFocusOut);
-                        if (_msieVersion > 9 || !_autoUpdateRecommended) {
-                            _targetElement.on('input', textareaOnInput);
-                        }
-                        else {
-                            _targetElement.on(_strKeyDownEvent, textareaOnKeyDown)
-                                .on(_strKeyUpEvent, textareaOnKeyUp);
-                        }
-                    } else {
-                        addClass(_targetElement, _classNameHostElement);
-                        _hostElement = _targetElement;
-                        _hostElement.wrapInner(generateDiv(_classNameContentElement))
-                            .wrapInner(generateDiv(_classNameViewportElement))
-                            .wrapInner(generateDiv(_classNamePaddingElement));
-                        _contentElement = findFirst(_hostElement, _strDot + _classNameContentElement);
-                        _viewportElement = findFirst(_hostElement, _strDot + _classNameViewportElement);
-                        _paddingElement = findFirst(_hostElement, _strDot + _classNamePaddingElement);
+                    //build Scrollbars DOM and Events
+                    setupScrollbarsDOM();
+                    setupScrollbarEvents(true);
+                    setupScrollbarEvents(false);
 
-                        //add transitionend event
-                        _contentElement.on(_strTransitionEndEvent, function (event) {
-                            if (_autoUpdateCache === true)
-                                return;
-                            event = event.originalEvent || event;
-                            if (isSizeAffectingCSSProperty(event.propertyName))
-                                update(_strAuto);
-                        });
-                    }
+                    //build Scrollbar Corner DOM and Events
+                    setupScrollbarCornerDOM();
+                    setupScrollbarCornerEvents();
 
-                    buildScrollbars();
+                    //create mutation observers
+                    createMutationObservers();
 
-                    //add scroll event
-                    if (_supportPassiveEvents)
-                        addPassiveEventListener(_viewportElement, _strScroll, viewportOnScroll);
-                    else
-                        _viewportElement.on(_strScroll, viewportOnScroll);
+                    if(_isBody) {
+                        //apply the body scroll to handle it right in the update method
+                        _viewportElement[_strScrollLeft](initBodyScroll.l)[_strScrollTop](initBodyScroll.t);
 
-                    if (_nativeScrollbarStyling)
-                        addClass(_viewportElement, _nativeScrollbarIsOverlaid.x && _nativeScrollbarIsOverlaid.y ? _classNameViewportNativeScrollbarsOverlaid : _classNameViewportNativeScrollbarsInvisible);
-
-                    //build mutation observers
-                    if (_supportMutationObserver) {
-                        var mutationObserver = compatibility.mO();
-                        var contentLastUpdate = compatibility.now();
-                        var mutationTarget;
-                        var mutationAttrName;
-                        var contentTimeout;
-                        var now;
-                        var sizeAuto;
-                        var action;
-
-                        _mutationObserverHost = new mutationObserver(function (mutations) {
-                            if (!_initialized || _isSleeping)
-                                return;
-
-                            var doUpdate = false;
-                            //var doUpdateScrollbars = false;
-                            var mutation;
-                            framework.each(mutations, function () {
-                                mutation = this;
-                                mutationTarget = mutation.target;
-                                mutationAttrName = mutation.attributeName;
-
-                                if (mutationAttrName === LEXICON.c)
-                                    doUpdate = hostClassNamesChanged(mutation.oldValue, mutationTarget.className);
-                                else if (mutationAttrName === LEXICON.s)
-                                    doUpdate = mutation.oldValue !== mutationTarget[LEXICON.s].cssText;
-                                else
-                                    doUpdate = true;
-
-                                if (doUpdate)
-                                    return false;
+                        //set the focus on the viewport element so you dont have to click on the page to use keyboard keys (up / down / space) for scrolling
+                        if(document.activeElement == targetElement && _viewportElementNative.focus) {
+                            //set a tabindex to make the viewportElement focusable
+                            _viewportElement.attr('tabindex', '-1');
+                            _viewportElementNative.focus();
+                            /* the tabindex has to be removed due to;
+                             * If you set the tabindex attribute on an <div>, then its child content cannot be scrolled with the arrow keys unless you set tabindex on the content, too
+                             * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/tabindex
+                             */
+                            _viewportElement.one(_strMouseTouchDownEvent, function() {
+                                _viewportElement.removeAttr('tabindex');
                             });
-
-                            if (doUpdate)
-                                _base.update(_strAuto);
-                            /*
-                            if(doUpdateScrollbars) {
-                                refreshScrollbarHandleLength(true);
-                                refreshScrollbarHandleOffset(true, _scrollHorizontalInfo.cs);
-                                refreshScrollbarHandleLength(false);
-                                refreshScrollbarHandleOffset(false, _scrollVerticalInfo.cs);
-                            }
-                            */
-                        });
-                        _mutationObserverContent = new mutationObserver(function (mutations) {
-                            if (!_initialized || _isSleeping)
-                                return;
-
-                            var doUpdate = false;
-                            var mutation;
-                            framework.each(mutations, function () {
-                                mutation = this;
-                                doUpdate = isUnknownMutation(mutation);
-                                return !doUpdate;
-                            });
-
-                            if (doUpdate) {
-                                now = compatibility.now();
-                                sizeAuto = (_heightAutoCache || _widthAutoCache);
-                                action = function () {
-                                    if(!_destroyed) {
-                                        contentLastUpdate = now;
-
-                                        //if cols, rows or wrap attr was changed
-                                        if (_isTextarea)
-                                            textareaUpdate();
-
-                                        if (sizeAuto)
-                                            update();
-                                        else
-                                            _base.update(_strAuto);
-                                    }
-                                };
-                                clearTimeout(contentTimeout);
-                                if (_mutationObserverContentLag <= 0 || now - contentLastUpdate > _mutationObserverContentLag || !sizeAuto)
-                                    action();
-                                else
-                                    contentTimeout = setTimeout(action, _mutationObserverContentLag);
-                            }
-                        });
+                        }
                     }
 
                     //build resize observer for the host element
-                    if (_isBody) {
-                        addClass(_htmlElement, _classNameHTMLElement);
-
-                        //apply the body scroll to handle it right in the update method
-                        _viewportElement[_strScrollLeft](initBodyScroll.l);
-                        _viewportElement[_strScrollTop](initBodyScroll.t);
-                    }
-                    _sizeObserverElement = framework(generateDiv('os-resize-observer-host'));
-                    _hostElement.prepend(_sizeObserverElement);
                     addResizeObserver(_sizeObserverElement, hostOnResized);
 
                     //update for the first time
                     hostOnResized(); //initialize cache for host size
                     _base.update(_strAuto); //initialize cache for content
 
-                    //add the transition class for transitions AFTER the first update (for preventing unwanted transitions)
-                    setTimeout(function () {
-                        if (_supportTransition && !_destroyed)
-                            addClass(_hostElement, _classNameHostTransition)
-                    }, 333);
-
                     //the plugin is initialized now!
                     _initialized = true;
-                    callCallback("onInitialized");
+                    dispatchCallback("onInitialized");
+
+                    //call all callbacks which would fire before the initialized was complete
+                    FRAMEWORK.each(_callbacksInitQeueue, function(index, value) { dispatchCallback(value.n, value.a); });
+                    _callbacksInitQeueue = [ ];
 
                     //add extensions
                     if(type(extensions) == TYPES.s)
                         extensions = [ extensions ];
-                    if(framework.isArray(extensions))
-                        framework.each(extensions, function () {_base.addExt(this); });
-                    else if(framework.isPlainObject(extensions))
-                        framework.each(extensions, function (key, value) { _base.addExt(key, value); });
+                    if(COMPATIBILITY.isA(extensions))
+                        FRAMEWORK.each(extensions, function (index, value) {_base.addExt(value); });
+                    else if(FRAMEWORK.isPlainObject(extensions))
+                        FRAMEWORK.each(extensions, function (key, value) { _base.addExt(key, value); });
+
+                    //add the transition class for transitions AFTER the first update & AFTER the applied extensions (for preventing unwanted transitions)
+                    setTimeout(function () {
+                        if (_supportTransition && !_destroyed)
+                            addClass(_hostElement, _classNameHostTransition);
+                    }, 333);
 
                     return _initialized;
                 }
 
                 if (construct(pluginTargetElement, options, extensions)) {
-                    instances(pluginTargetElement, _base);
+                    INSTANCES(pluginTargetElement, _base);
                     return _base;
                 }
                 _base = undefined;
@@ -5923,41 +5182,46 @@
              * @returns {*}
              */
             window[PLUGINNAME] = function(pluginTargetElements, options, extensions) {
-                if(arguments.length === 0)
+                if(arguments[LEXICON.l] === 0)
                     return this;
 
-                initOverlayScrollbarsStatics();
-
                 var arr = [ ];
+                var optsIsPlainObj = FRAMEWORK.isPlainObject(options);
                 var inst;
                 var result;
-                if(framework.isPlainObject(options)) {
-                    if (pluginTargetElements && pluginTargetElements.length) {
-                        framework.each(pluginTargetElements, function () {
-                            inst = this;
+
+                //pluginTargetElements is null or undefined
+                if(!pluginTargetElements)
+                    return optsIsPlainObj || !options ? result : arr;
+
+                /*
+                   pluginTargetElements will be converted to:
+                   1. A jQueryElement Array
+                   2. A HTMLElement Array
+                   3. A Array with a single HTML Element
+                   so pluginTargetElements is always a array.
+                */
+                pluginTargetElements = pluginTargetElements[LEXICON.l] != undefined ? pluginTargetElements : [ pluginTargetElements[0] || pluginTargetElements ];
+                initOverlayScrollbarsStatics();
+
+                if(pluginTargetElements[LEXICON.l] > 0) {
+                    if(optsIsPlainObj) {
+                        FRAMEWORK.each(pluginTargetElements, function (i, v) {
+                            inst = v;
                             if(inst !== undefined)
                                 arr.push(OverlayScrollbarsInstance(inst, options, extensions, _pluginsGlobals, _pluginsAutoUpdateLoop));
                         });
-                        result = arr.length > 1 ? arr : arr[0];
                     }
-                    else
-                        result = OverlayScrollbarsInstance(pluginTargetElements, options, extensions, _pluginsGlobals, _pluginsAutoUpdateLoop);
-                }
-                else if(pluginTargetElements) {
-                    if(pluginTargetElements.length && pluginTargetElements.length > 0) {
-                        framework.each(pluginTargetElements, function() {
-                            inst = instances(this);
-                            if(options === '!') {
-                                if(inst instanceof window[PLUGINNAME])
-                                    arr.push(inst);
-                            }
-                            else
+                    else {
+                        FRAMEWORK.each(pluginTargetElements, function(i, v) {
+                            inst = INSTANCES(v);
+                            if((options === '!' && inst instanceof window[PLUGINNAME]) || (COMPATIBILITY.type(options) == TYPES.f && options(v, inst)))
+                                arr.push(inst);
+                            else if(options === undefined)
                                 arr.push(inst);
                         });
-                        result = arr.length > 1 ? arr : arr[0];
                     }
-                    else
-                        result = instances(pluginTargetElements);
+                    result = arr[LEXICON.l] === 1 ? arr[0] : arr;
                 }
                 return result;
             };
@@ -5968,7 +5232,7 @@
              */
             window[PLUGINNAME].globals = function () {
                 initOverlayScrollbarsStatics();
-                var globals = framework.extend(true, { }, _pluginsGlobals);
+                var globals = FRAMEWORK.extend(true, { }, _pluginsGlobals);
                 delete globals['msie'];
                 return globals;
             };
@@ -5981,10 +5245,10 @@
                 initOverlayScrollbarsStatics();
                 var currDefaultOptions = _pluginsGlobals.defaultOptions;
                 if(newDefaultOptions === undefined)
-                    return framework.extend(true, { }, currDefaultOptions);
+                    return FRAMEWORK.extend(true, { }, currDefaultOptions);
 
                 //set the new default options
-                _pluginsGlobals.defaultOptions = framework.extend(true, { }, currDefaultOptions , _pluginsOptions.v(newDefaultOptions, _pluginsOptions.t, true));
+                _pluginsGlobals.defaultOptions = FRAMEWORK.extend(true, { }, currDefaultOptions , _pluginsOptions._validate(newDefaultOptions, _pluginsOptions._template, true));
             };
 
             /**
@@ -5998,19 +5262,19 @@
              * @param defaultOptions The default options which shall be used for the registered extension.
              */
             window[PLUGINNAME].extension = function(extensionName, extension, defaultOptions) {
-                var extNameTypeString = framework.type(extensionName) == TYPES.s;
+                var extNameTypeString = COMPATIBILITY.type(extensionName) == TYPES.s;
                 var argLen = arguments[LEXICON.l];
                 var i = 0;
                 if(argLen < 1 || !extNameTypeString) {
                     //return a copy of all extension objects
-                    return framework.extend(true, { length : _pluginsExtensions[LEXICON.l] }, _pluginsExtensions);
+                    return FRAMEWORK.extend(true, { length : _pluginsExtensions[LEXICON.l] }, _pluginsExtensions);
                 }
                 else if(extNameTypeString) {
-                    if(framework.type(extension) == TYPES.f) {
+                    if(COMPATIBILITY.type(extension) == TYPES.f) {
                         //register extension
                         _pluginsExtensions.push({
                             name : extensionName,
-                            extension : extension,
+                            extensionFactory : extension,
                             defaultOptions : defaultOptions
                         });
                     }
@@ -6020,7 +5284,7 @@
                                 if(argLen > 1)
                                     _pluginsExtensions.splice(i, 1); //remove extension
                                 else
-                                    return framework.extend(true, { }, _pluginsExtensions[i]); //return extension with the given name
+                                    return FRAMEWORK.extend(true, { }, _pluginsExtensions[i]); //return extension with the given name
                             }
                         }
                     }
@@ -6028,7 +5292,7 @@
             };
 
             return window[PLUGINNAME];
-        })(FRAMEWORK, COMPATIBILITY, INSTANCES);
+        })();
 
         if(JQUERY && JQUERY.fn) {
             /**
@@ -6047,7 +5311,6 @@
                     return PLUGIN(_elements, options);
             };
         }
-
         return PLUGIN;
     }
 ));
