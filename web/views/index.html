@@ -63,13 +63,19 @@
     <!--PORN CODE HERE-->
     <div id="message">
         <div id="chat_bar">
-            <input type="button" class="mess_button" style="background: url('../assets/img/ico-show-chat-48x.png')"/>
+            <input type="button" id="mess_button" style="background: url('../assets/img/ico-show-chat-48x.png')"/>
             <button id="All_chat_tab" onclick="changeColor()">ALL</button>
-            <button class="chat_tab"> <img class="chat_ava_tab" src="https://bit.ly/2ZeCbaL" alt=""> Vĩnh Hân</button>
-            <button class="chat_tab"> <img class="chat_ava_tab" src="../assets/img/smiling.png" alt=""> Smile </button>
+            <button class="chat_tab"> <img class="chat_ava_tab" src="https://bit.ly/2ZeCbaL" alt="">Hân</button>
+            <button class="chat_tab"> <img class="chat_ava_tab" src="../assets/img/smiling.png" alt="">Smile</button>
+
         </div>
-        <div class="chat_body">
-            <div>
+        <div style="display:flex;height: 3px">
+            <div style="width: 58px" class="red_line"></div>
+            <div style="width: 96px"></div>
+            <div style="width:calc(100% - 153px)" class="red_line"></div>
+        </div>
+        <div id="chat_body">
+            <div >
                 <img class="chat_ava_mess" src="https://bit.ly/2ZeCbaL" alt="">
             </div>
             <div class="other_chat_mess">
