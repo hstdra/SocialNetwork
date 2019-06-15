@@ -84,16 +84,22 @@ let con = new WebSocket('ws://localhost:8080/chat');
 
 con.onmessage = function (e) {
     const data = JSON.parse(e.data);
-    console.log(data);
+
+    //Update recent tab
+    $("div.contact-main-people[chatid=" + data.chatID + "]").prependTo('#contact-main-recent');
+    $("div.contact-main-people[chatid=" + data.chatID + "] div:nth-child(2) p:nth-child(2)").text(data.content);
+    $("div.contact-main-people[chatid=" + data.chatID + "] div:nth-child(2) p:nth-child(2)").attr("class", "contact-main-people-message ma b");
+    $("div.contact-main-people[chatid=" + data.chatID + "]").find("i").attr("class", "far fa-bell fa-lg ma");
 };
 con.onopen = function (e) {
 
 };
 setInterval(function () {
     const data = JSON.stringify({
-        from: '1',
-        to: '4',
-        content: 'cc'
+        chatID: '3',
+        userID: '1',
+        to: '1',
+        content: 'chào bạn'
     });
     con.send(data);
-}, 3000);
+}, 5000);

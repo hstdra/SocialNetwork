@@ -1,21 +1,25 @@
 package Model.Socket;
 
 public class Message {
-    private String from;
+    private String chatID;
+    private String userID;
     private String to;
     private String content;
 
-    @Override
-    public String toString() {
-        return super.toString();
+    public String getChatID() {
+        return chatID;
     }
 
-    public String getFrom() {
-        return from;
+    public void setChatID(String chatID) {
+        this.chatID = chatID;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     public String getTo() {

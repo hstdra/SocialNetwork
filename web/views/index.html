@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <title>Trang chủ</title>
     <link rel="stylesheet" href="../assets/css/index.css">
+    <link rel="stylesheet" href="../assets/css/taskbar.css">
     <link rel="stylesheet" href="../assets/css/contact.css">
     <link rel="stylesheet" href="../assets/css/message.css">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.1.0/css/all.css" media="all">
-    <script src="https://kit.fontawesome.com/2b45e9c5d6.js"></script>
+    <link rel="stylesheet" href="../assets/fontawesome/css/all.css">
+<!--    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.1.0/css/all.css" media="all">-->
+<!--    <script src="https://kit.fontawesome.com/2b45e9c5d6.js"></script>-->
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -30,7 +32,30 @@
 </head>
 
 <body>
-<div id="main-task-bar"></div>
+<div id="main-task-bar">
+    <div id="zone1" class="task-bar">
+        <div id="main-task-bar-logo" class="mid if">
+            <i class="fab fa-windows fa-2x ma"></i>
+        </div>
+        <div id="main-task-bar-name" class="mid if">SPACENET</div>
+        <div id="main-task-bar-search" class="mid if">
+            <input id="search-bar" type="text" placeholder="Tìm kiếm...">
+            <div id="search-bar-icon" class="if">
+                <i class="far fa-search fa-lg ma"></i>
+            </div>
+        </div>
+    </div>
+    <div id="zone2" class="task-bar"></div>
+    <div id="zone3" class="task-bar">
+        <div class="col-sm-3 if">
+            <img id="task-bar-ava" class="ma" src="https://bit.ly/2ZeCbaL" alt="">
+        </div>
+        <div class="col-sm-7 if">
+            <p id="task-bar-name" class="ma">Vĩnh Hân</p>
+        </div>
+        <i class="far fa-chevron-down fa-lg ma"></i>
+    </div>
+</div>
 <div id="main-section" >
     <!--TRÍ CODE HERE-->
     <div id="view"></div>

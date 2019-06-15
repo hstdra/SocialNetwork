@@ -1,0 +1,78 @@
+.task-bar {
+    height: 100%;
+}
+
+#zone1 {
+    width: calc(100% - 650px);
+    background: #607d8b00;
+    display: flex;
+    justify-content: center;
+}
+
+#main-task-bar-logo {
+    width: 60px;
+}
+
+#main-task-bar-name {
+    font-size: 25px;
+    font-family: fantasy;
+    color: white;
+}
+
+#main-task-bar-search {
+    margin-left: 20px;
+    height: 30px;
+}
+
+#search-bar {
+    width: 350px;
+    height: 100%;
+    border: 0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding-left: 10px;
+    font-size: 15px;
+}
+
+#search-bar-icon {
+    width: 40px;
+    background: #b0b6cd;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+#zone2 {
+    width: 400px;
+    background: #34475800;
+    margin-left: auto;
+}
+
+#zone3 {
+    width: 250px;
+    background: #49586269;
+    display: flex;
+}
+
+#zone3:hover {
+    cursor: pointer;
+    background: #2e577a;
+}
+
+#task-bar-ava {
+    height: 33px;
+    width: 33px;
+    border-radius: 50%;
+    margin: auto;
+    object-fit: cover;
+}
+
+#task-bar-name {
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    margin-left: 0;
+
+    color: white;
+}
