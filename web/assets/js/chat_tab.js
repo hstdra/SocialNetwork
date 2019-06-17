@@ -5,3 +5,8 @@ function changeColor(_this) {
 function oldColor(_this) {
     _this.style.boxShadow = "0px 0px red";
 }
+
+$(".chat_tab").dblclick(function (e) {
+    var x = $(e.target).attr('chatid');
+    $(e.target).remove();
+});

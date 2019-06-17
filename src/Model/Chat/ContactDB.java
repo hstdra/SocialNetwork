@@ -3,6 +3,7 @@ package Model.Chat;
 import Model.ConnectDatabase;
 import Model.UTCDate;
 
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
@@ -43,7 +44,22 @@ public class ContactDB {
         return null;
     }
 
+    public static String getChatID(String u1, String u2){
+        CallableStatement cs = ConnectDatabase.prepareCall("{CALL getCoupleChatID(?,?)}");
+        try {
+            cs.setString(1, u1);
+            cs.setString(2, u2);
+            cs.execute();
+            ResultSet rs = cs.getResultSet();
+            rs.next();
+            return rs.getString(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
-        getContact();
+
     }
 }

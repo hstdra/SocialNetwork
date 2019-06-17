@@ -8,8 +8,6 @@
     <link rel="stylesheet" href="../assets/css/contact.css">
     <link rel="stylesheet" href="../assets/css/message.css">
     <link rel="stylesheet" href="../assets/fontawesome/css/all.css">
-<!--    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.1.0/css/all.css" media="all">-->
-<!--    <script src="https://kit.fontawesome.com/2b45e9c5d6.js"></script>-->
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -34,15 +32,25 @@
 <body>
 <div id="main-task-bar">
     <div id="zone1" class="task-bar">
-        <div id="main-task-bar-logo" class="mid if">
-            <i class="fab fa-windows fa-2x ma"></i>
+        <div id="main-task-bar-info" class="mid if">
+            <div id="main-task-bar-logo" class="mid if">
+                <i class="fab fa-windows fa-2x ma"></i>
+            </div>
+            <div id="main-task-bar-name" class="mid if">
+                <p class="mid ma">SPACENET</p>
+            </div>
         </div>
-        <div id="main-task-bar-name" class="mid if">SPACENET</div>
         <div id="main-task-bar-search" class="mid if">
             <input id="search-bar" type="text" placeholder="Tìm kiếm...">
             <div id="search-bar-icon" class="if">
                 <i class="far fa-search fa-lg ma"></i>
             </div>
+        </div>
+        <div id="notification-icon" class="task-bar-icon mid if">
+            <i class="fas fa-bells fa-lg ma"></i>
+        </div>
+        <div id="friend-icon" class="task-bar-icon mid if">
+            <i class="fas fa-user-friends fa-lg ma"></i>
         </div>
     </div>
     <div id="zone2" class="task-bar"></div>
@@ -54,98 +62,97 @@
             <p id="task-bar-name" class="ma">Vĩnh Hân</p>
         </div>
         <i class="far fa-chevron-down fa-lg ma"></i>
+        <div id="zone3-down">
+            <div class="zone3-option">
+                <div class="col-sm-3 if">
+                    <i class="fas fa-home-lg-alt fa-lg ma"></i>
+                </div>
+                <div class="col-sm-7 if">
+                    <p class="zone3-option-name ma">Trang cá nhân</p>
+                </div>
+                <i class="far fa-chevron-right fa-lg ma"></i>
+            </div>
+            <div class="zone3-option">
+                <div class="col-sm-3 if">
+                    <i class="fas fa-tools fa-lg ma"></i>
+                </div>
+                <div class="col-sm-7 if">
+                    <p class="zone3-option-name ma">Cài đặt</p>
+                </div>
+                <i class="far fa-chevron-right fa-lg ma"></i>
+            </div>
+            <div class="zone3-option">
+                <div class="col-sm-3 if">
+                    <i class="fas fa-sign-out fa-lg ma"></i>
+                </div>
+                <div class="col-sm-7 if">
+                    <p class="zone3-option-name ma">Đăng xuất</p>
+                </div>
+                <i class="far fa-chevron-right fa-lg ma"></i>
+            </div>
+        </div>
     </div>
+
 </div>
-<div id="main-section" >
+<div id="main-section">
     <!--TRÍ CODE HERE-->
-    <div id="view"></div>
+    <div id="view">
+        <iframe src="../views/content.html" frameborder="0"></iframe>
+    </div>
 
     <!--PORN CODE HERE-->
     <div id="message">
         <div id="chat_bar">
-            <input type="button" id="mess_button" style="background: url('../assets/img/ico-show-chat-48x.png')"/>
-            <button id="All_chat_tab" onclick="changeColor()">ALL</button>
-            <button class="chat_tab"> <img class="chat_ava_tab" src="https://bit.ly/2ZeCbaL" alt="">Hân</button>
-            <button class="chat_tab"> <img class="chat_ava_tab" src="../assets/img/smiling.png" alt="">Smile</button>
-
-        </div>
-        <div style="display:flex;height: 3px">
-            <div style="width: 58px" class="red_line"></div>
-            <div style="width: 96px"></div>
-            <div style="width:calc(100% - 153px)" class="red_line"></div>
+            <!--            <input type="button" id="mess_button" style="background: url('../assets/img/ico-show-chat-48x.png')"/>-->
+            <button id="All_chat_tab" class="chat_tab" onclick="changeColor()">ALL</button>
+            <button chatid="1" class="chat_tab">
+                <div class="chat_tab_ava"><img src="https://bit.ly/2ZeCbaL" alt=""></div>
+                <div class="chat_tab_name"><p>Hân</p></div>
+            </button>
+            <button chatid="2" class="chat_tab">
+                <div class="chat_tab_ava"><img src="https://bit.ly/2ZeCbaL" alt=""></div>
+                <div class="chat_tab_name"><p>Hân</p></div>
+            </button>
+            <button chatid="3" class="chat_tab">
+                <div class="chat_tab_ava"><img src="https://bit.ly/2ZeCbaL" alt=""></div>
+                <div class="chat_tab_name"><p>Hân</p></div>
+            </button>
         </div>
         <div id="chat_body">
-            <div >
-                <img class="chat_ava_mess" src="https://bit.ly/2ZeCbaL" alt="">
-            </div>
-            <div class="other_chat_mess">
-                <div>Hé lô mấy cưng!!</div>
-                <div>Tao vừa rủ crush đi chơi nè :))</div>
-            </div>
-            <div class="other_chat_mess">
-                <div>Mà chưa thấy Crush rep nơi :((</div>
-                <div>Crush chảnh vl :((</div>
-            </div>
-            <div>
-                <img class="chat_ava_mess" src="../assets/img/smiling.png" alt="">
-            </div>
-            <div class="other_chat_mess">
-                <div>Thế mày rủ nó đi đâu ??</div>
-            </div>
-            <div>
-                <img class="chat_ava_mess" src="https://bit.ly/2ZeCbaL" alt="">
-            </div>
-            <div class="other_chat_mess">
-                <div>Tau hỏi nó "Em ăn cơm chưa?"</div>
-                <div>Nó rep "em chưa"</div>
-            </div>
-            <div class="other_chat_mess">
-                <div>Thế là tau rủ nó đi ăn vịt quay Bắc Kinh :))</div>
-            </div>
-            <div>
-                <img class="chat_ava_mess" src="../assets/img/thatim.png" alt="">
-            </div>
-            <div class="other_chat_mess">
-                <div>Ờ</div>
-            </div>
-            <div>
-                <img class="chat_ava_mess" src="https://bit.ly/2ZeCbaL" alt="">
-            </div>
-            <div class="other_chat_mess">
-                <div>Ể ể ,ẻm đang rep</div>
-            </div>
-            <div>
-                <img class="chat_ava_mess" src="../assets/img/smiling.png" alt="">
-            </div>
-            <div class="other_chat_mess">
-                <div>Để tao đoán...</div>
-            </div>
-            <div>
-                <img class="chat_ava_mess" src="https://bit.ly/2ZeCbaL" alt="">
-            </div>
-            <div class="other_chat_mess">
-                <div>"Hẹn anh khi khác, crush chở em đi ăn rồi" :)</div>
-            </div>
-            <div>
-                <img class="chat_ava_mess" src="../assets/img/smiling.png" alt="">
-            </div>
-            <div class="other_chat_mess">
-                <div><div>またこんど</div></div>
-            </div>
-            <div>
-                <img class="chat_ava_mess" src="../assets/img/thatim.png" alt="">
-            </div>
-            <div class="other_chat_mess">
-                <div>Đù, răn m đoán hay ghê rứa :v</div>
-            </div>
-            <div id="your_chat_mess">
-                We are just ともだち :)))
+            <div chatid="1" class="chat_region">
+                <div class="other_chat">
+                    <div class="other_chat_ava">
+                        <img class="mid" src="https://bit.ly/2ZeCbaL" alt="">
+                    </div>
+                    <div class="other_chat_mess">
+                        <p class="mid">Chào bạn</p>
+                    </div>
+                </div>
+                <div class="other_chat">
+                    <div class="other_chat_ava">
+                        <img src="https://bit.ly/2ZeCbaL" alt="">
+                    </div>
+                    <div class="other_chat_mess">
+                        <p>Chào bạn Chào bạn Chào bạn Chào bạn Chào bạn Chào bạn Chào bạn Chào bạn Chào bạn</p>
+                    </div>
+                </div>
+                <div class="your_chat">
+                    <div class="your_chat_mess">
+                        <p>Chào bạn</p>
+                    </div>
+                    <div class="your_chat_ava">
+                        <img src="https://bit.ly/2ZeCbaL" alt="">
+                    </div>
+                </div>
+
             </div>
         </div>
-        <div id="input_chat_mess">
-            <div>
-                <textarea id="chat_box" placeholder="Say something...."></textarea>
-                <input type="button" style=" border: none; width: 64px; height: 64px; float: right;background: url('../assets/img/forward.png')"/>
+        <div id="input_chat" class="if">
+            <div id="input_chat_content">
+                <input type="text" id="chat_box" placeholder="Say something...."></input>
+            </div>
+            <div id="input_chat_send">
+                <i class="fas fa-paper-plane fa-lg"></i>
             </div>
         </div>
     </div>
@@ -159,7 +166,9 @@
             <div class="contact-main-people">
                 <div class="col-sm-3 if">
                     <img class="contact-main-people-img ma" src="https://bit.ly/2ZeCbaL" alt="">
-                    <img class="contact-main-people-online" src="https://cdn.clipart.email/33e1f7cb7397d141c79db0c12ad1ac75_filegreen-light-iconsvg-wikimedia-commons_232-232.png" alt="">
+                    <img class="contact-main-people-online"
+                         src="https://cdn.clipart.email/33e1f7cb7397d141c79db0c12ad1ac75_filegreen-light-iconsvg-wikimedia-commons_232-232.png"
+                         alt="">
                 </div>
                 <div class="col-sm-7 if">
                     <p class="contact-main-people-name ma">Vĩnh Hân</p>
@@ -169,7 +178,9 @@
             <div class="contact-main-people">
                 <div class="col-sm-3 if">
                     <img class="contact-main-people-img ma" src="https://bit.ly/2ZeCbaL" alt="">
-                    <img class="contact-main-people-online" src="https://cdn.clipart.email/33e1f7cb7397d141c79db0c12ad1ac75_filegreen-light-iconsvg-wikimedia-commons_232-232.png" alt="">
+                    <img class="contact-main-people-online"
+                         src="https://cdn.clipart.email/33e1f7cb7397d141c79db0c12ad1ac75_filegreen-light-iconsvg-wikimedia-commons_232-232.png"
+                         alt="">
                 </div>
                 <div class="col-sm-7 if">
                     <p class="contact-main-people-name ma">Vĩnh Hân</p>
@@ -179,7 +190,9 @@
             <div class="contact-main-people">
                 <div class="col-sm-3 if">
                     <img class="contact-main-people-img ma" src="https://bit.ly/2ZeCbaL" alt="">
-                    <img class="contact-main-people-online" src="https://cdn.clipart.email/33e1f7cb7397d141c79db0c12ad1ac75_filegreen-light-iconsvg-wikimedia-commons_232-232.png" alt="">
+                    <img class="contact-main-people-online"
+                         src="https://cdn.clipart.email/33e1f7cb7397d141c79db0c12ad1ac75_filegreen-light-iconsvg-wikimedia-commons_232-232.png"
+                         alt="">
                 </div>
                 <div class="col-sm-7 if">
                     <p class="contact-main-people-name ma">Vĩnh Hân</p>
@@ -225,6 +238,8 @@
     </div>
 </div>
 
-<!--    <script type="text/babel" src="../assets/js/contact.jsx"></script>-->
+<script type="text/babel" src="../assets/js/chat_tab.js"></script>
+
+<script type="text/babel" src="../assets/js/contact.jsx"></script>
 </body>
 </html>

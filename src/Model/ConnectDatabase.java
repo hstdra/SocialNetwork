@@ -30,6 +30,7 @@ public class ConnectDatabase {
     //Make function for execute sql callable from another model
     public static CallableStatement prepareCall(String query) {
         try {
+            assert connection != null;
             return connection.prepareCall(query);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -50,6 +51,7 @@ public class ConnectDatabase {
     //Make statement
     private static Statement statement() {
         try {
+            assert connection != null;
             return connection.createStatement();
         } catch (Exception e) {
             e.printStackTrace();

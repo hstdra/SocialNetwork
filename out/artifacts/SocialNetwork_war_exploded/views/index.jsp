@@ -7,9 +7,10 @@
     <meta charset="UTF-8">
     <title>Trang chủ</title>
     <link rel="stylesheet" href="../assets/css/index.css">
+    <link rel="stylesheet" href="../assets/css/taskbar.css">
     <link rel="stylesheet" href="../assets/css/contact.css">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.1.0/css/all.css" media="all">
-    <script src="https://kit.fontawesome.com/2b45e9c5d6.js"></script>
+    <link rel="stylesheet" href="../assets/css/message.css">
+    <link rel="stylesheet" href="../assets/fontawesome/css/all.css">
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -37,13 +38,122 @@
 </head>
 
 <body>
-<div id="main-task-bar"></div>
+<div id="main-task-bar">
+    <div id="zone1" class="task-bar">
+        <div id="main-task-bar-info" class="mid if">
+            <div id="main-task-bar-logo" class="mid if">
+                <i class="fab fa-windows fa-2x ma"></i>
+            </div>
+            <div id="main-task-bar-name" class="mid if">
+                <p class="mid ma">SPACENET</p>
+            </div>
+        </div>
+        <div id="main-task-bar-search" class="mid if">
+            <input id="search-bar" type="text" placeholder="Tìm kiếm...">
+            <div id="search-bar-icon" class="if">
+                <i class="far fa-search fa-lg ma"></i>
+            </div>
+        </div>
+        <div id="notification-icon" class="task-bar-icon mid if">
+            <i class="fas fa-bells fa-lg ma"></i>
+        </div>
+        <div id="friend-icon" class="task-bar-icon mid if">
+            <i class="fas fa-user-friends fa-lg ma"></i>
+        </div>
+    </div>
+    <div id="zone2" class="task-bar"></div>
+    <div id="zone3" class="task-bar">
+        <div class="col-sm-3 if">
+            <img id="task-bar-ava" class="ma" src="${sessionScope.user.avatar}" alt="">
+        </div>
+        <div class="col-sm-7 if">
+            <p id="task-bar-name" userid="${sessionScope.user.userID}" class="ma">${sessionScope.user.getFullName()}</p>
+        </div>
+        <i class="far fa-chevron-down fa-lg ma"></i>
+        <div id="zone3-down">
+            <div class="zone3-option">
+                <div class="col-sm-3 if">
+                    <i class="fas fa-home-lg-alt fa-lg ma"></i>
+                </div>
+                <div class="col-sm-7 if">
+                    <p class="zone3-option-name ma">Trang cá nhân</p>
+                </div>
+                <i class="far fa-chevron-right fa-lg ma"></i>
+            </div>
+            <div class="zone3-option">
+                <div class="col-sm-3 if">
+                    <i class="fas fa-tools fa-lg ma"></i>
+                </div>
+                <div class="col-sm-7 if">
+                    <p class="zone3-option-name ma">Cài đặt</p>
+                </div>
+                <i class="far fa-chevron-right fa-lg ma"></i>
+            </div>
+            <div class="zone3-option">
+                <div class="col-sm-3 if">
+                    <i class="fas fa-sign-out fa-lg ma"></i>
+                </div>
+                <div class="col-sm-7 if">
+                    <p class="zone3-option-name ma">Đăng xuất</p>
+                </div>
+                <i class="far fa-chevron-right fa-lg ma"></i>
+            </div>
+        </div>
+    </div>
+
+</div>
 <div id="main-section">
     <!--TRÍ CODE HERE-->
     <div id="view"></div>
 
     <!--PORN CODE HERE-->
-    <div id="message"></div>
+    <div id="message">
+        <div id="chat_bar">
+            <div chatid="0" class="chat_tab">
+                <div class="chat_tab_ava"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYw07ioamYJtIXSMIpXlMzloyPYEnm4ef_g-jCkm9em6MGsIAa" alt=""></div>
+                <div class="chat_tab_name"><p>All</p></div>
+            </div>
+        </div>
+        <div id="chat_body">
+            <div chatid="1" class="chat_region">
+                <div class="other_chat">
+                    <div class="other_chat_ava">
+                        <img class="mid" src="https://bit.ly/2ZeCbaL" alt="">
+                    </div>
+                    <div class="other_chat_mess">
+                        <p class="mid">Chào bạn</p>
+                    </div>
+                </div>
+                <div class="other_chat">
+                    <div class="other_chat_ava">
+                        <img src="https://bit.ly/2ZeCbaL" alt="">
+                    </div>
+                    <div class="other_chat_mess">
+                        <p>Chào bạn Chào bạn Chào bạn Chào bạn Chào bạn Chào bạn Chào bạn Chào bạn Chào bạn</p>
+                    </div>
+                </div>
+                <div class="your_chat">
+                    <div class="your_chat_mess">
+                        <p>Chào bạn</p>
+                    </div>
+                    <div class="your_chat_ava">
+                        <img src="https://bit.ly/2ZeCbaL" alt="">
+                    </div>
+                </div>
+            </div>
+            <div chatid="2" class="chat_region">
+
+            </div>
+        </div>
+        <div id="input_chat" class="if">
+            <div id="input_chat_content">
+                <input type="text" id="chat_box" placeholder="Say something...."></input>
+            </div>
+            <div id="input_chat_send">
+                <i class="fas fa-paper-plane fa-lg"></i>
+            </div>
+        </div>
+    </div>
 
     <!--HÂN CODE HERE-->
     <div id="contact">
@@ -63,10 +173,10 @@
                         </div>
                         <div class="col-sm-7">
                             <p class="contact-main-people-name1 ma">${recent.name}</p>
-                            <c:if test = "${recent.lSMessID != recent.messID}">
+                            <c:if test="${recent.lSMessID != recent.messID}">
                                 <p class="contact-main-people-message ma b">${recent.content}</p>
                             </c:if>
-                            <c:if test = "${recent.lSMessID == recent.messID}">
+                            <c:if test="${recent.lSMessID == recent.messID}">
                                 <p class="contact-main-people-message ma">${recent.content}</p>
                             </c:if>
                         </div>
@@ -91,7 +201,15 @@
     </div>
 </div>
 
-<script type="text/babel" src="../assets/js/contact2.jsx"></script>
+<script type="text/babel" src="../assets/js/contact.jsx"></script>
 <script src="../assets/js/index.js"></script>
+<script type="text/babel">
+
+
+
+
+
+
+</script>
 </body>
 </html>

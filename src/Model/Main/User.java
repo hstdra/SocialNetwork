@@ -80,4 +80,8 @@ public class User {
     public void setLastOnline(Date lastOnline) {
         this.lastOnline = lastOnline;
     }
+
+    public String getFullName(){
+        return (lastName +" "+ firstName + "           ").substring(0, 12);
+    }
 }

@@ -1,6 +1,7 @@
 package Controller.Filter;
 
 import Model.Main.User;
+import org.apache.catalina.filters.CorsFilter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
