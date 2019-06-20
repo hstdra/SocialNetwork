@@ -13,7 +13,7 @@ import java.util.List;
 public class RecentDB {
     private static List<Recent> listRecent = new LinkedList<>();
 
-    public synchronized static List<Recent> getListRecent(String userid) {
+    public static List<Recent> getListRecent(String userid) {
         listRecent.clear();
         CallableStatement cs = ConnectDatabase.prepareCall("{CALL getContactRecent(?)}");
         try {
@@ -39,7 +39,6 @@ public class RecentDB {
                 } else {
                     last = time / 60 / 24 + "D";
                 }
-
 
                 Recent recent = new Recent(chatID, userID, lSMessID, messID, content, name, avatar, last);
                 listRecent.add(recent);

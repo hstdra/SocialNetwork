@@ -2,7 +2,7 @@ package WebSocket;
 
 import Model.GSON;
 import Model.Main.User;
-import Model.Socket.Message;
+import Model.Chat.Message;
 
 import javax.servlet.http.HttpSession;
 import javax.websocket.*;
@@ -30,8 +30,6 @@ public class ChatEndpoint {
             list.add(session);
             userSessions.put(userID, list);
         }
-
-        System.out.println(userSessions);
     }
 
     @OnMessage

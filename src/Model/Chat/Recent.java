@@ -1,5 +1,7 @@
 package Model.Chat;
 
+import java.util.List;
+
 public class Recent {
     private String chatID;
     private String userID;
@@ -19,6 +21,10 @@ public class Recent {
         this.name = name;
         this.avatar = avatar;
         this.lastOnline = lastOnline;
+    }
+
+    public static List<Recent> getListRecent(String userid) {
+        return RecentDB.getListRecent(userid);
     }
 
     public String getChatID() {

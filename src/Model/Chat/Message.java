@@ -1,10 +1,23 @@
-package Model.Socket;
+package Model.Chat;
 
 public class Message {
     private String chatID;
     private String userID;
     private String to;
     private String content;
+    private String avatar;
+
+    public Message(String chatID, String userID, String to, String content, String avatar) {
+        this.chatID = chatID;
+        this.userID = userID;
+        this.to = to;
+        this.content = content;
+        this.avatar = avatar;
+    }
+
+    public static void insertMessage(String chatID, String userID, String content){
+        MessageDB.insertMessage(chatID, userID, content);
+    }
 
     public String getChatID() {
         return chatID;
@@ -36,5 +49,13 @@ public class Message {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

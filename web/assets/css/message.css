@@ -39,6 +39,11 @@
     background: #ffffff;
 }
 
+.chat_tab:hover {
+    cursor: pointer;
+    background: #cdcdcd;
+}
+
 .chat_tab_ava {
     height: 30px;
     display: flex;
@@ -174,6 +179,11 @@
     width: 40px;
     display: inline-flex;
     background: #3b3b3b;
+}
+
+#input_chat_send:hover {
+    background: rgba(255, 255, 255, 0.64);
+    cursor: pointer;
 }
 
 #input_chat_send > i {

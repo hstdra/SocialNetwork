@@ -9,33 +9,28 @@
     <bookmark url="file://$PROJECT_DIR$/web/views/index.html" line="62" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3279c7d8-6094-4e56-a308-fbe3fbd481ae" name="Default Changelist" comment="v0.2.3&#10;- Add fontawesome offline pro&#10;- Update Taskbar UI">
-      <change afterPath="$PROJECT_DIR$/src/Controller/GetChatIDServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/WEB-INF/lib/catalina.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/views/json/getChatID.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/SocialNetwork_war.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/SocialNetwork_war.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/SocialNetwork_war_exploded.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/SocialNetwork_war_exploded.xml" afterDir="false" />
+    <list default="true" id="3279c7d8-6094-4e56-a308-fbe3fbd481ae" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Controller/Chat/InsertMessageServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/Chat/LoadChatServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/Chat/NewChatServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/Chat/UpdateLSMessageServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Model/Chat/MessageDB.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork.iml" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/SocialNetwork_war_exploded/WEB-INF/classes/Controller/Filter/CheckLoginFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/SocialNetwork_war_exploded/WEB-INF/classes/Controller/Filter/CheckLoginFilter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/SocialNetwork_war_exploded/WEB-INF/classes/Model/ConnectDatabase.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/SocialNetwork_war_exploded/WEB-INF/classes/Model/ConnectDatabase.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/SocialNetwork_war_exploded/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/SocialNetwork_war_exploded/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/SocialNetwork_war_exploded/WEB-INF/classes/Controller/IndexServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/SocialNetwork_war_exploded/WEB-INF/classes/Controller/IndexServlet.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/SocialNetwork_war_exploded/views/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/SocialNetwork_war_exploded/views/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SocialNetwork/Controller/Filter/CheckLoginFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SocialNetwork/Controller/Filter/CheckLoginFilter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Filter/CheckLoginFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Filter/CheckLoginFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Chat/ContactDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Chat/ContactDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/ConnectDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/ConnectDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Main/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Main/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SocialNetwork/Controller/IndexServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SocialNetwork/Controller/IndexServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/GetChatIDServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Chat/GetChatIDServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/IndexServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/IndexServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Chat/Recent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Chat/Recent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Chat/RecentDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Chat/RecentDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Socket/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Chat/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/WebSocket/ChatEndpoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WebSocket/ChatEndpoint.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/assets/css/message.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/css/message.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/assets/css/taskbar.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/css/taskbar.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/assets/js/chat_tab.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/js/chat_tab.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/assets/fontawesome/metadata/categories.yml" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/fontawesome/metadata/categories.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/assets/fontawesome/metadata/icons.yml" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/fontawesome/metadata/icons.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/assets/js/contact.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/js/contact.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/assets/js/contact2.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/views/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/views/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/assets/js/jquery.overlayScrollbars.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/js/jquery.overlayScrollbars.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/views/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/views/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/views/json/contact.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/views/json/contact.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/views/json/contact.jsp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -85,6 +80,11 @@
         <item name="root: schema" type="76f4a085:MysqlImplModel$Schema" />
         <item name="routines" type="d4e8921:DatabaseStructure$FamilyGroup" />
       </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="root@hst.ciodxqutvgb3.ap-southeast-1.rds.amazonaws.com" type="feb32156:DbDataSourceImpl" />
+        <item name="collations" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
     </expand>
     <select />
   </component>
@@ -94,10 +94,69 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Controller/Chat/InsertMessageServlet.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="112">
+              <caret line="11" column="72" selection-start-line="11" selection-start-column="59" selection-end-line="11" selection-end-column="72" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Model/Chat/Message.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="242">
+              <caret line="18" column="25" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/assets/js/contact.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1708">
+              <caret line="178" column="27" selection-start-line="178" selection-start-column="27" selection-end-line="178" selection-end-column="27" />
+              <folding>
+                <element signature="n#!!block;n#loadChat#0" />
+                <element signature="n#!!block;n#changeChatTab#0" />
+                <element signature="n#!!block;n#loadChatTab#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/root/routine/getChatBox@(int(11),int(11)).sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="140">
+              <caret line="5" column="39" selection-start-line="5" selection-start-column="39" selection-end-line="5" selection-end-column="39" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/358cd58d-e04e-4913-b482-d317944550d2/console.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="56">
+              <caret line="2" column="54" selection-end-line="9" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/root/routine/getContactRecent@(int(11)).sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="84">
+              <caret line="3" column="78" selection-start-line="3" selection-start-column="78" selection-end-line="3" selection-end-column="78" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/assets/js/chat_tab.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="11" column="3" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="3" />
+            <state relative-caret-position="224">
+              <caret line="8" selection-start-line="8" selection-end-line="11" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -105,48 +164,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/views/index.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3136">
-              <caret line="112" column="156" selection-start-line="112" selection-start-column="156" selection-end-line="112" selection-end-column="156" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/web/assets/js/contact.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="269">
-              <caret line="136" selection-start-line="136" selection-end-line="136" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/views/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2856">
-              <caret line="102" column="25" selection-start-line="102" selection-start-column="25" selection-end-line="102" selection-end-column="25" />
-              <folding>
-                <element signature="n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/assets/css/message.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5320">
-              <caret line="190" column="26" selection-start-line="190" selection-start-column="26" selection-end-line="190" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/assets/js/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+            <state relative-caret-position="2184">
+              <caret line="137" selection-start-line="137" selection-end-line="137" />
             </state>
           </provider>
         </entry>
@@ -182,7 +201,6 @@
         <option value="$PROJECT_DIR$/web/views/trangchu.html" />
         <option value="$PROJECT_DIR$/web/assets/js/All_chat_tab.js" />
         <option value="$PROJECT_DIR$/web/assets/css/contact.css" />
-        <option value="$PROJECT_DIR$/src/Model/Socket/Message.java" />
         <option value="$PROJECT_DIR$/web/assets/css/index.css" />
         <option value="$PROJECT_DIR$/web/assets/css/taskbar.css" />
         <option value="$PROJECT_DIR$/src/Model/Main/User.java" />
@@ -198,11 +216,27 @@
         <option value="$PROJECT_DIR$/web/views/json/contact.jsp" />
         <option value="$PROJECT_DIR$/web/assets/js/contact2.jsx" />
         <option value="$PROJECT_DIR$/web/views/index.html" />
-        <option value="$PROJECT_DIR$/web/assets/css/message.css" />
         <option value="$PROJECT_DIR$/web/assets/js/chat_tab.js" />
+        <option value="$PROJECT_DIR$/src/Controller/InsertMessageServlet.java" />
+        <option value="$PROJECT_DIR$/src/WebSocket/ChatEndpoint.java" />
+        <option value="$PROJECT_DIR$/src/Model/Socket/MessageDB.java" />
+        <option value="$PROJECT_DIR$/src/Model/Socket/Message.java" />
+        <option value="$PROJECT_DIR$/src/Model/Chat/RecentDB.java" />
+        <option value="$PROJECT_DIR$/src/Model/Chat/Recent.java" />
+        <option value="$PROJECT_DIR$/src/Controller/IndexServlet.java" />
+        <option value="$PROJECT_DIR$/web/assets/css/message.css" />
+        <option value="/76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/root/routine/getChatBox@(int(11),int(11)).sql" />
+        <option value="$PROJECT_DIR$/src/Controller/Chat/UpdateLSMessageServlet.java" />
+        <option value="$PROJECT_DIR$/src/Controller/Chat/NewChatServlet.java" />
+        <option value="$PROJECT_DIR$/src/Controller/Chat/InsertMessageServlet.java" />
+        <option value="$PROJECT_DIR$/src/Model/Chat/Message.java" />
+        <option value="$PROJECT_DIR$/src/Controller/Chat/LoadChatServlet.java" />
         <option value="$PROJECT_DIR$/web/views/index.jsp" />
-        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/358cd58d-e04e-4913-b482-d317944550d2/console.sql" />
         <option value="$PROJECT_DIR$/web/assets/js/contact.jsx" />
+        <option value="$PROJECT_DIR$/src/Model/Chat/MessageDB.java" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/358cd58d-e04e-4913-b482-d317944550d2/console.sql" />
+        <option value="/76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/root/routine/getContactRecent@(int(11)).sql" />
       </list>
     </option>
   </component>
@@ -220,9 +254,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-10" />
-    <option name="width" value="1725" />
-    <option name="height" value="905" />
+    <option name="x" value="85" />
+    <option name="y" value="25" />
+    <option name="width" value="1750" />
+    <option name="height" value="980" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="false" id="Update" />
@@ -232,7 +267,83 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Controller" type="462c0819:PsiDirectoryNode" />
+              <item name="Chat" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Controller" type="462c0819:PsiDirectoryNode" />
+              <item name="Filter" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Model" type="462c0819:PsiDirectoryNode" />
+              <item name="Chat" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Model" type="462c0819:PsiDirectoryNode" />
+              <item name="Main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="WebSocket" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="mysql" />
@@ -245,12 +356,17 @@
     <property name="project.structure.last.edited" value="Problems" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
+    <property name="settings.editor.selected.configurable" value="database.main" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Study\SocialNetwork\web\assets\css" />
       <recent name="D:\Study\SocialNetwork\web\assets\cssold" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="Controller.Chat" />
+      <recent name="Model.Socket" />
+      <recent name="Controller" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Study\SocialNetwork\web\WEB-INF\lib" />
@@ -284,7 +400,34 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Message" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Model.Chat.Message" />
+      <module name="SocialNetwork" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Model.Chat.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MessageDB" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Model.Chat.MessageDB" />
+      <module name="SocialNetwork" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Model.Chat.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Tomcat 8.0.27" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 8.0.27" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+      <option name="SHOW_DIALOG_ON_UPDATE" value="false" />
       <deployment>
         <artifact name="SocialNetwork:war exploded">
           <settings>
@@ -357,10 +500,14 @@
     </configuration>
     <list>
       <item itemvalue="Application.ContactDB" />
+      <item itemvalue="Application.Message" />
+      <item itemvalue="Application.MessageDB" />
       <item itemvalue="Tomcat Server.Tomcat 8.0.27" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.MessageDB" />
+        <item itemvalue="Application.Message" />
         <item itemvalue="Application.ContactDB" />
       </list>
     </recent_temporary>
@@ -392,6 +539,15 @@
       <workItem from="1560689377664" duration="8325000" />
       <workItem from="1560734736097" duration="9843000" />
       <workItem from="1560762474445" duration="32000" />
+      <workItem from="1560763629662" duration="3492000" />
+      <workItem from="1560845924971" duration="2625000" />
+      <workItem from="1560849943872" duration="22000" />
+      <workItem from="1560851985883" duration="1760000" />
+      <workItem from="1560865308157" duration="5932000" />
+      <workItem from="1560915491539" duration="3998000" />
+      <workItem from="1560932409285" duration="803000" />
+      <workItem from="1560996526502" duration="9108000" />
+      <workItem from="1561035401096" duration="5303000" />
     </task>
     <task id="LOCAL-00001" summary="v0.1.2&#10;- Lam tam bay choi">
       <created>1559991551705</created>
@@ -442,29 +598,45 @@
       <option name="project" value="LOCAL" />
       <updated>1560613445456</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="v0.2.4&#10;- Update some features&#10;- So many khong nho het">
+      <created>1560763733126</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1560763733126</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="88741000" />
+    <option name="totallyTimeSpent" value="121784000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49411765" weight="0.24765101" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49411765" weight="0.26442954" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.24966443" />
       <window_info id="Web" order="2" sideWeight="0.5058824" side_tool="true" weight="0.24765101" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.475" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.94264704" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.4735294" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32941177" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.4986577" weight="0.42352942" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
@@ -473,30 +645,30 @@
       <window_info anchor="bottom" id="Java Enterprise" order="12" />
       <window_info anchor="bottom" id="Messages" order="13" weight="0.32998884" />
       <window_info anchor="bottom" id="Application Servers" order="14" weight="0.32998884" />
-      <window_info anchor="bottom" id="Database Console" order="15" weight="0.32941177" />
+      <window_info anchor="bottom" id="Database Console" order="15" weight="0.4970588" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.24966443" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Database" order="4" weight="0.3295302" />
+      <window_info active="true" anchor="right" id="Database" order="4" visible="true" weight="0.3295302" />
       <window_info anchor="right" id="Maven" order="5" weight="0.3295302" />
       <window_info anchor="right" id="Palette&#9;" order="6" />
       <window_info anchor="right" id="Codota" order="7" weight="0.3295302" />
     </layout>
     <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49411765" visible="true" weight="0.24765101" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49411765" weight="0.26442954" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.24966443" />
       <window_info id="Web" order="2" sideWeight="0.5058824" side_tool="true" weight="0.24765101" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.475" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32941177" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.4735294" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32941177" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.4986577" weight="0.42352942" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
@@ -505,7 +677,7 @@
       <window_info anchor="bottom" id="Java Enterprise" order="12" />
       <window_info anchor="bottom" id="Messages" order="13" weight="0.32998884" />
       <window_info anchor="bottom" id="Application Servers" order="14" weight="0.32998884" />
-      <window_info anchor="bottom" id="Database Console" order="15" weight="0.32941177" />
+      <window_info anchor="bottom" id="Database Console" order="15" weight="0.4970588" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.24966443" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -565,100 +737,14 @@
     <MESSAGE value="v0.1.3&#10;- Update index css&#10;- Change trangchu.html to index.html" />
     <MESSAGE value="v0.2.2&#10;- Websocket update&#10;- Login update&#10;- Path update&#10;- Contact menu update" />
     <MESSAGE value="v0.2.3&#10;- Add fontawesome offline pro&#10;- Update Taskbar UI" />
-    <option name="LAST_COMMIT_MESSAGE" value="v0.2.3&#10;- Add fontawesome offline pro&#10;- Update Taskbar UI" />
+    <MESSAGE value="v0.2.4&#10;- Update some features&#10;- So many khong nho het" />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.2.4&#10;- Update some features&#10;- So many khong nho het" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/web/assets/img/people-background.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/img/people-icon.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/img/people-icon2.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/img/search-chat-icon.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/img/search-left-icon.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/img/chat.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/cssold/chat-people.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6635" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/cssold/OverlayScrollbars.min.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/cssold/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5821">
-          <caret line="292" column="21" selection-start-line="292" selection-start-column="21" selection-end-line="292" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/img/smiling.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/img/thatim.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/img/forward.png" />
-    <entry file="file://$PROJECT_DIR$/src/Model/GSON.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="15" column="18" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#149#150#0" expanded="true" />
-            <element signature="e#184#185#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Model/UTCDate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="11" column="23" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Model/Socket/Message.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-          <folding>
-            <element signature="e#182#183#0" expanded="true" />
-            <element signature="e#211#212#0" expanded="true" />
-            <element signature="e#255#256#0" expanded="true" />
-            <element signature="e#291#292#0" expanded="true" />
-            <element signature="e#324#325#0" expanded="true" />
-            <element signature="e#353#354#0" expanded="true" />
-            <element signature="e#397#398#0" expanded="true" />
-            <element signature="e#433#434#0" expanded="true" />
-            <element signature="e#462#463#0" expanded="true" />
-            <element signature="e#487#488#0" expanded="true" />
-            <element signature="e#523#524#0" expanded="true" />
-            <element signature="e#551#552#0" expanded="true" />
-            <element signature="e#585#586#0" expanded="true" />
-            <element signature="e#615#616#0" expanded="true" />
-            <element signature="e#661#662#0" expanded="true" />
-            <element signature="e#699#700#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/assets/fontawesome/css/light.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
@@ -693,24 +779,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/WebSocket/ChatEndpoint.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1456">
-          <caret line="62" selection-start-line="62" selection-end-line="62" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/assets/css/contact.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1064">
           <caret line="38" selection-start-line="38" selection-end-line="42" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/Filter/CheckLoginFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="19" column="85" selection-start-line="19" selection-start-column="85" selection-end-line="19" selection-end-column="85" />
         </state>
       </provider>
     </entry>
@@ -721,27 +793,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/LoginServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Model/Main/UserDB.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Model/ConnectDatabase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="563">
-          <caret line="51" column="42" selection-start-line="51" selection-start-column="42" selection-end-line="51" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/views/view.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
@@ -749,38 +800,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/root/routine/getContactRecent@(int(11)).sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
-          <caret line="1" column="33" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Model/Chat/Contact.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="56">
           <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/IndexServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="376">
-          <caret line="25" column="50" selection-start-line="25" selection-start-column="45" selection-end-line="25" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Model/Chat/Recent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-11">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Model/Chat/RecentDB.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="17" column="59" lean-forward="true" selection-start-line="17" selection-end-line="18" />
         </state>
       </provider>
     </entry>
@@ -801,26 +824,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/root/table/Users">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="78777abd-4853-40a2-9ba1-a14778776b79">
-          <filtering>
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/views/json/contact.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="56">
           <caret line="2" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/GetChatIDServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="15" column="47" selection-start-line="15" selection-start-column="47" selection-end-line="15" selection-end-column="47" />
         </state>
       </provider>
     </entry>
@@ -845,49 +852,105 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/358cd58d-e04e-4913-b482-d317944550d2/console.sql">
+    <entry file="file://$PROJECT_DIR$/web/assets/js/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="12" column="26" lean-forward="true" selection-start-line="12" selection-end-line="13" />
+        <state relative-caret-position="280">
+          <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Model/ConnectDatabase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1120">
+          <caret line="41" column="36" selection-start-line="41" selection-start-column="36" selection-end-line="41" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/LoginServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/Filter/CheckLoginFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="19" column="85" selection-start-line="19" selection-start-column="85" selection-end-line="19" selection-end-column="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Model/Chat/Recent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="728">
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
+          <folding>
+            <element signature="e#751#752#0" expanded="true" />
+            <element signature="e#804#805#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Model/Chat/RecentDB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="15" column="10" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/css/message.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-14">
+          <caret line="39" column="1" selection-start-line="39" selection-start-column="1" selection-end-line="39" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/Chat/GetChatIDServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/Chat/UpdateLSMessageServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/Chat/NewChatServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/WebSocket/ChatEndpoint.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-445">
+          <caret line="31" column="9" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/IndexServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="24" column="49" selection-start-line="24" selection-start-column="49" selection-end-line="24" selection-end-column="49" />
         </state>
       </provider>
     </entry>
     <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/root/routine/getCoupleChatID@(int(11),int(11)).sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
-          <caret line="1" column="33" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
+        <state relative-caret-position="84">
+          <caret line="3" selection-start-line="3" selection-end-line="11" selection-end-column="36" />
         </state>
       </provider>
     </entry>
-    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/root/table/ChatMembers">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="6c6efb85-0aac-47a8-9e54-85b7e54e88fc">
-          <filtering>
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/root/table/ChatGroups">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="6c6efb85-0aac-47a8-9e54-85b7e54e88fc">
-          <filtering>
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/js/chat_tab.js">
+    <entry file="file://$PROJECT_DIR$/src/Controller/Chat/LoadChatServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="11" column="3" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/views/index.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3136">
-          <caret line="112" column="156" selection-start-line="112" selection-start-column="156" selection-end-line="112" selection-end-column="156" />
+        <state relative-caret-position="336">
+          <caret line="21" column="47" selection-start-line="21" selection-start-column="47" selection-end-line="21" selection-end-column="47" />
         </state>
       </provider>
     </entry>
@@ -902,24 +965,116 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/css/message.css">
+    <entry file="file://$PROJECT_DIR$/src/Model/Main/UserDB.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5320">
-          <caret line="190" column="26" selection-start-line="190" selection-start-column="26" selection-end-line="190" selection-end-column="26" />
+        <state relative-caret-position="392">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/js/index.js">
+    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/root/table/Users">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="fe782853-a5c6-427e-8699-22dfa658e612">
+          <filtering />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Model/Chat/Message.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+        <state relative-caret-position="242">
+          <caret line="18" column="25" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/js/chat_tab.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="8" selection-start-line="8" selection-end-line="11" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/root/table/ChatMembers">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="fe782853-a5c6-427e-8699-22dfa658e612">
+          <filtering>
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/root/table/ChatGroups">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="fe782853-a5c6-427e-8699-22dfa658e612">
+          <filtering>
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Model/Chat/MessageDB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="20" column="34" lean-forward="true" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
+          <folding>
+            <element signature="e#1612#1613#0" expanded="true" />
+            <element signature="e#1643#1644#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/root/table/ChatMessages">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="fe782853-a5c6-427e-8699-22dfa658e612">
+          <filtering>
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/Chat/InsertMessageServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="11" column="72" selection-start-line="11" selection-start-column="59" selection-end-line="11" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/views/index.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2184">
+          <caret line="137" selection-start-line="137" selection-end-line="137" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/assets/js/contact.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="136" selection-start-line="136" selection-end-line="136" />
+        <state relative-caret-position="1708">
+          <caret line="178" column="27" selection-start-line="178" selection-start-column="27" selection-end-line="178" selection-end-column="27" />
+          <folding>
+            <element signature="n#!!block;n#loadChat#0" />
+            <element signature="n#!!block;n#changeChatTab#0" />
+            <element signature="n#!!block;n#loadChatTab#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/root/routine/getChatBox@(int(11),int(11)).sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="5" column="39" selection-start-line="5" selection-start-column="39" selection-end-line="5" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/358cd58d-e04e-4913-b482-d317944550d2/console.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="56">
+          <caret line="2" column="54" selection-end-line="9" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/root/routine/getContactRecent@(int(11)).sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="3" column="78" selection-start-line="3" selection-start-column="78" selection-end-line="3" selection-end-column="78" />
         </state>
       </provider>
     </entry>
