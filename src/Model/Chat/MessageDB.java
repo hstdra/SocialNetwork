@@ -33,10 +33,11 @@ public class MessageDB {
             cs.execute();
             ResultSet rs = cs.getResultSet();
             while (rs.next()) {
+                String mID = rs.getString("MessID");
                 String userID = rs.getString("UserID");
                 String content = rs.getString("Content");
                 String avatar = rs.getString("Avatar");
-                list.add(new Message(chatID, userID, null, content, avatar));
+                list.add(new Message(mID ,chatID, userID, null, content, avatar));
             }
         } catch (SQLException e) {
             e.printStackTrace();

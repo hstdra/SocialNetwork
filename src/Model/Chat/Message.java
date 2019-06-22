@@ -1,14 +1,16 @@
 package Model.Chat;
 
 public class Message {
+    private String messID;
     private String chatID;
     private String userID;
     private String to;
     private String content;
     private String avatar;
 
-    public Message(String chatID, String userID, String to, String content, String avatar) {
+    public Message(String messID, String chatID, String userID, String to, String content, String avatar) {
         this.chatID = chatID;
+        this.messID = messID;
         this.userID = userID;
         this.to = to;
         this.content = content;

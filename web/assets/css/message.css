@@ -1,5 +1,5 @@
 #chat_bar {
-    background-color: #979797;
+    background-color: #6b6969;
     height: 40px;
     display: flex;
     align-content: center;
@@ -36,7 +36,7 @@
     justify-content: center;
     border: 1px #c5c5c5 solid;
     border-bottom: none;
-    background: #ffffff;
+    background: #ababab;
 }
 
 .chat_tab:hover {
@@ -81,7 +81,7 @@
 
 #chat_body {
     height: calc(100% - 80px);
-    background-color: #b5b3b3;
+    background-color: #e5e5e5;
     overflow: auto;
 }
 
@@ -112,11 +112,12 @@
 
 .other_chat_mess > p {
     height: 100%;
-    max-width: 320px;
+    max-width: 275px;
     margin: auto;
-    background: white;
+    background: #8a2741;
     padding: 8px;
     border-radius: 12px;
+    color: white;
 }
 
 .your_chat {
@@ -147,7 +148,7 @@
 
 .your_chat_mess > p {
     height: 100%;
-    max-width: 320px;
+    max-width: 275px;
     margin: auto;
     background: #465dff;
     padding: 8px;

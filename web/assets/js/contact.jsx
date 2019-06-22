@@ -71,6 +71,7 @@ const CMPeople = (props) => {
             success: function (data) {
                 loadChatTab(data, props.user.userID, props.user.name, props.user.avatar);
                 changeChatTab();
+                $(".chat_tab[chatid=" + data + "]").click();
             }
         });
     };
@@ -117,6 +118,7 @@ con.onmessage = function (e) {
         '                        <p class="mid">' + data.content + '</p>\n' +
         '                    </div>\n' +
         '                </div>\n');
+    $('#chat_body').scrollTop(1000);
 
     //Update recent tab
     $("div.contact-main-people[chatid=" + data.chatID + "]").prependTo('#contact-main-recent');
@@ -131,7 +133,7 @@ con.onopen = function (e) {
 
 // =====================================================================
 
-//Bam nut send
+//Ham auto
 $('#input_chat_send').click(function () {
     const mess = $('#chat_box').val();
     if (mess !== "") {
@@ -148,6 +150,7 @@ $('#input_chat_send').click(function () {
             '                    </div>\n' +
             '                </div>');
     }
+    $('#chat_body').scrollTop(1000);
 });
 
 $('.contact-main-people').click(function (e) {
@@ -160,10 +163,30 @@ $('.contact-main-people').click(function (e) {
     loadChatTab(cid, uid, name, ava);
 });
 
+$('#chat_box').keypress(function (event) {
+    var keycode = (event.keyCode ? event.keyCode : event.which);
+    if (keycode == '13') {
+        $('#input_chat_send').click();
+    }
+});
+
+$('#chat_body').scroll(function () {
+    const pos = $('#chat_body').scrollTop();
+    if (pos < 100) {
+        const chat_region = $('.chat_region[chatid="' + chatid + '"]');
+        const messid = chat_region.attr("lmess");
+        if (messid !== '0'){
+            loadChat(chatid, messid);
+            $('#chat_body').scrollTop(200);
+        }
+    }
+});
+
 // Function for chat
 
 function sendMessage(chatID, userID, to, content, avatar) {
     const data = JSON.stringify({
+        messID: null,
         chatID: chatID,
         userID: userID,
         to: to,
@@ -185,21 +208,23 @@ function sendMessage(chatID, userID, to, content, avatar) {
     });
 }
 
-function loadChat(chatID) {
+function loadChat(chatID, messID) {
     $.ajax({
         type: 'POST',
         url: 'http://' + host + '/loadChat',
         data: {
             chatID: chatID,
-            messID: -1
+            messID: messID
         },
         success: function (data) {
             const chat_region = $('.chat_region[chatid="' + chatID + '"]');
             const list = JSON.parse(data);
+            const lmess = list.length === 0 ? 0 : list[list.length - 1].messID;
+            chat_region.attr("lmess", lmess);
 
             list.map(chat => {
                 if (chat.userID !== userID) {
-                    chat_region.append('                <div class="other_chat">\n' +
+                    chat_region.prepend('                <div class="other_chat">\n' +
                         '                    <div class="other_chat_ava">\n' +
                         '                        <img class="mid" src="' + chat.avatar + '" alt="">\n' +
                         '                    </div>\n' +
@@ -208,7 +233,7 @@ function loadChat(chatID) {
                         '                    </div>\n' +
                         '                </div>\n')
                 } else {
-                    chat_region.append('                <div class="your_chat">\n' +
+                    chat_region.prepend('                <div class="your_chat">\n' +
                         '                    <div class="your_chat_mess">\n' +
                         '                        <p>' + chat.content + '</p>\n' +
                         '                    </div>\n' +
@@ -218,6 +243,9 @@ function loadChat(chatID) {
                         '                </div>')
                 }
             });
+            if (messID === -1){
+                $('#chat_body').scrollTop(1000);
+            }
         }
     });
 
@@ -233,6 +261,7 @@ function changeChatTab() {
 
         $('.chat_region').hide();
         $('.chat_region[chatid="' + chatid + '"]').show();
+        setActiveTab(chatid);
     });
 }
 
@@ -255,7 +284,7 @@ function loadChatTab(cid, uid, name, ava) {
         $('.chat_region').hide();
         $('#chat_body').append(chat_region);
         $('#chat_bar').append(chat_tab);
-        loadChat(chatid);
+        loadChat(chatid, -1);
     } else {
         chatid = cid;
         to = uid;
@@ -272,7 +301,30 @@ function loadChatTab(cid, uid, name, ava) {
         $('.chat_tab[chatid="' + first + '"]').remove();
         loadChat(chatid);
     }
+    setActiveTab(chatid);
+    changeChatTab();
+    removeChat();
 }
 
+function removeChat() {
+    $(".chat_tab").dblclick(function (e) {
+        const cid = $(this).attr("chatid");
+        $('.chat_region[chatid="' + cid + '"]').remove();
+        $(this).remove();
+        set.delete(cid);
+        arr = jQuery.grep(arr, function (value) {
+            return value != cid;
+        });
+        const x = arr.length > 0 ? arr[arr.length - 1] : 0;
+        $('.chat_tab[chatid="' + x + '"]').click();
+    });
+}
+
+function setActiveTab(cid) {
+    $('.chat_tab').css("background-color", "#cdcdcd");
+    $('.chat_tab[chatid="' + cid + '"]').css("background-color", "#ececec");
+}
 
 // ====================
+setActiveTab(0);
+

@@ -7,6 +7,5 @@ function oldColor(_this) {
 }
 
 $(".chat_tab").dblclick(function (e) {
-    var x = $(e.target).attr('chatid');
-    $(e.target).remove();
+    $(this).remove();
 });
