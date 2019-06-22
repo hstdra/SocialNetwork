@@ -82,7 +82,7 @@ acquisitions-incorporated:
   search:
     terms:
       - Dungeons & Dragons
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - game
@@ -1795,7 +1795,7 @@ axe-battle:
     terms:
       - Dungeons & Dragons
       - barbarian
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - gimli
@@ -2115,7 +2115,7 @@ ballot-check:
       - finished
       - select
       - success
-      - tick
+      - updateList
       - vote
       - voting
   styles:
@@ -3118,7 +3118,7 @@ book-dead:
     terms:
       - Dungeons & Dragons
       - crossbones
-      - d&d
+      - contact&contact
       - dark arts
       - death
       - dnd
@@ -3224,7 +3224,7 @@ book-spells:
   search:
     terms:
       - Dungeons & Dragons
-      - d&d
+      - contact&contact
       - dark arts
       - dnd
       - documentation
@@ -3369,7 +3369,7 @@ bow-arrow:
     terms:
       - Dungeons & Dragons
       - archery
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - legolas
@@ -3481,7 +3481,7 @@ box-check:
       - package
       - select
       - success
-      - tick
+      - updateList
       - todo
       - 'yes'
   styles:
@@ -4236,7 +4236,7 @@ calendar-check:
       - schedule
       - select
       - success
-      - tick
+      - updateList
       - time
       - todo
       - when
@@ -4486,7 +4486,7 @@ campfire:
       - caliente
       - campaign
       - camping
-      - d&d
+      - contact&contact
       - dnd
       - fall
       - fire
@@ -5544,7 +5544,7 @@ check:
       - ok
       - select
       - success
-      - tick
+      - updateList
       - todo
       - 'yes'
   styles:
@@ -5568,7 +5568,7 @@ check-circle:
       - ok
       - select
       - success
-      - tick
+      - updateList
       - todo
       - 'yes'
   styles:
@@ -5596,7 +5596,7 @@ check-double:
       - ok
       - select
       - success
-      - tick
+      - updateList
       - todo
   styles:
     - solid
@@ -5620,7 +5620,7 @@ check-square:
       - ok
       - select
       - success
-      - tick
+      - updateList
       - todo
       - 'yes'
   styles:
@@ -6415,7 +6415,7 @@ clipboard-check:
       - ok
       - select
       - success
-      - tick
+      - updateList
       - todo
       - 'yes'
   styles:
@@ -6437,7 +6437,7 @@ clipboard-list:
       - intinerary
       - ol
       - schedule
-      - tick
+      - updateList
       - todo
       - ul
   styles:
@@ -6460,7 +6460,7 @@ clipboard-list-check:
       - intinerary
       - ol
       - schedule
-      - tick
+      - updateList
       - todo
       - ul
       - vote
@@ -7324,7 +7324,7 @@ comment-alt-check:
       - success
       - synced
       - texting
-      - tick
+      - updateList
       - todo
   styles:
     - solid
@@ -7641,7 +7641,7 @@ comment-check:
       - success
       - synced
       - texting
-      - tick
+      - updateList
       - todo
   styles:
     - solid
@@ -8647,7 +8647,7 @@ critical-role:
   search:
     terms:
       - Dungeons & Dragons
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - game
@@ -8938,7 +8938,7 @@ d-and-d-beyond:
   search:
     terms:
       - Dungeons & Dragons
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - gaming
@@ -8955,7 +8955,7 @@ dagger:
     terms:
       - Dungeons & Dragons
       - blade
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - melee attack
@@ -9306,7 +9306,7 @@ dice-d10:
     terms:
       - Dungeons & Dragons
       - chance
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - gambling
@@ -9326,7 +9326,7 @@ dice-d12:
     terms:
       - Dungeons & Dragons
       - chance
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - gambling
@@ -9346,7 +9346,7 @@ dice-d20:
     terms:
       - Dungeons & Dragons
       - chance
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - gambling
@@ -9366,7 +9366,7 @@ dice-d4:
     terms:
       - Dungeons & Dragons
       - chance
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - gambling
@@ -9386,7 +9386,7 @@ dice-d6:
     terms:
       - Dungeons & Dragons
       - chance
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - gambling
@@ -9406,7 +9406,7 @@ dice-d8:
     terms:
       - Dungeons & Dragons
       - chance
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - gambling
@@ -9982,7 +9982,7 @@ dragon:
   search:
     terms:
       - Dungeons & Dragons
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - fire
@@ -10263,7 +10263,7 @@ dungeon:
     terms:
       - Dungeons & Dragons
       - building
-      - d&d
+      - contact&contact
       - dnd
       - door
       - entrance
@@ -11198,7 +11198,7 @@ eye-evil:
   search:
     terms:
       - Dungeons & Dragons
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - sauron
@@ -11291,7 +11291,7 @@ fantasy-flight-games:
   search:
     terms:
       - Dungeons & Dragons
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - game
@@ -11628,7 +11628,7 @@ file-check:
       - select
       - success
       - synced
-      - tick
+      - updateList
       - todo
   styles:
     - solid
@@ -12400,7 +12400,7 @@ fist-raised:
   search:
     terms:
       - Dungeons & Dragons
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - hand
@@ -12501,7 +12501,7 @@ flame:
     terms:
       - Dungeons & Dragons
       - caliente
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - heat
@@ -12559,7 +12559,7 @@ flask-potion:
       - beaker
       - beverage
       - container
-      - d&d
+      - contact&contact
       - danger
       - dangerous
       - deadly
@@ -13249,7 +13249,7 @@ gamepad:
   search:
     terms:
       - controller
-      - d-pad
+      - contact-pad
       - joystick
       - video
   styles:
@@ -14664,7 +14664,7 @@ hammer-war:
     terms:
       - Dungeons & Dragons
       - cleric
-      - d&d
+      - contact&contact
       - dnd
       - dwarf
       - fantasy
@@ -14769,7 +14769,7 @@ hand-holding-magic:
       - Dungeons & Dragons
       - carry
       - cast
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - lift
@@ -15272,7 +15272,7 @@ hat-wizard:
       - accessory
       - buckle
       - clothing
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - halloween
@@ -15600,7 +15600,7 @@ helmet-battle:
       - Dungeons & Dragons
       - armor
       - clothing
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - hat
@@ -15882,7 +15882,7 @@ hood-cloak:
     terms:
       - Dungeons & Dragons
       - clothing
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - hat
@@ -18498,7 +18498,7 @@ mace:
   search:
     terms:
       - Dungeons & Dragons
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - melee attack
@@ -18651,7 +18651,7 @@ mandolin:
     terms:
       - Dungeons & Dragons
       - bard
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - guitar
@@ -18847,7 +18847,7 @@ map-marker-check:
       - place
       - select
       - success
-      - tick
+      - updateList
       - todo
   styles:
     - solid
@@ -21171,7 +21171,7 @@ paw-claws:
       - Dungeons & Dragons
       - animal
       - beast
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - lion
@@ -21402,7 +21402,7 @@ penny-arcade:
   search:
     terms:
       - Dungeons & Dragons
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - game
@@ -23595,7 +23595,7 @@ ring:
       - Gollum
       - band
       - binding
-      - d&d
+      - contact&contact
       - dnd
       - engagement
       - fantasy
@@ -24351,7 +24351,7 @@ scroll:
     terms:
       - Dungeons & Dragons
       - announcement
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - paper
@@ -24371,7 +24371,7 @@ scroll-old:
       - Dungeons & Dragons
       - ancient
       - announcement
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - paper
@@ -24408,7 +24408,7 @@ scythe:
     terms:
       - Dungeons & Dragons
       - blade
-      - d&d
+      - contact&contact
       - death
       - dnd
       - fantasy
@@ -24797,7 +24797,7 @@ shield-check:
       - security
       - select
       - success
-      - tick
+      - updateList
       - todo
       - winner
   styles:
@@ -24815,7 +24815,7 @@ shield-cross:
       - Dungeons & Dragons
       - block
       - crusader
-      - d&d
+      - contact&contact
       - defend
       - dnd
       - fantasy
@@ -25100,7 +25100,7 @@ sickle:
   search:
     terms:
       - blade
-      - d&d
+      - contact&contact
       - dnd
       - dungeons & dragons
       - fantasy
@@ -25661,7 +25661,7 @@ skull-crossbones:
       - Dungeons & Dragons
       - alert
       - bones
-      - d&d
+      - contact&contact
       - danger
       - dead
       - deadly
@@ -26746,7 +26746,7 @@ staff:
   search:
     terms:
       - Dungeons & Dragons
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - mage
@@ -27673,7 +27673,7 @@ sword:
     terms:
       - Dungeons & Dragons
       - blade
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - fight
@@ -27693,7 +27693,7 @@ swords:
     terms:
       - Dungeons & Dragons
       - blade
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - fight
@@ -29672,7 +29672,7 @@ treasure-chest:
     terms:
       - Dungeons & Dragons
       - booty
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - gold
@@ -31863,7 +31863,7 @@ wand:
   search:
     terms:
       - Dungeons & Dragons
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - halloween
@@ -32577,7 +32577,7 @@ wizards-of-the-coast:
   search:
     terms:
       - Dungeons & Dragons
-      - d&d
+      - contact&contact
       - dnd
       - fantasy
       - game

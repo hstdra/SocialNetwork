@@ -1,7 +1,6 @@
-package Controller;
+package Controller.Chat;
 
-import Model.Chat.Recent;
-import Model.Main.User;
+import Model.Chat.ContactDB;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,19 +8,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
-@WebServlet(name = "IndexServlet", urlPatterns = "")
-public class IndexServlet extends HttpServlet {
+@WebServlet(name = "GetChatIDServlet", urlPatterns = "/getChatID")
+public class GetChatIDServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        String u1 = request.getParameter("u1");
+        String u2 = request.getParameter("u2");
+        response.getWriter().print(ContactDB.getChatID(u1, u2));
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String userID = ((User) request.getSession().getAttribute("user")).getUserID();
-        List<Recent> listRecent = Recent.getListRecent(userID);
 
-        request.getSession().setAttribute("listRecent", listRecent);
-        request.getRequestDispatcher("/views/index.jsp").forward(request, response);
     }
 }

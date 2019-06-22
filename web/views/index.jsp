@@ -115,35 +115,6 @@
             </div>
         </div>
         <div id="chat_body">
-            <div chatid="1" class="chat_region">
-                <div class="other_chat">
-                    <div class="other_chat_ava">
-                        <img class="mid" src="https://bit.ly/2ZeCbaL" alt="">
-                    </div>
-                    <div class="other_chat_mess">
-                        <p class="mid">Chào bạn</p>
-                    </div>
-                </div>
-                <div class="other_chat">
-                    <div class="other_chat_ava">
-                        <img src="https://bit.ly/2ZeCbaL" alt="">
-                    </div>
-                    <div class="other_chat_mess">
-                        <p>Chào bạn Chào bạn Chào bạn Chào bạn Chào bạn Chào bạn Chào bạn Chào bạn Chào bạn</p>
-                    </div>
-                </div>
-                <div class="your_chat">
-                    <div class="your_chat_mess">
-                        <p>Chào bạn</p>
-                    </div>
-                    <div class="your_chat_ava">
-                        <img src="https://bit.ly/2ZeCbaL" alt="">
-                    </div>
-                </div>
-            </div>
-            <div chatid="2" class="chat_region">
-
-            </div>
         </div>
         <div id="input_chat" class="if">
             <div id="input_chat_content">
@@ -166,8 +137,8 @@
             <div id="contact-main-online"></div>
 
             <div id="contact-main-recent">
-                <c:forEach items="${sessionScope.listrecent}" var="recent">
-                    <div class="contact-main-people" chatid="${recent.chatID}">
+                <c:forEach items="${sessionScope.listRecent}" var="recent">
+                    <div class="contact-main-people" chatid="${recent.chatID}" userid="${recent.userID}">
                         <div class="col-sm-3 if">
                             <img class="contact-main-people-img ma" src="${recent.avatar}" alt="">
                         </div>
@@ -200,16 +171,12 @@
         </div>
     </div>
 </div>
-
+<script type="text/babel">
+    const host = window.location.hostname + ":" +window.location.port;
+    $("body").attr("host", host);
+</script>
 <script type="text/babel" src="../assets/js/contact.jsx"></script>
 <script src="../assets/js/index.js"></script>
-<script type="text/babel">
 
-
-
-
-
-
-</script>
 </body>
 </html>

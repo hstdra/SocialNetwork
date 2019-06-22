@@ -31,7 +31,7 @@
             n : 'number',
             u : 'undefined',
             z : 'null'
-            //d : 'date',
+            //contact : 'date',
             //e : 'error',
             //r : 'regexp',
             //y : 'symbol'
