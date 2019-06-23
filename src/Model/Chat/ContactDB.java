@@ -59,7 +59,22 @@ public class ContactDB {
         return null;
     }
 
-    public static void main(String[] args) {
+    public static String newChatGroup(String u1, String u2){
+        CallableStatement cs = ConnectDatabase.prepareCall("{CALL newChatGroup(?,?)}");
+        try {
+            cs.setString(1, u1);
+            cs.setString(2, u2);
+            cs.execute();
+            ResultSet rs = cs.getResultSet();
+            rs.next();
+            return rs.getString(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
+    public static void main(String[] args) {
+        System.out.println(newChatGroup("3", "4"));
     }
 }

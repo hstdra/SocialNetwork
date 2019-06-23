@@ -10,11 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3279c7d8-6094-4e56-a308-fbe3fbd481ae" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/SocialNetwork_war.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Chat/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Chat/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Chat/MessageDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Chat/MessageDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/assets/css/message.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/css/message.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/assets/js/chat_tab.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/js/chat_tab.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Chat/NewChatServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Chat/NewChatServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Chat/ContactDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Chat/ContactDB.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/assets/js/contact.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/js/contact.jsx" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -76,24 +75,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/assets/js/contact.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="6" column="11" lean-forward="true" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
+            <state relative-caret-position="1316">
+              <caret line="75" column="54" selection-start-line="75" selection-start-column="54" selection-end-line="75" selection-end-column="54" />
               <folding>
-                <element signature="e#439#584#0" />
-                <element signature="e#622#653#0" />
-                <element signature="e#680#723#0" />
                 <element signature="n#ListCMPeople#0" />
-                <element signature="e#1369#2735#0" />
-                <element signature="e#2904#3991#0" />
-                <element signature="e#4156#4860#0" />
-                <element signature="e#4909#5138#0" />
-                <element signature="e#5224#5364#0" />
-                <element signature="e#5403#5721#0" />
                 <element signature="n#!!block;n#sendMessage#0" />
                 <element signature="n#!!block;n#loadChat#0" />
-                <element signature="e#6024#7319#0" />
                 <element signature="n#!!block;n#changeChatTab#0" />
-                <element signature="n#!!block;n#loadChatTab#0" />
                 <element signature="n#!!block;n#removeChat#0" />
                 <element signature="n#!!block;n#setActiveTab#0" />
               </folding>
@@ -101,47 +89,90 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/web/assets/css/message.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="32">
-              <caret line="112" column="22" lean-forward="true" selection-start-line="112" selection-start-column="22" selection-end-line="112" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/358cd58d-e04e-4913-b482-d317944550d2/console.sql">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="11" column="18" selection-start-line="11" selection-end-line="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Controller/Chat/LoadChatServlet.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="18" column="46" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Model/Chat/MessageDB.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="30" column="36" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Model/Chat/Message.java">
+        <entry file="file://$PROJECT_DIR$/src/Controller/Chat/GetChatIDServlet.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="196">
-              <caret line="7" column="27" selection-start-line="7" selection-start-column="27" selection-end-line="7" selection-end-column="27" />
+              <caret line="14" selection-start-line="14" selection-end-line="16" selection-end-column="64" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Model/Chat/ContactDB.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="868">
+              <caret line="68" selection-start-line="68" selection-end-line="68" />
+              <folding>
+                <element signature="method#getContact#0;class#ContactDB#0" />
+                <element signature="e#2515#2516#0" expanded="true" />
+                <element signature="e#2573#2574#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/root/routine/newChatGroup@(int(11),int(11)).sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="168">
+              <caret line="6" column="65" selection-start-line="6" selection-start-column="65" selection-end-line="6" selection-end-column="65" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Controller/Chat/NewChatServlet.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="252">
+              <caret line="16" column="49" selection-start-line="16" selection-start-column="49" selection-end-line="16" selection-end-column="49" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/root/table/ChatGroups">
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state projectRestartId="1db607d4-26f7-4dbe-8e16-d43de03cb1d0">
+              <filtering>
+                <filter text="" />
+              </filtering>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$PROJECT_DIR$/web/WEB-INF/lib/mysql-connector-java-5.1.47.jar!/com/mysql/jdbc/NonRegisteringDriver.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="40">
+              <caret line="120" selection-start-line="120" selection-end-line="120" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Model/ConnectDatabase.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="200">
+              <caret line="72" lean-forward="true" selection-start-line="72" selection-end-line="72" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/root/table/ChatMembers">
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state projectRestartId="1db607d4-26f7-4dbe-8e16-d43de03cb1d0">
+              <filtering />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Model/Chat/Contact.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="56">
+              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -167,6 +198,7 @@
       <find>type</find>
       <find>loadChat</find>
       <find>320px</find>
+      <find>getChatID</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -188,11 +220,9 @@
         <option value="$PROJECT_DIR$/src/Model/Main/User.java" />
         <option value="$PROJECT_DIR$/src/Controller/Filter/CheckLoginFilter.java" />
         <option value="$PROJECT_DIR$/web/WEB-INF/web.xml" />
-        <option value="$PROJECT_DIR$/src/Model/ConnectDatabase.java" />
         <option value="$PROJECT_DIR$/src/Model/Main/UserDB.java" />
         <option value="/76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/root/routine/getCoupleChatID@(int(11),int(11)).sql" />
         <option value="$PROJECT_DIR$/web/views/json/getChatID.jsp" />
-        <option value="$PROJECT_DIR$/src/Model/Chat/ContactDB.java" />
         <option value="$PROJECT_DIR$/src/Controller/GetChatIDServlet.java" />
         <option value="$PROJECT_DIR$/web/assets/js/index.js" />
         <option value="$PROJECT_DIR$/web/views/json/contact.jsp" />
@@ -206,19 +236,22 @@
         <option value="$PROJECT_DIR$/src/Model/Chat/Recent.java" />
         <option value="$PROJECT_DIR$/src/Controller/IndexServlet.java" />
         <option value="$PROJECT_DIR$/src/Controller/Chat/UpdateLSMessageServlet.java" />
-        <option value="$PROJECT_DIR$/src/Controller/Chat/NewChatServlet.java" />
         <option value="$PROJECT_DIR$/src/Controller/Chat/InsertMessageServlet.java" />
         <option value="$PROJECT_DIR$/src/Controller/Chat/LoadChatServlet.java" />
         <option value="$PROJECT_DIR$/web/views/index.jsp" />
-        <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
         <option value="/76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/root/routine/getContactRecent@(int(11)).sql" />
         <option value="$PROJECT_DIR$/web/assets/js/chat_tab.js" />
         <option value="$PROJECT_DIR$/src/Model/Chat/Message.java" />
         <option value="$PROJECT_DIR$/src/Model/Chat/MessageDB.java" />
-        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/358cd58d-e04e-4913-b482-d317944550d2/console.sql" />
         <option value="/76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/root/routine/getChatBox@(int(11),int(11)).sql" />
-        <option value="$PROJECT_DIR$/web/assets/js/contact.jsx" />
         <option value="$PROJECT_DIR$/web/assets/css/message.css" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/358cd58d-e04e-4913-b482-d317944550d2/console.sql" />
+        <option value="$PROJECT_DIR$/src/Controller/Chat/NewChatServlet.java" />
+        <option value="$PROJECT_DIR$/web/assets/js/contact.jsx" />
+        <option value="$PROJECT_DIR$/src/Model/Chat/ContactDB.java" />
+        <option value="/76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/root/routine/newChatGroup@(int(11),int(11)).sql" />
+        <option value="$PROJECT_DIR$/src/Model/ConnectDatabase.java" />
       </list>
     </option>
   </component>
@@ -250,8 +283,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -321,10 +352,25 @@
               <item name="web" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -335,7 +381,7 @@
     <property name="database.console.LAST_STATE" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/web/WEB-INF/lib/catalina.jar!/" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
-    <property name="project.structure.last.edited" value="Problems" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="database.main" />
@@ -488,9 +534,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ContactDB" />
         <item itemvalue="Application.MessageDB" />
         <item itemvalue="Application.Message" />
-        <item itemvalue="Application.ContactDB" />
       </list>
     </recent_temporary>
   </component>
@@ -533,7 +579,9 @@
       <workItem from="1561126176245" duration="21000" />
       <workItem from="1561126238726" duration="2834000" />
       <workItem from="1561173967008" duration="1343000" />
-      <workItem from="1561196815670" duration="7934000" />
+      <workItem from="1561196815670" duration="8658000" />
+      <workItem from="1561210064719" duration="4580000" />
+      <workItem from="1561257727426" duration="3058000" />
     </task>
     <task id="LOCAL-00001" summary="v0.1.2&#10;- Lam tam bay choi">
       <created>1559991551705</created>
@@ -598,11 +646,18 @@
       <option name="project" value="LOCAL" />
       <updated>1561041052319</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="v0.2.6&#10;- Update chat feature ~ 90%&#10;- Fix some bugs&#10;- Change some css">
+      <created>1561204966791</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1561204966791</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="136995000" />
+    <option name="totallyTimeSpent" value="145357000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -614,10 +669,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49411765" weight="0.26442954" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49411765" visible="true" weight="0.26845637" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24966443" />
       <window_info id="Web" order="2" sideWeight="0.5058824" side_tool="true" weight="0.24765101" />
       <window_info id="Designer" order="3" />
@@ -625,7 +680,7 @@
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.94264704" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.4735294" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.7676471" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -643,7 +698,7 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.24966443" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Database" order="4" weight="0.3295302" />
+      <window_info anchor="right" id="Database" order="4" visible="true" weight="0.18053691" />
       <window_info anchor="right" id="Maven" order="5" weight="0.3295302" />
       <window_info anchor="right" id="Palette&#9;" order="6" />
       <window_info anchor="right" id="Codota" order="7" weight="0.3295302" />
@@ -732,7 +787,8 @@
     <MESSAGE value="v0.2.3&#10;- Add fontawesome offline pro&#10;- Update Taskbar UI" />
     <MESSAGE value="v0.2.4&#10;- Update some features&#10;- So many khong nho het" />
     <MESSAGE value="v0.2.5&#10;- Update chat feature ~ 70%" />
-    <option name="LAST_COMMIT_MESSAGE" value="v0.2.5&#10;- Update chat feature ~ 70%" />
+    <MESSAGE value="v0.2.6&#10;- Update chat feature ~ 90%&#10;- Fix some bugs&#10;- Change some css" />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.2.6&#10;- Update chat feature ~ 90%&#10;- Fix some bugs&#10;- Change some css" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -787,30 +843,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/views/view.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="3" column="6" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Model/Chat/Contact.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="56">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Model/Chat/ContactDB.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="62" selection-start-line="62" selection-end-line="62" />
-          <folding>
-            <element signature="method#getContact#0;class#ContactDB#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/views/json/getChatID.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
@@ -853,13 +885,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Model/ConnectDatabase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1120">
-          <caret line="41" column="36" selection-start-line="41" selection-start-column="36" selection-end-line="41" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/LoginServlet.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
@@ -892,24 +917,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/Chat/GetChatIDServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/Chat/UpdateLSMessageServlet.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="392">
           <caret line="21" selection-start-line="21" selection-end-line="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/Chat/NewChatServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
         </state>
       </provider>
     </entry>
@@ -927,17 +938,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/views/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2856">
-          <caret line="102" column="25" selection-start-line="102" selection-start-column="25" selection-end-line="102" selection-end-column="25" />
-          <folding>
-            <element signature="n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Model/Main/UserDB.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="392">
@@ -945,47 +945,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/root/table/Users">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="fe782853-a5c6-427e-8699-22dfa658e612">
-          <filtering />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/root/table/ChatGroups">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="fe782853-a5c6-427e-8699-22dfa658e612">
-          <filtering>
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
-    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/root/routine/getContactRecent@(int(11)).sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="3" column="78" selection-start-line="3" selection-start-column="78" selection-end-line="3" selection-end-column="78" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/Chat/InsertMessageServlet.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="112">
           <caret line="11" column="72" selection-start-line="11" selection-start-column="59" selection-end-line="11" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/root/routine/getCoupleChatID@(int(11),int(11)).sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
-          <caret line="1" column="33" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/root/table/ChatMembers">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="7a738e5c-f2b1-4b31-8896-7e5c9d8fe098">
-          <filtering />
         </state>
       </provider>
     </entry>
@@ -1006,10 +969,33 @@
     <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/root/table/ChatMembers.sql">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/root/table/ChatMessages">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="2072077f-95db-4e18-b0e4-2e57c402ba71">
+          <filtering>
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/css/message.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3108">
+          <caret line="111" selection-start-line="111" selection-end-line="111" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/Chat/LoadChatServlet.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
           <caret line="18" column="46" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Model/Chat/MessageDB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="644">
+          <caret line="30" column="36" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
         </state>
       </provider>
     </entry>
@@ -1020,66 +1006,143 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Model/Chat/MessageDB.java">
+    <entry file="file://$PROJECT_DIR$/web/views/view.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="30" column="36" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
+        <state relative-caret-position="-1904">
+          <caret line="3" column="6" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/root/table/ChatMessages">
+    <entry file="file://$PROJECT_DIR$/web/views/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="59">
+          <caret line="99" column="66" selection-start-line="99" selection-start-column="66" selection-end-line="99" selection-end-column="66" />
+          <folding>
+            <element signature="n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/root/routine/getChatBox@(int(11),int(11)).sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28">
+          <caret line="1" column="33" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/root/routine/getCoupleChatID@(int(11),int(11)).sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28">
+          <caret line="1" column="33" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/root/routine/getContactRecent@(int(11)).sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28">
+          <caret line="1" column="33" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/358cd58d-e04e-4913-b482-d317944550d2/console.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="421">
+          <caret line="20" column="22" lean-forward="true" selection-start-line="20" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/root/table/Users">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="2072077f-95db-4e18-b0e4-2e57c402ba71">
+        <state projectRestartId="bdb27292-ebd1-4f0a-a3ce-2b7b86167a27">
           <filtering>
             <filter text="" />
           </filtering>
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/358cd58d-e04e-4913-b482-d317944550d2/console.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="11" column="18" selection-start-line="11" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/root/routine/getChatBox@(int(11),int(11)).sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-139">
-          <caret line="1" column="33" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/assets/js/contact.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="6" column="11" lean-forward="true" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
+        <state relative-caret-position="1316">
+          <caret line="75" column="54" selection-start-line="75" selection-start-column="54" selection-end-line="75" selection-end-column="54" />
           <folding>
-            <element signature="e#439#584#0" />
-            <element signature="e#622#653#0" />
-            <element signature="e#680#723#0" />
             <element signature="n#ListCMPeople#0" />
-            <element signature="e#1369#2735#0" />
-            <element signature="e#2904#3991#0" />
-            <element signature="e#4156#4860#0" />
-            <element signature="e#4909#5138#0" />
-            <element signature="e#5224#5364#0" />
-            <element signature="e#5403#5721#0" />
             <element signature="n#!!block;n#sendMessage#0" />
             <element signature="n#!!block;n#loadChat#0" />
-            <element signature="e#6024#7319#0" />
             <element signature="n#!!block;n#changeChatTab#0" />
-            <element signature="n#!!block;n#loadChatTab#0" />
             <element signature="n#!!block;n#removeChat#0" />
             <element signature="n#!!block;n#setActiveTab#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/css/message.css">
+    <entry file="file://$PROJECT_DIR$/src/Controller/Chat/GetChatIDServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="32">
-          <caret line="112" column="22" lean-forward="true" selection-start-line="112" selection-start-column="22" selection-end-line="112" selection-end-column="22" />
+        <state relative-caret-position="196">
+          <caret line="14" selection-start-line="14" selection-end-line="16" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Model/Chat/ContactDB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="868">
+          <caret line="68" selection-start-line="68" selection-end-line="68" />
+          <folding>
+            <element signature="method#getContact#0;class#ContactDB#0" />
+            <element signature="e#2515#2516#0" expanded="true" />
+            <element signature="e#2573#2574#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/root/routine/newChatGroup@(int(11),int(11)).sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="6" column="65" selection-start-line="6" selection-start-column="65" selection-end-line="6" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/Chat/NewChatServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="16" column="49" selection-start-line="16" selection-start-column="49" selection-end-line="16" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/root/table/ChatMembers">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="1db607d4-26f7-4dbe-8e16-d43de03cb1d0">
+          <filtering />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Model/Chat/Contact.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="56">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/root/table/ChatGroups">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="1db607d4-26f7-4dbe-8e16-d43de03cb1d0">
+          <filtering>
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/web/WEB-INF/lib/mysql-connector-java-5.1.47.jar!/com/mysql/jdbc/NonRegisteringDriver.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="40">
+          <caret line="120" selection-start-line="120" selection-end-line="120" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Model/ConnectDatabase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="72" lean-forward="true" selection-start-line="72" selection-end-line="72" />
         </state>
       </provider>
     </entry>
@@ -1089,10 +1152,12 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
+          <last-edited>SocialNetwork:war exploded</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.5" />
               </list>
             </option>
           </splitter-proportions>
@@ -1100,6 +1165,7 @@
       </state>
       <state key="FacetStructureConfigurable.UI">
         <settings>
+          <last-edited>Web</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

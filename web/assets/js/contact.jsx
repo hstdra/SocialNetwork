@@ -6,6 +6,7 @@ let set = new Set();
 let arr = [];
 let chatid;
 let to;
+let loadchat = 0;
 
 // =====================================================================
 
@@ -69,9 +70,25 @@ const CMPeople = (props) => {
                 u2: props.user.userID
             },
             success: function (data) {
-                loadChatTab(data, props.user.userID, props.user.name, props.user.avatar);
-                changeChatTab();
-                $(".chat_tab[chatid=" + data + "]").click();
+                if (data === 'null'){
+                    $.ajax({
+                        type: 'POST',
+                        url: 'http://' + host + '/newChat',
+                        data: {
+                            u1: userID,
+                            u2: props.user.userID
+                        },
+                        success: function (d) {
+                            loadChatTab(d, props.user.userID, props.user.name, props.user.avatar);
+                            changeChatTab();
+                            $(".chat_tab[chatid=" + d + "]").click();
+                        }
+                    });
+                } else{
+                    loadChatTab(data, props.user.userID, props.user.name, props.user.avatar);
+                    changeChatTab();
+                    $(".chat_tab[chatid=" + data + "]").click();
+                }
             }
         });
     };
@@ -172,12 +189,14 @@ $('#chat_box').keypress(function (event) {
 
 $('#chat_body').scroll(function () {
     const pos = $('#chat_body').scrollTop();
-    if (pos < 100) {
+    if (pos < 100 && loadchat === 0) {
         const chat_region = $('.chat_region[chatid="' + chatid + '"]');
         const messid = chat_region.attr("lmess");
-        if (messid !== '0'){
-            loadChat(chatid, messid);
+        if (messid !== '0') {
+            loadchat = 1;
             $('#chat_body').scrollTop(200);
+            loadChat(chatid, messid);
+            loadchat = 0;
         }
     }
 });
@@ -243,12 +262,11 @@ function loadChat(chatID, messID) {
                         '                </div>')
                 }
             });
-            if (messID === -1){
+            if (messID === -1) {
                 $('#chat_body').scrollTop(1000);
             }
         }
     });
-
 }
 
 function changeChatTab() {
@@ -299,7 +317,7 @@ function loadChatTab(cid, uid, name, ava) {
         $('#chat_bar').append(chat_tab);
         $('.chat_region[chatid="' + first + '"]').remove();
         $('.chat_tab[chatid="' + first + '"]').remove();
-        loadChat(chatid);
+        loadChat(chatid, -1);
     }
     setActiveTab(chatid);
     changeChatTab();
@@ -309,14 +327,16 @@ function loadChatTab(cid, uid, name, ava) {
 function removeChat() {
     $(".chat_tab").dblclick(function (e) {
         const cid = $(this).attr("chatid");
-        $('.chat_region[chatid="' + cid + '"]').remove();
-        $(this).remove();
-        set.delete(cid);
-        arr = jQuery.grep(arr, function (value) {
-            return value != cid;
-        });
-        const x = arr.length > 0 ? arr[arr.length - 1] : 0;
-        $('.chat_tab[chatid="' + x + '"]').click();
+        if (cid !== '0'){
+            $('.chat_region[chatid="' + cid + '"]').remove();
+            $(this).remove();
+            set.delete(cid);
+            arr = jQuery.grep(arr, function (value) {
+                return value != cid;
+            });
+            const x = arr.length > 0 ? arr[arr.length - 1] : 0;
+            $('.chat_tab[chatid="' + x + '"]').click();
+        }
     });
 }
 
@@ -327,4 +347,3 @@ function setActiveTab(cid) {
 
 // ====================
 setActiveTab(0);
-
