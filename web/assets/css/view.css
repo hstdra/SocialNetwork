@@ -2,29 +2,27 @@ div.main_container {
     background-color: #eeeded;
     padding: 10px;
     margin: 10px;
+    position: relative;
 }
-
 .avatar {
     width: 50px;
     border-radius: 50%;
     margin-right: 10px;
 }
-
 div.main_content {
     margin-left: 30%;
     display: inline-block;
     width: 550px;
     background-color: #FFFFFF;
     padding: 8px 16px;
+    position: relative;
 }
-
 #w_status {
     display: inline-block;
     vertical-align: middle;
     height: 125px;
     width: 100%;
 }
-
 #status_content {
     width: 528px;
     margin: 5px;
@@ -32,39 +30,38 @@ div.main_content {
     resize: none;
     font-size: 14px;
 }
-
 #status_button {
     display: flex;
     height: 30px;
 }
-
 #user1infor {
     padding-left: 10%;
     padding-right: 10%;
-
 }
-
-button.but {
+.but {
     border-radius: 10px;
     cursor: pointer;
     font-size: 13px;
 }
-
 #post_button {
     float: right;
     margin-left: 70%;
 }
-
 .username {
     text-align: center;
 }
-
 .newFeedTime {
     font-size: 13px;
     font-style: italic;
     margin-top: 5px;
 }
-
-button:hover {
-    background-color: #EBEDF0;
+.para{
+    padding: 0 20px 0px 10px;
+    margin-bottom: 15px;
+}
+.pic {
+    padding: 0px 0px 18px 16px;
+}
+.noneOutline{
+    outline: none;
 }

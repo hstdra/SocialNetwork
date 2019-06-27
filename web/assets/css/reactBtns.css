@@ -1,0 +1,95 @@
+.reaction_Button {
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    bottom: 12px;
+}
+.reaction_Button:hover{
+    background-color: #cdcdcd;
+}
+.div_for_users_react{
+    font-size: 14px;
+    font-style: italic;
+    position: absolute;
+    left: 35%;
+    cursor: pointer;
+}
+.div_for_comment_btn{
+    position: relative;
+    margin-left: 90%;
+}
+.commentBtn{
+    border-radius: 10px;
+    border: none;
+    width: 40px;
+    height: 30px;
+    background-color: white;
+}
+.commentBtn:hover{
+    background-color: #cdcdcd;
+}
+.div_for_reactBtn{
+    position: absolute;
+    bottom: 5px;
+}
+.react_font{
+    font-size: 20px;
+}
+span.thumbs{
+    color: #3176ff;
+}
+span.heart{
+    color: #ff133d;
+}
+span.face{
+    color: #d8b019;
+}
+span.react{
+    color: forestgreen;
+}
+.reactBtn{
+    position: absolute;
+    bottom: 0px;
+    z-index: 100;
+}
+.heartBtn{
+    position: absolute;
+    bottom: 32px;
+    left: 0px;
+    z-index: 100;
+    display: none;
+}
+.thumbs-downBtn{
+    position: absolute;
+    left: -21px;
+    bottom: -26px;
+    z-index: 100;
+    display: none;
+}
+.thumbs-upBtn{
+    position: absolute;
+    left: -32px;
+    bottom: 8px;
+    z-index: 100;
+    display: none;
+}
+.laughBtn{
+    position: absolute;
+    bottom: -26px;
+    left: 20px;
+    z-index: 100;
+    display: none;
+}
+.cryBtn{
+    position: absolute;
+    bottom: 8px;
+    left: 32px;
+    z-index: 100;
+    display: none;
+}
+
