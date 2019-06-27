@@ -60,10 +60,11 @@ input[name=contact-search-input] {
     position: absolute;
     margin-left: -1px;
     margin-top: 4px;
-    font-size: 9px;
+    font-size: 10px;
     color: white;
     background-color: #a4a4a4b3;
     text-align: center;
+    font-weight: 900;
 }
 
 .contact-main-people-name {
@@ -80,6 +81,7 @@ input[name=contact-search-input] {
 .contact-main-people-message {
     margin-left: 0;
     font-size: 10px;
+    font-weight: 500;
 }
 
 
@@ -96,4 +98,25 @@ input[name=contact-search-input] {
 #contact-button > div:hover {
     background-color: #999999;
     cursor: pointer;
+}
+
+#count-recent{
+    background: #ff0000b8;
+}
+
+#count-online{
+    background: #068421ba;
+}
+
+.contact-count{
+    font-size: 12px;
+    width: 22px;
+    height: 20px;
+    color: white;
+    text-align: center;
+    border-radius: 50%;
+    position: absolute;
+    margin-left: 30px;
+    margin-top: 2px;
+    font-weight: bold;
 }

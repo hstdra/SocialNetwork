@@ -25,6 +25,10 @@ public class User {
         return UserDB.login(email, passWord);
     }
 
+    public static void updateOnline(String userID){
+        UserDB.updateOnline(userID);
+    }
+
     public String getUserID() {
         return userID;
     }

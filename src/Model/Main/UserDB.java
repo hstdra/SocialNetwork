@@ -12,7 +12,7 @@ import java.util.List;
 public class UserDB {
     private static final List<User> listUser = new LinkedList<>();
 
-    public static User login(String email, String passWord) {
+    static User login(String email, String passWord) {
         try {
             PreparedStatement ps = ConnectDatabase.preparedStatement("Select * from Users where Email=? and Password=?");
             assert ps != null;
@@ -36,6 +36,17 @@ public class UserDB {
         return null;
     }
 
+    static void updateOnline(String userID){
+        PreparedStatement ps = ConnectDatabase.preparedStatement("UPDATE Users SET LastOnline = NOW() WHERE UserID = ?");
+        try {
+            assert ps != null;
+            ps.setString(1, userID);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static List<User> getListUsers() {
         listUser.clear();
         try {
@@ -57,5 +68,9 @@ public class UserDB {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void main(String[] args) {
+        updateOnline("1");
     }
 }

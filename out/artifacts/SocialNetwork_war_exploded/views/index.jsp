@@ -25,11 +25,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <!-- Latest compiled React -->
-    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    <script src="../assets/js/library/react.development.js"></script>
+    <script src="../assets/js/library/react-dom.development.js"></script>
+    <script src="../assets/js/library/react.production.min.js"></script>
+    <script src="../assets/js/library/react-dom.production.min.js"></script>
+    <script src="../assets/js/library/browser.min.js"></script>
 
     <!-- Plugin CSS -->
     <link type="text/css" href="../assets/css/OverlayScrollbar.css" rel="stylesheet"/>
@@ -110,11 +110,37 @@
     <div id="message">
         <div id="chat_bar">
             <div chatid="0" class="chat_tab">
-                <div class="chat_tab_ava"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYw07ioamYJtIXSMIpXlMzloyPYEnm4ef_g-jCkm9em6MGsIAa" alt=""></div>
+                <div class="chat_tab_ava"><img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYw07ioamYJtIXSMIpXlMzloyPYEnm4ef_g-jCkm9em6MGsIAa"
+                        alt=""></div>
                 <div class="chat_tab_name"><p>All</p></div>
             </div>
         </div>
         <div id="chat_body">
+            <div chatid="0" class="chat_region">
+                <c:forEach items="${applicationScope.ListAllMess}" var="mess">
+                    <c:if test="${mess.userID == sessionScope.user.userID}">
+                        <div class="your_chat">
+                            <div class="your_chat_mess">
+                                <p>${mess.content}</p>
+                            </div>
+                            <div class="your_chat_ava">
+                                <img src="${mess.avatar}" alt="">
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${mess.userID != sessionScope.user.userID}">
+                        <div class="other_chat">
+                            <div class="other_chat_ava">
+                                <img class="mid" src="${mess.avatar}" alt="">
+                            </div>
+                            <div class="other_chat_mess">
+                                <p class="mid">${mess.content}</p>
+                            </div>
+                        </div>
+                    </c:if>
+                </c:forEach>
+            </div>
         </div>
         <div id="input_chat" class="if">
             <div id="input_chat_content">
@@ -145,13 +171,19 @@
                         <div class="col-sm-7">
                             <p class="contact-main-people-name1 ma">${recent.name}</p>
                             <c:if test="${recent.lSMessID != recent.messID}">
-                                <p class="contact-main-people-message ma b">${recent.content}</p>
+                                <p class="contact-main-people-message ma b"
+                                   style="font-weight: bolder">${recent.content}</p>
                             </c:if>
                             <c:if test="${recent.lSMessID == recent.messID}">
                                 <p class="contact-main-people-message ma">${recent.content}</p>
                             </c:if>
                         </div>
-                        <i class="far fa-comment fa-lg ma"></i>
+                        <c:if test="${recent.lSMessID != recent.messID}">
+                            <i class="far fa-bell fa-lg ma"></i>
+                        </c:if>
+                        <c:if test="${recent.lSMessID == recent.messID}">
+                            <i class="far fa-comment fa-lg ma"></i>
+                        </c:if>
                     </div>
                 </c:forEach>
             </div>
@@ -161,9 +193,11 @@
         <div id="contact-button" class="row ma">
             <div id="contact-button-online" class="col if">
                 <i class="fal fa-user-friends fa-lg ma"></i>
+                <p id="count-online" class="contact-count" style="display: none"></p>
             </div>
             <div id="contact-button-recent" class="col if">
                 <i class="fal fa-envelope-open fa-lg ma"></i>
+                <p id="count-recent" class="contact-count" style="display: none"></p>
             </div>
             <div id="contact-button-setting" class="col if">
                 <i class="fal fa-cog fa-lg ma"></i>
@@ -172,7 +206,7 @@
     </div>
 </div>
 <script type="text/babel">
-    const host = window.location.hostname + ":" +window.location.port;
+    const host = window.location.hostname + ":" + window.location.port;
     $("body").attr("host", host);
 </script>
 <script type="text/babel" src="../assets/js/contact.jsx"></script>

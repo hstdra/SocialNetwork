@@ -18,7 +18,7 @@
     height: 100%;
 }
 
-#main-task-bar-info:hover{
+#main-task-bar-info:hover {
     background-color: rgba(255, 255, 255, 0.13);
     cursor: pointer;
 }
@@ -54,12 +54,17 @@
     border-bottom-right-radius: 5px;
 }
 
-.task-bar-icon{
+#search-bar-icon:hover {
+    background: #e8eaf2;
+    cursor: pointer;
+}
+
+.task-bar-icon {
     width: 40px;
     height: 100%;
 }
 
-.task-bar-icon:hover{
+.task-bar-icon:hover {
     background-color: #ffffff6b;
     cursor: pointer;
 }
@@ -103,7 +108,7 @@
     color: white;
 }
 
-#zone3-down{
+#zone3-down {
     display: none;
     position: absolute;
     margin-top: 45px;
@@ -117,14 +122,14 @@
     height: 45px;
 }
 
-.zone3-option-name{
+.zone3-option-name {
     font-size: 16px;
     font-weight: bold;
     margin-left: 0;
     color: #514f4f;
 }
 
-#zone3:hover #zone3-down{
+#zone3:hover #zone3-down {
     display: unset;
 }
 

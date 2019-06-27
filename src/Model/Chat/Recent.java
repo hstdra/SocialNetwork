@@ -27,6 +27,10 @@ public class Recent {
         return RecentDB.getListRecent(userid);
     }
 
+    public static void updateLSMessage(String chatid, String userid) {
+        RecentDB.updateLSMessage(chatid, userid);
+    }
+
     public String getChatID() {
         return chatID;
     }
@@ -40,7 +44,7 @@ public class Recent {
     }
 
     public String getContent() {
-        return content;
+        return content.length() <= 25 ? content : content.substring(0, 21) + "...";
     }
 
     public String getName() {

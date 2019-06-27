@@ -17,6 +17,15 @@ public class Message {
         this.avatar = avatar;
     }
 
+    public Message(String userID, String content, String avatar) {
+        this.chatID = null;
+        this.messID = null;
+        this.userID = userID;
+        this.to = null;
+        this.content = content;
+        this.avatar = avatar;
+    }
+
     public static void insertMessage(String chatID, String userID, String content){
         MessageDB.insertMessage(chatID, userID, content);
     }

@@ -4,6 +4,7 @@ import Model.ConnectDatabase;
 import Model.UTCDate;
 
 import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
@@ -48,5 +49,17 @@ public class RecentDB {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void updateLSMessage(String chatID, String userID) {
+        CallableStatement cs = ConnectDatabase.prepareCall("{CALL updateLSMessage(?,?)}");
+        try {
+            assert cs != null;
+            cs.setString(1, chatID);
+            cs.setString(2, userID);
+            cs.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

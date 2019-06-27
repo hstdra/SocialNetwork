@@ -2,16 +2,16 @@
 const host = $("body").attr("host");
 const userID = $("#task-bar-name").attr("userID");
 const avatar = $("#task-bar-ava").attr("src");
+const audio = new Audio('../assets/audio/new_mess.mp3');
 let set = new Set();
 let arr = [];
-let chatid;
+let chatid = "0";
 let to;
-let loadchat = 0;
 
 // =====================================================================
 
 //React render Contact
-let contactSocket = new WebSocket('ws://' + host + '/contact');
+const contactSocket = new WebSocket('ws://' + host + '/contact');
 let contact;
 
 contactSocket.onmessage = function (e) {
@@ -27,7 +27,7 @@ contactSocket.onopen = function (e) {
 
 setInterval(function () {
     contactSocket.send('updateRecent');
-}, 10000);
+}, 30000);
 
 
 class ListCMPeople extends React.Component {
@@ -39,8 +39,9 @@ class ListCMPeople extends React.Component {
     componentDidMount() {
         this.timerID = setInterval(
             () => this.updateList(),
-            10000
+            30000
         );
+        updateCountContact();
     }
 
     componentWillUnmount() {
@@ -70,7 +71,7 @@ const CMPeople = (props) => {
                 u2: props.user.userID
             },
             success: function (data) {
-                if (data === 'null'){
+                if (data === 'null') {
                     $.ajax({
                         type: 'POST',
                         url: 'http://' + host + '/newChat',
@@ -79,13 +80,13 @@ const CMPeople = (props) => {
                             u2: props.user.userID
                         },
                         success: function (d) {
-                            loadChatTab(d, props.user.userID, props.user.name, props.user.avatar);
+                            loadChatTab(d, props.user.userID, props.user.firstName, props.user.avatar);
                             changeChatTab();
                             $(".chat_tab[chatid=" + d + "]").click();
                         }
                     });
-                } else{
-                    loadChatTab(data, props.user.userID, props.user.name, props.user.avatar);
+                } else {
+                    loadChatTab(data, props.user.userID, props.user.firstName, props.user.avatar);
                     changeChatTab();
                     $(".chat_tab[chatid=" + data + "]").click();
                 }
@@ -118,12 +119,11 @@ const CMPeople = (props) => {
 //=====================================================================
 
 
-// For chat
-let con = new WebSocket('ws://' + host + '/chat');
+// For couple chat
+const coupleSocket = new WebSocket('ws://' + host + '/chat');
 
-con.onmessage = function (e) {
+coupleSocket.onmessage = function (e) {
     const data = JSON.parse(e.data);
-
 
     const chat_region = $('.chat_region[chatid="' + data.chatID + '"]');
 
@@ -135,16 +135,43 @@ con.onmessage = function (e) {
         '                        <p class="mid">' + data.content + '</p>\n' +
         '                    </div>\n' +
         '                </div>\n');
-    $('#chat_body').scrollTop(1000);
+    $('#chat_body').scrollTop(9999999);
 
     //Update recent tab
     $("div.contact-main-people[chatid=" + data.chatID + "]").prependTo('#contact-main-recent');
-    $("div.contact-main-people[chatid=" + data.chatID + "] div:nth-child(2) p:nth-child(2)").text(data.content);
+    $("div.contact-main-people[chatid=" + data.chatID + "] div:nth-child(2) p:nth-child(2)").text(data.content.length > 25 ? data.content.substring(0, 21) + '...' : data.content);
     $("div.contact-main-people[chatid=" + data.chatID + "] div:nth-child(2) p:nth-child(2)").attr("class", "contact-main-people-message ma b");
+    $("div.contact-main-people[chatid=" + data.chatID + "] div:nth-child(2) p:nth-child(2)").css("font-weight", "bolder");
     $("div.contact-main-people[chatid=" + data.chatID + "]").find("i").attr("class", "far fa-bell fa-lg ma");
-};
-con.onopen = function (e) {
 
+    //Update some addition
+    updateCountRecent();
+    audio.play();
+};
+coupleSocket.onopen = function (e) {
+};
+
+
+// =====================================================================
+
+// For all chat
+const allSocket = new WebSocket('ws://' + host + '/chatAll');
+
+allSocket.onmessage = function (e) {
+    const data = JSON.parse(e.data);
+    const chat_region = $('.chat_region[chatid="0"]');
+
+    chat_region.append('                <div class="other_chat">\n' +
+        '                    <div class="other_chat_ava">\n' +
+        '                        <img class="mid" src="' + data.avatar + '" alt="">\n' +
+        '                    </div>\n' +
+        '                    <div class="other_chat_mess">\n' +
+        '                        <p class="mid">' + data.content + '</p>\n' +
+        '                    </div>\n' +
+        '                </div>\n');
+    $('#chat_body').scrollTop(9999999);
+};
+allSocket.onopen = function (e) {
 };
 
 
@@ -152,22 +179,16 @@ con.onopen = function (e) {
 
 //Ham auto
 $('#input_chat_send').click(function () {
-    const mess = $('#chat_box').val();
-    if (mess !== "") {
+    const content = $('#chat_box').val();
+    if (content !== "") {
         $('#chat_box').val("");
-        sendMessage(chatid, userID, to, mess, avatar);
-
-        const chat_region = $('.chat_region[chatid="' + chatid + '"]');
-        chat_region.append('                <div class="your_chat">\n' +
-            '                    <div class="your_chat_mess">\n' +
-            '                        <p>' + mess + '</p>\n' +
-            '                    </div>\n' +
-            '                    <div class="your_chat_ava">\n' +
-            '                        <img src="' + avatar + '" alt="">\n' +
-            '                    </div>\n' +
-            '                </div>');
+        if (chatid === "0") {
+            sendAllMessage(userID, content, avatar);
+        } else {
+            sendMessage(chatid, userID, to, content, avatar);
+        }
     }
-    $('#chat_body').scrollTop(1000);
+    $('#chat_body').scrollTop(9999999);
 });
 
 $('.contact-main-people').click(function (e) {
@@ -189,19 +210,41 @@ $('#chat_box').keypress(function (event) {
 
 $('#chat_body').scroll(function () {
     const pos = $('#chat_body').scrollTop();
-    if (pos < 100 && loadchat === 0) {
+    if (pos < 100) {
         const chat_region = $('.chat_region[chatid="' + chatid + '"]');
         const messid = chat_region.attr("lmess");
         if (messid !== '0') {
-            loadchat = 1;
-            $('#chat_body').scrollTop(200);
+            chat_region.attr("lmess", "0");
             loadChat(chatid, messid);
-            loadchat = 0;
+            $('#chat_body').scrollTop(200);
         }
     }
 });
 
 // Function for chat
+
+function sendAllMessage(userID, content, avatar) {
+    const data = JSON.stringify({
+        messID: null,
+        chatID: null,
+        userID: userID,
+        to: null,
+        content: content,
+        avatar: avatar
+    });
+    allSocket.send(data);
+
+    //Update view
+    const chat_region = $('.chat_region[chatid="' + chatid + '"]');
+    chat_region.append('                <div class="your_chat">\n' +
+        '                    <div class="your_chat_mess">\n' +
+        '                        <p>' + content + '</p>\n' +
+        '                    </div>\n' +
+        '                    <div class="your_chat_ava">\n' +
+        '                        <img src="' + avatar + '" alt="">\n' +
+        '                    </div>\n' +
+        '                </div>');
+}
 
 function sendMessage(chatID, userID, to, content, avatar) {
     const data = JSON.stringify({
@@ -212,8 +255,27 @@ function sendMessage(chatID, userID, to, content, avatar) {
         content: content,
         avatar: avatar
     });
-    con.send(data);
+    coupleSocket.send(data);
 
+    //Update recent tab
+    $("div.contact-main-people[chatid=" + chatID + "]").prependTo('#contact-main-recent');
+    $("div.contact-main-people[chatid=" + chatID + "] div:nth-child(2) p:nth-child(2)").text(content.length > 25 ? content.substring(0, 21) + '...' : content);
+    $("div.contact-main-people[chatid=" + chatID + "] div:nth-child(2) p:nth-child(2)").attr("class", "contact-main-people-message ma");
+    $("div.contact-main-people[chatid=" + chatID + "] div:nth-child(2) p:nth-child(2)").css("font-weight", "500");
+    $("div.contact-main-people[chatid=" + chatID + "]").find("i").attr("class", "far fa-comment fa-lg ma");
+
+    //Update view
+    const chat_region = $('.chat_region[chatid="' + chatid + '"]');
+    chat_region.append('                <div class="your_chat">\n' +
+        '                    <div class="your_chat_mess">\n' +
+        '                        <p>' + content + '</p>\n' +
+        '                    </div>\n' +
+        '                    <div class="your_chat_ava">\n' +
+        '                        <img src="' + avatar + '" alt="">\n' +
+        '                    </div>\n' +
+        '                </div>');
+
+    //Write database
     $.ajax({
         type: 'POST',
         url: 'http://' + host + '/insertMessage',
@@ -225,6 +287,7 @@ function sendMessage(chatID, userID, to, content, avatar) {
         success: function (data) {
         }
     });
+    updateLSMessage();
 }
 
 function loadChat(chatID, messID) {
@@ -285,7 +348,7 @@ function changeChatTab() {
 
 function loadChatTab(cid, uid, name, ava) {
     const chat_region = '<div chatid="' + cid + '" userid="' + uid + '" class="chat_region"></div>';
-    const chat_tab = '<div chatid="' + cid + '" userid="' + uid + '" class="chat_tab"><div class="chat_tab_ava"><img src=' + ava + ' alt=""></div><div class="chat_tab_name"><p>' + name + '</p></div></div>';
+    const chat_tab = '<div chatid="' + cid + '" userid="' + uid + '" class="chat_tab"><div class="chat_tab_ava"><img src="' + ava + '" alt=""></div><div class="chat_tab_name"><p>' + name + '</p></div></div>';
 
     if (set.has(cid)) {
         chatid = cid;
@@ -327,7 +390,7 @@ function loadChatTab(cid, uid, name, ava) {
 function removeChat() {
     $(".chat_tab").dblclick(function (e) {
         const cid = $(this).attr("chatid");
-        if (cid !== '0'){
+        if (cid !== '0') {
             $('.chat_region[chatid="' + cid + '"]').remove();
             $(this).remove();
             set.delete(cid);
@@ -343,7 +406,46 @@ function removeChat() {
 function setActiveTab(cid) {
     $('.chat_tab').css("background-color", "#cdcdcd");
     $('.chat_tab[chatid="' + cid + '"]').css("background-color", "#ececec");
+    updateLSMessage();
+}
+
+function updateCountRecent() {
+    const x = $('.contact-main-people-message.ma.b').length;
+    $('#count-recent').text(x);
+    if (x > 0) $('#count-recent').show(); else $('#count-recent').hide();
+}
+
+function updateCountContact() {
+    const x = $('.contact-main-people-online').length;
+    $('#count-online').text(x);
+    if (x > 0) $('#count-online').show(); else $('#count-online').hide();
+}
+
+function updateLSMessage(){
+    $("div.contact-main-people[chatid=" + chatid + "] div:nth-child(2) p:nth-child(2)").attr("class", "contact-main-people-message ma");
+    $("div.contact-main-people[chatid=" + chatid + "] div:nth-child(2) p:nth-child(2)").css("font-weight", "500");
+    $("div.contact-main-people[chatid=" + chatid + "]").find("i").attr("class", "far fa-comment fa-lg ma");
+    $.ajax({
+        type: 'POST',
+        url: 'http://' + host + '/updateLSMessage',
+        data: {
+            chatID: chatid,
+            userID: userID,
+        },
+        success: function (data) {
+        }
+    });
+    updateCountRecent();
 }
 
 // ====================
 setActiveTab(0);
+$('#chat_body').scrollTop(9999999);
+
+updateCountRecent();
+
+const promise = audio.play();
+if (promise) {
+    //Older browsers may not return a promise, according to the MDN website
+    promise.catch(function(error) { console.error(error); });
+};

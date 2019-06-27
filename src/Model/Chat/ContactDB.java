@@ -13,7 +13,7 @@ import java.util.List;
 public class ContactDB {
     private static final List<Contact> listContact = new LinkedList<>();
 
-    public static List<Contact> getContact() {
+    static List<Contact> getContact() {
         listContact.clear();
         Date date = UTCDate.getUTCDate();
         try {
@@ -22,6 +22,7 @@ public class ContactDB {
             while (rs.next()) {
                 String userID = rs.getString("UserID");
                 String name = rs.getString("LastName") + " " + rs.getString("FirstName");
+                String firstName = rs.getString("FirstName");
                 String avatar = rs.getString("Avatar");
                 Date lastOnline = rs.getTimestamp("LastOnline");
                 long time = (date.getTime() - lastOnline.getTime()) / 60000;
@@ -34,7 +35,7 @@ public class ContactDB {
                     last = time / 60 / 24 + "D";
                 }
 
-                Contact contact = new Contact(userID, name, avatar, last, null);
+                Contact contact = new Contact(userID, name, firstName, avatar, last, null);
                 listContact.add(contact);
             }
             return listContact;
@@ -44,7 +45,7 @@ public class ContactDB {
         return null;
     }
 
-    public static String getChatID(String u1, String u2){
+    public static String getChatID(String u1, String u2) {
         CallableStatement cs = ConnectDatabase.prepareCall("{CALL getCoupleChatID(?,?)}");
         try {
             cs.setString(1, u1);
@@ -59,7 +60,7 @@ public class ContactDB {
         return null;
     }
 
-    public static String newChatGroup(String u1, String u2){
+    public static String newChatGroup(String u1, String u2) {
         CallableStatement cs = ConnectDatabase.prepareCall("{CALL newChatGroup(?,?)}");
         try {
             cs.setString(1, u1);
