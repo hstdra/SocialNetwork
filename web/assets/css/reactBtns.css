@@ -26,8 +26,8 @@
 .commentBtn{
     border-radius: 10px;
     border: none;
-    width: 40px;
-    height: 30px;
+    width: 50px;
+    height: 35px;
     background-color: white;
 }
 .commentBtn:hover{
@@ -51,6 +51,14 @@ span.face{
 }
 span.react{
     color: forestgreen;
+}
+span.addPic{
+    color: #ff1789;
+    font-size: 30px;
+}
+span.post{
+    color:#2422ff;
+    font-size:30px;
 }
 .reactBtn{
     position: absolute;
