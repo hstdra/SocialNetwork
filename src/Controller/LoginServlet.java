@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.MD5;
 import Model.Main.User;
 
 import java.io.IOException;
@@ -8,12 +9,12 @@ import java.io.IOException;
 public class LoginServlet extends javax.servlet.http.HttpServlet {
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         String email = request.getParameter("email");
-        String passWord = request.getParameter("passWord");
+        String passWord = MD5.hash(request.getParameter("password"));
         User user = User.login(email, passWord);
         if (user != null) {
             request.getSession().setAttribute("user", user);
             response.sendRedirect("");
-        } else request.getRequestDispatcher("/views/login.jsp").forward(request, response);
+        } else request.getRequestDispatcher("/views/inout/login.jsp").forward(request, response);
     }
 
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
@@ -21,7 +22,7 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
         if (user != null){
             response.sendRedirect("");
         } else {
-            request.getRequestDispatcher("/views/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/inout/login.jsp").forward(request, response);
         }
     }
 }

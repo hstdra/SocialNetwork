@@ -21,11 +21,19 @@ public class User {
         this.lastOnline = lastOnline;
     }
 
+    public static void changeAvatar(String email, String avatar){
+        UserDB.changeAvatar(email, avatar);
+    }
+
+    public static boolean signup(String email, String passWord, String firstName, String lastName, String dob, String avatar) {
+       return UserDB.signup(email, passWord, firstName, lastName, dob, avatar);
+    }
+
     public static User login(String email, String passWord) {
         return UserDB.login(email, passWord);
     }
 
-    public static void updateOnline(String userID){
+    public static void updateOnline(String userID) {
         UserDB.updateOnline(userID);
     }
 
@@ -85,7 +93,7 @@ public class User {
         this.lastOnline = lastOnline;
     }
 
-    public String getFullName(){
-        return (lastName +" "+ firstName + "           ").substring(0, 12);
+    public String getFullName() {
+        return (lastName + " " + firstName + "           ").substring(0, 12);
     }
 }

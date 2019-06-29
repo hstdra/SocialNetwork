@@ -3,6 +3,14 @@ const host = $("body").attr("host");
 const userID = $("#task-bar-name").attr("userID");
 const avatar = $("#task-bar-ava").attr("src");
 const audio = new Audio('../assets/audio/new_mess.mp3');
+const promise = audio.play();
+if (promise) {
+    //Older browsers may not return a promise, according to the MDN website
+    promise.catch(function (error) {
+        console.error(error);
+    });
+}
+
 let set = new Set();
 let arr = [];
 let chatid = "0";
@@ -27,8 +35,7 @@ contactSocket.onopen = function (e) {
 
 setInterval(function () {
     contactSocket.send('updateRecent');
-}, 30000);
-
+}, 20000);
 
 class ListCMPeople extends React.Component {
     constructor(props) {
@@ -39,9 +46,8 @@ class ListCMPeople extends React.Component {
     componentDidMount() {
         this.timerID = setInterval(
             () => this.updateList(),
-            30000
+            20000
         );
-        updateCountContact();
     }
 
     componentWillUnmount() {
@@ -62,7 +68,7 @@ class ListCMPeople extends React.Component {
 }
 
 const CMPeople = (props) => {
-    const cc = () => {
+    const openTab = () => {
         $.ajax({
             type: 'POST',
             url: 'http://' + host + '/getChatID',
@@ -83,6 +89,8 @@ const CMPeople = (props) => {
                             loadChatTab(d, props.user.userID, props.user.firstName, props.user.avatar);
                             changeChatTab();
                             $(".chat_tab[chatid=" + d + "]").click();
+                            newRecentTab(d, props.user.userID, props.user.firstName, props.user.avatar);
+
                         }
                     });
                 } else {
@@ -104,7 +112,8 @@ const CMPeople = (props) => {
 
 
     return (
-        <div userid={props.user.userID} onClick={cc} className="contact-main-people">
+        <div userid={props.user.userID} firstname={props.user.firstName} onClick={openTab}
+             className="contact-main-people">
             <div className="col-sm-3 if">
                 <img className="contact-main-people-img ma" src={props.user.avatar} alt=""/>
                 {online}
@@ -126,6 +135,12 @@ coupleSocket.onmessage = function (e) {
     const data = JSON.parse(e.data);
 
     const chat_region = $('.chat_region[chatid="' + data.chatID + '"]');
+    const chat_tab = $('.contact-main-people[chatid="' + data.chatID + '"]');
+
+    if (chat_tab.length === 0) {
+        newRecentTab(data.chatID, data.userID, $('.contact-main-people[userid="' + data.userID + '"]').attr("firstname"), data.avatar);
+    }
+
 
     chat_region.append('                <div class="other_chat">\n' +
         '                    <div class="other_chat_ava">\n' +
@@ -191,16 +206,6 @@ $('#input_chat_send').click(function () {
     $('#chat_body').scrollTop(9999999);
 });
 
-$('.contact-main-people').click(function (e) {
-    const ele = $(this);
-    const cid = ele.attr("chatid");
-    const uid = ele.attr("userid");
-    const name = ele.find("p:eq(0)").text();
-    const ava = ele.find("img").attr("src");
-
-    loadChatTab(cid, uid, name, ava);
-});
-
 $('#chat_box').keypress(function (event) {
     var keycode = (event.keyCode ? event.keyCode : event.which);
     if (keycode == '13') {
@@ -222,6 +227,18 @@ $('#chat_body').scroll(function () {
 });
 
 // Function for chat
+
+function recentTabOnClick() {
+    $('.contact-main-people').click(function (e) {
+        const ele = $(this);
+        const cid = ele.attr("chatid");
+        const uid = ele.attr("userid");
+        const name = ele.find("p:eq(0)").text();
+        const ava = ele.find("img").attr("src");
+
+        loadChatTab(cid, uid, name, ava);
+    });
+}
 
 function sendAllMessage(userID, content, avatar) {
     const data = JSON.stringify({
@@ -285,9 +302,9 @@ function sendMessage(chatID, userID, to, content, avatar) {
             content: content
         },
         success: function (data) {
+            updateLSMessage();
         }
     });
-    updateLSMessage();
 }
 
 function loadChat(chatID, messID) {
@@ -409,6 +426,27 @@ function setActiveTab(cid) {
     updateLSMessage();
 }
 
+function newRecentTab(chatid, userid, firstname, avatar) {
+    const tab = '<div class="contact-main-people" chatid="' + chatid + '" userid="' + userid + '">\n' +
+        '                        <div class="col-sm-3 if">\n' +
+        '                            <img class="contact-main-people-img ma" src="' + avatar + '" alt="">\n' +
+        '                        </div>\n' +
+        '                        <div class="col-sm-7">\n' +
+        '                            <p class="contact-main-people-name1 ma">' + firstname + '</p>\n' +
+        '                            \n' +
+        '                            \n' +
+        '                                <p class="contact-main-people-message ma"></p>\n' +
+        '                            \n' +
+        '                        </div>\n' +
+        '                        \n' +
+        '                        \n' +
+        '                            <i class="far fa-comment fa-lg ma"></i>\n' +
+        '                        \n' +
+        '                    </div>'
+    $('#contact-main-recent').prepend(tab);
+    recentTabOnClick();
+}
+
 function updateCountRecent() {
     const x = $('.contact-main-people-message.ma.b').length;
     $('#count-recent').text(x);
@@ -421,7 +459,7 @@ function updateCountContact() {
     if (x > 0) $('#count-online').show(); else $('#count-online').hide();
 }
 
-function updateLSMessage(){
+function updateLSMessage() {
     $("div.contact-main-people[chatid=" + chatid + "] div:nth-child(2) p:nth-child(2)").attr("class", "contact-main-people-message ma");
     $("div.contact-main-people[chatid=" + chatid + "] div:nth-child(2) p:nth-child(2)").css("font-weight", "500");
     $("div.contact-main-people[chatid=" + chatid + "]").find("i").attr("class", "far fa-comment fa-lg ma");
@@ -431,21 +469,30 @@ function updateLSMessage(){
         data: {
             chatID: chatid,
             userID: userID,
-        },
-        success: function (data) {
         }
     });
     updateCountRecent();
+}
+
+function updateMainUserOnline() {
+    $.ajax({
+        type: 'POST',
+        url: 'http://' + host + '/updateOnline',
+        data: {
+            userID: userID,
+        }
+    });
 }
 
 // ====================
 setActiveTab(0);
 $('#chat_body').scrollTop(9999999);
 
+recentTabOnClick();
 updateCountRecent();
+updateCountContact();
 
-const promise = audio.play();
-if (promise) {
-    //Older browsers may not return a promise, according to the MDN website
-    promise.catch(function(error) { console.error(error); });
-};
+setInterval(function () {
+    updateMainUserOnline();
+    updateCountContact();
+}, 10000);

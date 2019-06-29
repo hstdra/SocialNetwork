@@ -33,7 +33,7 @@ public class MainListener implements ServletContextListener,
                 String contactJsonString = gson.toJson(Contact.getContact());
                 sce.getServletContext().setAttribute("Contact", contactJsonString);
                 try {
-                    Thread.sleep(30000);
+                    Thread.sleep(20000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

@@ -41,7 +41,7 @@ public class ConnectDatabase {
     //Make function for prepare sql from another model
     public static PreparedStatement preparedStatement(String query) {
         try {
-            return Objects.requireNonNull(connection()).prepareStatement(query);
+            return Objects.requireNonNull(connection).prepareStatement(query);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -73,9 +73,10 @@ public class ConnectDatabase {
 
     //Declare parameter for database connection
     private static void config() {
-        host = "hst.ciodxqutvgb3.ap-southeast-1.rds.amazonaws.com";
+        host = "root.ciodxqutvgb3.ap-southeast-1.rds.amazonaws.com";
         user = "root";
         password = "123456789";
-        database = "root";
+        database = "dungxoanua";
     }
+
 }

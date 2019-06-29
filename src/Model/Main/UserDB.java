@@ -9,8 +9,39 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-public class UserDB {
+class UserDB {
     private static final List<User> listUser = new LinkedList<>();
+
+    static void changeAvatar(String email, String avatar) {
+        PreparedStatement ps = ConnectDatabase.preparedStatement("UPDATE Users SET Avatar = ? WHERE Email = ?");
+        try {
+            assert ps != null;
+            ps.setString(2, email);
+            ps.setString(1, avatar);
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static boolean signup(String email, String passWord, String firstName, String lastName, String dob, String avatar) {
+        PreparedStatement ps = ConnectDatabase.preparedStatement("INSERT INTO Users (Email, Password, FirstName, LastName, Dob, Avatar) VALUES (?,?,?,?,?,?)");
+        try {
+            assert ps != null;
+            ps.setString(1, email);
+            ps.setString(2, passWord);
+            ps.setNString(3, firstName);
+            ps.setNString(4, lastName);
+            ps.setString(5, dob);
+            ps.setString(6, avatar);
+
+            return ps.executeUpdate() == 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     static User login(String email, String passWord) {
         try {
@@ -36,7 +67,7 @@ public class UserDB {
         return null;
     }
 
-    static void updateOnline(String userID){
+    static void updateOnline(String userID) {
         PreparedStatement ps = ConnectDatabase.preparedStatement("UPDATE Users SET LastOnline = NOW() WHERE UserID = ?");
         try {
             assert ps != null;
@@ -47,7 +78,7 @@ public class UserDB {
         }
     }
 
-    public static List<User> getListUsers() {
+    static List<User> getListUsers() {
         listUser.clear();
         try {
             ResultSet rs = ConnectDatabase.executeQuery("Select * from Users");
@@ -71,6 +102,5 @@ public class UserDB {
     }
 
     public static void main(String[] args) {
-        updateOnline("1");
     }
 }

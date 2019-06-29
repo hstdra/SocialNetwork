@@ -25,7 +25,12 @@ public class ContactDB {
                 String firstName = rs.getString("FirstName");
                 String avatar = rs.getString("Avatar");
                 Date lastOnline = rs.getTimestamp("LastOnline");
-                long time = (date.getTime() - lastOnline.getTime()) / 60000;
+                long time = 0;
+                try {
+                    time = (date.getTime() - lastOnline.getTime()) / 60000;
+                } catch (Exception exx){
+
+                }
                 String last;
                 if (time < 60) {
                     last = time + "M";
@@ -76,6 +81,6 @@ public class ContactDB {
     }
 
     public static void main(String[] args) {
-        System.out.println(newChatGroup("3", "4"));
+        System.out.println(getContact());
     }
 }

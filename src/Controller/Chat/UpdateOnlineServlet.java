@@ -12,7 +12,7 @@ import java.io.IOException;
 @WebServlet(name = "UpdateOnlineServlet", urlPatterns = "/updateOnline")
 public class UpdateOnlineServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String userID = request.getParameter("UserID");
+        String userID = request.getParameter("userID");
         User.updateOnline(userID);
     }
 
