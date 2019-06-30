@@ -1,3 +1,4 @@
+/*For React Buttons*/
 var reactClass = ["react","fab","fa-react"];
 var heartClass = ["heart","fas","fa-heart"];
 var upClass = ["thumbs","far","fa-thumbs-up"];
@@ -80,5 +81,76 @@ $(document).ready(function(){
             .removeClass()
             .addClass(reactClass[1])
             .addClass(reactClass[2]);
+    });
+});
+/*----------------------------------------------------------------------*/
+/*For React Announcement*/
+var current=0;
+var previous=0;
+var result;
+
+    $(document).ready(function(){
+    $(".react_announce").mouseenter(function () {
+        $(".react_announce_content").fadeIn();
+    });
+    $(".react_announce").mouseleave(function () {
+        $(".react_announce_content").fadeOut();
+    });
+    $(document).on("click", function(e){
+        if($(e.target).closest(".div_for_users_react").length || $(e.target).closest(".react_announce_box").length){
+            $(".cover").fadeIn();
+            $(".react_announce_box").fadeIn();
+        }else{
+            $(".react_announce_box").fadeOut();
+            $(".cover").fadeOut();
+        }
+    });
+    $("button.reactBtns_count span.heart").click(function() {
+        previous=current;
+        current=1;
+        result=16.67 * (current - previous);
+        $(".div_for_line_color .moving_line")
+            .animate({'left':'+='+ result+'%'})
+            .css({'background-color':'#ff133d'});
+    });
+    $("button.reactBtns_count span.thumbs i.fa-thumbs-up").click(function() {
+        previous=current;
+        current=2;
+        result=16.67 * (current - previous);
+        $(".div_for_line_color .moving_line")
+            .animate({'left':'+='+ result+'%'})
+            .css({'background-color':'#3176ff'});
+    });
+    $("button.reactBtns_count span.thumbs i.fa-thumbs-down").click(function() {
+        previous=current;
+        current=3;
+        result=16.67 * (current - previous);
+        $(".div_for_line_color .moving_line")
+            .animate({'left':'+='+ result+'%'})
+            .css({'background-color':'#3176ff'});
+    });
+    $("button.reactBtns_count span.face i.fa-laugh-squint").click(function() {
+        previous=current;
+        current=4;
+        result=16.67 * (current - previous);
+        $(".div_for_line_color .moving_line")
+            .animate({'left':'+='+ result+'%'})
+            .css({'background-color':'#d8b019'});
+    });
+    $("button.reactBtns_count span.face i.fa-sad-cry").click(function() {
+        previous=current;
+        current=5;
+        result=16.67 * (current - previous);
+        $(".div_for_line_color .moving_line")
+            .animate({'left':'+='+ result+'%'})
+            .css({'background-color':'#d8b019'});
+    });
+    $("button.reactBtns_count span.react").click(function() {
+        previous=current;
+        current=0;
+        result=16.67 * (current - previous);
+        $(".div_for_line_color .moving_line")
+            .animate({'left':'+='+ result+'%'})
+            .css({'background-color':'forestgreen'});
     });
 });

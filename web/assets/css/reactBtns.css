@@ -1,3 +1,157 @@
+/*Add Picture and post button*/
+span.addPic{
+    color: #ff1789;
+    font-size: 30px;
+}
+span.post{
+    color:#2422ff;
+    font-size:30px;
+}
+/*----------------------------------------------------------------------*/
+/*Comment button*/
+.commentBtn{
+    border-radius: 10px;
+    border: none;
+    width: 50px;
+    height: 35px;
+    background-color: white;
+}
+.commentBtn:hover{
+    background-color: #cdcdcd;
+}
+.div_for_comment_btn{
+    position: relative;
+    margin-left: 90%;
+}
+/*----------------------------------------------------------------------*/
+/*React Announcement */
+span.react_announce{
+    color: #3176ff;
+}
+.react_announce_font{
+    font-size: 12px;
+}
+.react_announce_content{
+    display: none;
+    position: absolute;
+    padding: 10px;
+    background-color: #d9d9d9;
+    z-index: 100;
+    top: 31px;
+}
+.react_announce_content::after {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid #d9d9d9;
+    top: -20px;
+    left: 20%;
+}
+.child_announce{
+    padding: 2px;
+    color:black;
+}
+.cover{
+    background-color: rgba(0, 0, 0, 0.4);
+    width:100%;
+    height:100%;
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:999;
+}
+.react_announce_box{
+    display: none;
+    background-color: red;
+    position: fixed;
+    width: 500px;
+    height: 350px;
+    z-index: 1000;
+    top: 33%;
+    left: 34%;
+}
+.div_for_reactBtns_count{
+    background-color: floralwhite;
+    height: 20%;
+    display: flex;
+    position: relative;
+}
+.each_reactBtn_hole{
+    width: calc(100% / 6);
+    height: 100%;
+    position: relative;
+}
+.reactBtn_count_font{
+    font-size: 33px;
+}
+.reactBtns_count {
+    background-color: #d6d6d6;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    position: relative;
+    padding: 8px;
+    margin-left: 15px;
+    margin-top: 10px;
+}
+.reactBtns_count:hover{
+    background-color: #cdcdcd;
+}
+.display_numb{
+    position: absolute;
+    font-size: 15px;
+    color: white;
+    right: 4px;
+    bottom: -11px;
+    border-radius: 20px;
+    padding: 2px;
+}
+.div_for_line_color{
+    height: 2%;
+    width: 100%;
+    background-color: lightgrey;
+}
+.moving_line{
+    width: 16.67%;
+    height: 100%;
+    background-color: forestgreen;
+    position: relative;
+}
+.background_numb_react{
+    background-color: forestgreen;
+}
+.background_numb_heart{
+    background-color: #ff133d;
+}
+.background_numb_thumbs{
+    background-color: #3176ff;
+}
+.background_numb_face{
+    background-color: #d8b019;
+}
+.react_announce_detail{
+    background-color: floralwhite;
+    height: 78%;
+    overflow: auto;
+    position: absolute;
+    width: 100%;
+}
+.child_announce_detail{
+    font-size: 25px;
+    margin: 5px;
+}
+.child_react_font{
+    font-size: 20px;
+}
+/*----------------------------------------------------------------------*/
+/* All reaction Buttons*/
 .reaction_Button {
     background-color: transparent;
     border: none;
@@ -19,20 +173,6 @@
     left: 35%;
     cursor: pointer;
 }
-.div_for_comment_btn{
-    position: relative;
-    margin-left: 90%;
-}
-.commentBtn{
-    border-radius: 10px;
-    border: none;
-    width: 50px;
-    height: 35px;
-    background-color: white;
-}
-.commentBtn:hover{
-    background-color: #cdcdcd;
-}
 .div_for_reactBtn{
     position: absolute;
     bottom: 5px;
@@ -40,25 +180,17 @@
 .react_font{
     font-size: 20px;
 }
-span.thumbs{
+.thumbs{
     color: #3176ff;
 }
-span.heart{
+.heart{
     color: #ff133d;
 }
-span.face{
+.face{
     color: #d8b019;
 }
-span.react{
+.react{
     color: forestgreen;
-}
-span.addPic{
-    color: #ff1789;
-    font-size: 30px;
-}
-span.post{
-    color:#2422ff;
-    font-size:30px;
 }
 .reactBtn{
     position: absolute;
@@ -100,4 +232,5 @@ span.post{
     z-index: 100;
     display: none;
 }
+
 
