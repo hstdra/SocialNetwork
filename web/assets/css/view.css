@@ -1,7 +1,13 @@
+body{
+    width: 100%;
+    overflow-x: hidden;
+}
+
 div.main_container {
     background-color: #eeeded;
     padding: 10px;
     margin: 10px;
+    display: flex;
 }
 .avatar {
     width: 50px;
@@ -9,7 +15,7 @@ div.main_container {
     margin-right: 10px;
 }
 div.main_content {
-    margin-left: 30%;
+    margin: auto;
     display: inline-block;
     width: 550px;
     background-color: #FFFFFF;
@@ -62,6 +68,14 @@ div.main_content {
 .para{
     padding: 0 20px 0px 10px;
     margin-bottom: 15px;
+    text-align: justify;
+    white-space: pre-line;
+    font-family: monospace;
+    font-size: 16px;
+}
+
+.para:first-line{
+    line-height: 0;
 }
 .pic {
     padding: 0px 0px 18px 16px;

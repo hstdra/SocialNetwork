@@ -26,7 +26,7 @@ class UserDB {
     }
 
     static boolean signup(String email, String passWord, String firstName, String lastName, String dob, String avatar) {
-        PreparedStatement ps = ConnectDatabase.preparedStatement("INSERT INTO Users (Email, Password, FirstName, LastName, Dob, Avatar) VALUES (?,?,?,?,?,?)");
+        PreparedStatement ps = ConnectDatabase.preparedStatement("INSERT INTO Users (Email, Password, FirstName, LastName, Dob, Avatar, LastOnline) VALUES (?,?,?,?,?,?,NOW()");
         try {
             assert ps != null;
             ps.setString(1, email);

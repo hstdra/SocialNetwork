@@ -87,15 +87,19 @@ const CMPeople = (props) => {
                         },
                         success: function (d) {
                             loadChatTab(d, props.user.userID, props.user.firstName, props.user.avatar);
-                            changeChatTab();
+
+                            $('.chat_tab[chatid="undefined"]').dblclick();
+
+                            // loadChatTab(d, props.user.userID, props.user.firstName, props.user.avatar);
+                            // changeChatTab();
+
                             $(".chat_tab[chatid=" + d + "]").click();
                             newRecentTab(d, props.user.userID, props.user.firstName, props.user.avatar);
-
                         }
                     });
                 } else {
+                    $('.chat_tab[chatid="undefined"]').dblclick();
                     loadChatTab(data, props.user.userID, props.user.firstName, props.user.avatar);
-                    changeChatTab();
                     $(".chat_tab[chatid=" + data + "]").click();
                 }
             }
@@ -193,6 +197,18 @@ allSocket.onopen = function (e) {
 // =====================================================================
 
 //Ham auto
+let typing = 0;
+$('#chat_box').on('input',function(e){
+    if (typing === 0){
+        updateLSMessage();
+    }
+    if ($('#chat_box').val() !== ""){
+        typing = 1;
+    } else {
+        typing = 0;
+    }
+});
+
 $('#input_chat_send').click(function () {
     const content = $('#chat_box').val();
     if (content !== "") {
@@ -204,6 +220,7 @@ $('#input_chat_send').click(function () {
         }
     }
     $('#chat_body').scrollTop(9999999);
+    typing = 0;
 });
 
 $('#chat_box').keypress(function (event) {
@@ -360,6 +377,8 @@ function changeChatTab() {
         $('.chat_region').hide();
         $('.chat_region[chatid="' + chatid + '"]').show();
         setActiveTab(chatid);
+        $('#chat_body').scrollTop(9999999);
+        $('#chat_box').val("");
     });
 }
 
@@ -423,7 +442,7 @@ function removeChat() {
 function setActiveTab(cid) {
     $('.chat_tab').css("background-color", "#cdcdcd");
     $('.chat_tab[chatid="' + cid + '"]').css("background-color", "#ececec");
-    updateLSMessage();
+    // updateLSMessage();
 }
 
 function newRecentTab(chatid, userid, firstname, avatar) {
@@ -495,4 +514,4 @@ updateCountContact();
 setInterval(function () {
     updateMainUserOnline();
     updateCountContact();
-}, 10000);
+}, 20000);

@@ -64,20 +64,20 @@ span.react_announce{
     top:0;
     left:0;
     z-index:999;
+    display: flex;
 }
 .react_announce_box{
     display: none;
     background-color: red;
-    position: fixed;
+    /* position: fixed; */
     width: 500px;
-    height: 350px;
+    /* height: 350px; */
     z-index: 1000;
-    top: 33%;
-    left: 34%;
+    margin: auto;
 }
 .div_for_reactBtns_count{
     background-color: floralwhite;
-    height: 20%;
+    height: 70px;
     display: flex;
     position: relative;
 }
@@ -114,7 +114,7 @@ span.react_announce{
     padding: 2px;
 }
 .div_for_line_color{
-    height: 2%;
+    height: 5px;
     width: 100%;
     background-color: lightgrey;
 }
@@ -138,14 +138,19 @@ span.react_announce{
 }
 .react_announce_detail{
     background-color: floralwhite;
-    height: 78%;
     overflow: auto;
-    position: absolute;
     width: 100%;
+    height: 240px;
+    display: block;
 }
 .child_announce_detail{
+    display: flex;
     font-size: 25px;
     margin: 5px;
+    height: 30px;
+    align-items: center;
+    justify-items: center;
+    color: #514949;
 }
 .child_react_font{
     font-size: 20px;
@@ -170,8 +175,10 @@ span.react_announce{
     font-size: 14px;
     font-style: italic;
     position: absolute;
-    left: 35%;
     cursor: pointer;
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
 }
 .div_for_reactBtn{
     position: absolute;
@@ -187,6 +194,8 @@ span.react_announce{
     color: #ff133d;
 }
 .face{
+    margin-left: auto;
+    margin-right: 20px;
     color: #d8b019;
 }
 .react{
@@ -194,7 +203,7 @@ span.react_announce{
 }
 .reactBtn{
     position: absolute;
-    bottom: 0px;
+    bottom: 2px;
     z-index: 100;
 }
 .heartBtn{
@@ -233,4 +242,11 @@ span.react_announce{
     display: none;
 }
 
-
+.child_announce_detail_img{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: 25px;
+    margin-right: 10px;
+}

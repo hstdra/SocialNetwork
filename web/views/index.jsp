@@ -104,7 +104,9 @@
 </div>
 <div id="main-section">
     <!--TRÍ CODE HERE-->
-    <div id="view"></div>
+    <div id="view">
+        <iframe src="../views/view.html" frameborder="0" width="100%" height="100%"></iframe>
+    </div>
 
     <!--PORN CODE HERE-->
     <div id="message">

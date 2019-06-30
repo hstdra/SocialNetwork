@@ -28,7 +28,7 @@ public class ContactDB {
                 long time = 0;
                 try {
                     time = (date.getTime() - lastOnline.getTime()) / 60000;
-                } catch (Exception exx){
+                } catch (Exception exx) {
 
                 }
                 String last;
@@ -53,6 +53,7 @@ public class ContactDB {
     public static String getChatID(String u1, String u2) {
         CallableStatement cs = ConnectDatabase.prepareCall("{CALL getCoupleChatID(?,?)}");
         try {
+            assert cs != null;
             cs.setString(1, u1);
             cs.setString(2, u2);
             cs.execute();
@@ -68,12 +69,10 @@ public class ContactDB {
     public static String newChatGroup(String u1, String u2) {
         CallableStatement cs = ConnectDatabase.prepareCall("{CALL newChatGroup(?,?)}");
         try {
+            assert cs != null;
             cs.setString(1, u1);
             cs.setString(2, u2);
             cs.execute();
-            ResultSet rs = cs.getResultSet();
-            rs.next();
-            return rs.getString(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
