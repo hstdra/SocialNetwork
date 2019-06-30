@@ -116,3 +116,16 @@ div.main_content {
 .comment_container {
     margin: 5px 0;
 }
+
+.user_comment_detail > span {
+    vertical-align: middle;
+}
+
+.post_comment_but .commentBtn {
+    width: auto;
+    color: inherit;
+}
+
+.comment {
+    display: none;
+}

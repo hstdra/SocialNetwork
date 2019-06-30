@@ -154,3 +154,13 @@ var result;
             .css({'background-color':'forestgreen'});
     });
 });
+
+
+/* For Comment */
+$(document).ready(function(){
+    $(".div_for_comment_btn").click(function(){
+        $(".comment").toggle(500);
+
+    });
+});
+
