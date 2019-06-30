@@ -69,3 +69,50 @@ div.main_content {
 .noneOutline{
     outline: none;
 }
+
+.post_comment_but {
+    color: dodgerblue;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 3%;
+}
+
+.your_comment_text {
+    border-radius: 5px;
+    height: 30px;
+    padding: 2px 5px;
+    width: 400px;
+    margin: 2px 7px;
+    border: 1px solid darkblue;
+    background-color: ghostwhite;
+}
+
+.your_comment_detail {
+    display: inline-block;
+}
+
+.user_comment_detail {
+    border-radius: 5px;
+    height: 30px;
+    padding: 2px 5px;
+    width: 400px;
+    margin: 2px 7px;
+    border: 1px solid darkblue;
+    /* background-color: ghostwhite; */
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.comment .avatar {
+    vertical-align: middle;
+    width: 40px;
+}
+
+.user_comment_ava {
+    display: inline-flex;
+    vertical-align: middle;
+}
+
+.comment_container {
+    margin: 5px 0;
+}
