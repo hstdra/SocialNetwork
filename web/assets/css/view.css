@@ -90,6 +90,9 @@ div.main_content {
     background-color: white;
     cursor: pointer;
 }
+.add_commentBtn:hover{
+    background-color: #d9d9d9;
+}
 .div_to_comment{
     margin: auto;
     display: inline-flex;
