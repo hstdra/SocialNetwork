@@ -15,6 +15,7 @@ span.post{
     width: 50px;
     height: 35px;
     background-color: white;
+    cursor: pointer;
 }
 .commentBtn:hover{
     background-color: #cdcdcd;
@@ -24,38 +25,11 @@ span.post{
     margin-left: 90%;
 }
 /*----------------------------------------------------------------------*/
-/*React Announcement */
+/*React Announcement*/
 span.react_announce{
     color: #3176ff;
 }
-.react_announce_font{
-    font-size: 12px;
-}
-.react_announce_content{
-    display: none;
-    position: absolute;
-    padding: 10px;
-    background-color: #d9d9d9;
-    z-index: 100;
-    top: 31px;
-}
-.react_announce_content::after {
-    content: "";
-    width: 0px;
-    height: 0px;
-    position: absolute;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid #d9d9d9;
-    top: -20px;
-    left: 20%;
-}
-.child_announce{
-    padding: 2px;
-    color:black;
-}
-.cover{
+.cover_for_react{
     background-color: rgba(0, 0, 0, 0.4);
     width:100%;
     height:100%;
@@ -64,14 +38,11 @@ span.react_announce{
     top:0;
     left:0;
     z-index:999;
-    display: flex;
 }
 .react_announce_box{
     display: none;
     background-color: red;
-    /* position: fixed; */
     width: 500px;
-    /* height: 350px; */
     z-index: 1000;
     margin: auto;
 }
@@ -154,6 +125,14 @@ span.react_announce{
 }
 .child_react_font{
     font-size: 20px;
+}
+.child_announce_detail_img{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: 25px;
+    margin-right: 10px;
 }
 /*----------------------------------------------------------------------*/
 /* All reaction Buttons*/
@@ -242,11 +221,3 @@ span.react_announce{
     display: none;
 }
 
-.child_announce_detail_img{
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-left: 25px;
-    margin-right: 10px;
-}

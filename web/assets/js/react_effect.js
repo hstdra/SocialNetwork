@@ -90,19 +90,15 @@ var previous = 0;
 var result;
 
 $(document).ready(function () {
-    $(".react_announce").mouseenter(function () {
-        $(".react_announce_content").fadeIn();
-    });
-    $(".react_announce").mouseleave(function () {
-        $(".react_announce_content").fadeOut();
-    });
     $(document).on("click", function (e) {
         if ($(e.target).closest(".div_for_users_react").length || $(e.target).closest(".react_announce_box").length) {
-            $(".cover").fadeIn();
+            $(".cover_for_react")
+                .fadeIn()
+                .css({'display':'flex'});
             $(".react_announce_box").fadeIn();
         } else {
             $(".react_announce_box").fadeOut();
-            $(".cover").fadeOut();
+            $(".cover_for_react").fadeOut();
         }
     });
     $("button.reactBtns_count span.heart").click(function () {
@@ -153,7 +149,31 @@ $(document).ready(function () {
             .animate({'left': '+=' + result + '%'})
             .css({'background-color': 'forestgreen'});
     });
-
-    $(".cover").click();
+    /*-------------------------------------------------------*/
+    /*Comment Button*/
+    var displayComment = 0;
+    $("button.commentBtn").click(function () {
+        if(displayComment==0){
+            $(".display_comment")
+                .slideDown()
+                .css({'display':'grid'});
+            displayComment = 1;
+        }
+        else{
+            $(".display_comment").slideUp();
+            displayComment = 0;
+        }
+    });
+    $(document).on("click", function (e) {
+        if ($(e.target).closest(".div_for_more_comment").length || $(e.target).closest(".comment_box").length) {
+            $(".cover_for_comment")
+                .fadeIn()
+                .css({'display':'flex'});
+            $(".comment_box").fadeIn();
+        } else {
+            $(".comment_box").fadeOut();
+            $(".cover_for_comment").fadeOut();
+        }
+    });
 });
 

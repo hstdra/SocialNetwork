@@ -7,28 +7,13 @@
   </component>
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/web/views/index.html" line="62" />
-    <bookmark url="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/ChatMembers" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3279c7d8-6094-4e56-a308-fbe3fbd481ae" name="Default Changelist" comment="v0.3.1&#10;- Complete chat feature 100%&#10;- Update login + signup">
-      <change afterPath="$PROJECT_DIR$/src/Controller/Main/GetAllStoriesServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/Main/StoryDB.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/views/view.jsp" afterDir="false" />
+    <list default="true" id="3279c7d8-6094-4e56-a308-fbe3fbd481ae" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/SocialNetwork_war_exploded/WEB-INF/classes/Controller/IndexServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/SocialNetwork_war_exploded/WEB-INF/classes/Controller/IndexServlet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/SocialNetwork_war_exploded/views/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/SocialNetwork_war_exploded/views/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Chat/NewChatServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Chat/NewChatServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/IndexServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/IndexServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Chat/ContactDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Chat/ContactDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Main/Story.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Main/Story.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Main/UserDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Main/UserDB.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/assets/css/reactBtns.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/css/reactBtns.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/assets/css/view.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/css/view.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/assets/js/contact.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/js/contact.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/assets/js/react_effect.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/js/react_effect.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/views/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/views/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/views/inout/checkmail.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/views/inout/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/views/inout/css/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/views/view.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/views/view.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -54,31 +39,6 @@
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
         <item name="dungxoanua@root.ciodxqutvgb3.ap-southeast-1.rds.amazonaws.com" type="feb32156:DbDataSourceImpl" />
       </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="dungxoanua@root.ciodxqutvgb3.ap-southeast-1.rds.amazonaws.com" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="dungxoanua@root.ciodxqutvgb3.ap-southeast-1.rds.amazonaws.com" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="dungxoanua: schema" type="76f4a085:MysqlImplModel$Schema" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="dungxoanua@root.ciodxqutvgb3.ap-southeast-1.rds.amazonaws.com" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="dungxoanua: schema" type="76f4a085:MysqlImplModel$Schema" />
-        <item name="tables" type="d4e8921:DatabaseStructure$FamilyGroup" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="dungxoanua@root.ciodxqutvgb3.ap-southeast-1.rds.amazonaws.com" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="dungxoanua: schema" type="76f4a085:MysqlImplModel$Schema" />
-        <item name="routines" type="d4e8921:DatabaseStructure$FamilyGroup" />
-      </path>
     </expand>
     <select />
   </component>
@@ -86,17 +46,74 @@
     <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/web/views/index.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="241">
-              <caret line="210" column="70" lean-forward="true" selection-start-line="210" selection-start-column="70" selection-end-line="210" selection-end-column="70" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/web/views/index.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="419">
+                  <caret line="154" column="18" lean-forward="true" selection-start-line="154" selection-start-column="18" selection-end-line="154" selection-end-column="18" />
+                  <folding>
+                    <element signature="n#div#0;n#body#0;n#html#0;n#!!top" />
+                    <element signature="n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/web/assets/js/react_effect.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="574">
+                  <caret line="158" column="14" lean-forward="true" selection-start-line="158" selection-start-column="14" selection-end-line="158" selection-end-column="14" />
+                  <folding>
+                    <element signature="n#!!doc" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/web/views/view.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="419">
+                  <caret line="331" column="32" lean-forward="true" selection-start-line="331" selection-start-column="32" selection-end-line="331" selection-end-column="32" />
+                  <folding>
+                    <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#p#0;n#div#2;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                    <element signature="n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
+                    <element signature="n#div#0;n#div#4;n#div#1;n#body#0;n#html#0;n#!!top" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/web/assets/css/reactBtns.css">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="371">
+                  <caret line="17" column="20" lean-forward="true" selection-start-line="12" selection-start-column="4" selection-end-line="17" selection-end-column="20" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/web/assets/css/view.css">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="5146">
+                  <caret line="166" column="16" lean-forward="true" selection-start-line="166" selection-start-column="16" selection-end-line="166" selection-end-column="16" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -135,16 +152,19 @@
       <find>cover</find>
       <find>.cover</find>
       <find>And 7</find>
-      <find>react_announce_content</find>
       <find>Crush</find>
+      <find>react_announce_font</find>
+      <find>react_announce_content</find>
+      <find>child_announce</find>
+      <find>child_announce_detail_img</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/web/assets/js/contact.jsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Model/Main/UserDB.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/web/assets/js/contact.jsx" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -186,8 +206,6 @@
         <option value="$PROJECT_DIR$/src/Controller/Filter/CheckLoginFilter.java" />
         <option value="$PROJECT_DIR$/web/assets/js/contact.jsx" />
         <option value="$PROJECT_DIR$/web/views/index.jsp" />
-        <option value="$PROJECT_DIR$/web/assets/js/react_effect.js" />
-        <option value="$PROJECT_DIR$/web/assets/css/reactBtns.css" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/358cd58d-e04e-4913-b482-d317944550d2/console.sql" />
         <option value="$PROJECT_DIR$/src/Model/Main/Story.java" />
         <option value="$PROJECT_DIR$/src/Controller/Main/IndexServlet.java" />
@@ -196,10 +214,12 @@
         <option value="$PROJECT_DIR$/src/Controller/IndexServlet.java" />
         <option value="$PROJECT_DIR$/src/Model/Main/StoryDB.java" />
         <option value="$PROJECT_DIR$/src/Controller/Main/GetAllStoriesServlet.java" />
-        <option value="$PROJECT_DIR$/web/views/view.html" />
         <option value="$PROJECT_DIR$/web/views/view.jsp" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
+        <option value="$PROJECT_DIR$/web/assets/css/reactBtns.css" />
         <option value="$PROJECT_DIR$/web/assets/css/view.css" />
+        <option value="$PROJECT_DIR$/web/assets/js/react_effect.js" />
+        <option value="$PROJECT_DIR$/web/views/view.html" />
       </list>
     </option>
   </component>
@@ -231,7 +251,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -257,23 +276,6 @@
               <item name="out" type="462c0819:PsiDirectoryNode" />
               <item name="artifacts" type="462c0819:PsiDirectoryNode" />
               <item name="SocialNetwork_war_exploded" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="artifacts" type="462c0819:PsiDirectoryNode" />
-              <item name="SocialNetwork_war_exploded" type="462c0819:PsiDirectoryNode" />
-              <item name="upload" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="artifacts" type="462c0819:PsiDirectoryNode" />
-              <item name="SocialNetwork_war_exploded" type="462c0819:PsiDirectoryNode" />
-              <item name="upload" type="462c0819:PsiDirectoryNode" />
-              <item name="avatar" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
@@ -328,6 +330,13 @@
               <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
               <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
               <item name="js" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -340,6 +349,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -530,9 +540,9 @@
       <item itemvalue="Application.ContactDB" />
       <item itemvalue="Application.UserDB" />
       <item itemvalue="Application.MD5" />
-      <item itemvalue="Tomcat Server.Tomcat 8.0.27" />
       <item itemvalue="Application.Story" />
       <item itemvalue="Application.StoryDB" />
+      <item itemvalue="Tomcat Server.Tomcat 8.0.27" />
     </list>
     <recent_temporary>
       <list>
@@ -605,6 +615,7 @@
       <workItem from="1561774171877" duration="7740000" />
       <workItem from="1561790825143" duration="9027000" />
       <workItem from="1561887356215" duration="16403000" />
+      <workItem from="1561967519269" duration="13489000" />
     </task>
     <task id="LOCAL-00001" summary="v0.1.2&#10;- Lam tam bay choi">
       <created>1559991551705</created>
@@ -701,7 +712,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="233977000" />
+    <option name="totallyTimeSpent" value="248516000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -713,10 +724,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49558824" weight="0.2885906" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49558824" weight="0.28837952" />
       <window_info id="Structure" order="1" sideWeight="0.50441176" side_tool="true" weight="0.28053692" />
       <window_info id="Web" order="2" sideWeight="0.5058824" side_tool="true" weight="0.24765101" />
       <window_info id="Designer" order="3" />
@@ -743,11 +754,43 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.24966443" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info active="true" anchor="right" id="Database" order="4" visible="true" weight="0.18053691" />
+      <window_info anchor="right" id="Database" order="4" weight="0.18017058" />
       <window_info anchor="right" id="Maven" order="5" weight="0.3295302" />
       <window_info anchor="right" id="Palette&#9;" order="6" />
       <window_info anchor="right" id="Codota" order="7" weight="0.3295302" />
     </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49411765" weight="0.26442954" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.24966443" />
+      <window_info id="Web" order="2" sideWeight="0.5058824" side_tool="true" weight="0.24765101" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Favorites" order="5" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32941177" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.4735294" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32941177" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.4986577" weight="0.42352942" />
+      <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="10" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5013423" side_tool="true" weight="0.32794118" />
+      <window_info anchor="bottom" id="Java Enterprise" order="12" />
+      <window_info anchor="bottom" id="Messages" order="13" weight="0.32998884" />
+      <window_info anchor="bottom" id="Application Servers" order="14" weight="0.32998884" />
+      <window_info anchor="bottom" id="Database Console" order="15" weight="0.4970588" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.24966443" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Database" order="4" weight="0.3295302" />
+      <window_info anchor="right" id="Maven" order="5" weight="0.3295302" />
+      <window_info anchor="right" id="Palette&#9;" order="6" />
+      <window_info anchor="right" id="Codota" order="7" weight="0.3295302" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -814,13 +857,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/web/views/inout/js/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1764">
-          <caret line="63" column="42" selection-start-line="63" selection-start-column="42" selection-end-line="63" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/views/inout/login.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2800">
@@ -849,13 +885,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/Users.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
-          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/Users.sql" />
     <entry file="file://$PROJECT_DIR$/src/Model/Main/User.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="326">
@@ -877,34 +907,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/getChatBox@(int(11),int(11)).sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
-          <caret line="1" column="33" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/updateLSMessage@(int(11),int(11)).sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
-          <caret line="1" column="33" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/getContactRecent@(int(11)).sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
-          <caret line="1" column="33" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/getCoupleChatID@(int(11),int(11)).sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="11" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/getChatBox@(int(11),int(11)).sql" />
+    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/updateLSMessage@(int(11),int(11)).sql" />
+    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/getContactRecent@(int(11)).sql" />
+    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/getCoupleChatID@(int(11),int(11)).sql" />
     <entry file="file://$PROJECT_DIR$/web/views/inout/css/main.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="13440">
@@ -922,29 +928,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/ChatGroups">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="3d745679-d35a-41dd-b25f-356a4b875c52">
-          <filtering>
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
-    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/newChatGroup@(int(11),int(11)).sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="33" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/views/inout/checkmail.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="56">
-          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/ChatGroups" />
+    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/newChatGroup@(int(11),int(11)).sql" />
+    <entry file="file://$PROJECT_DIR$/web/views/inout/checkmail.jsp" />
     <entry file="file://$PROJECT_DIR$/src/Controller/Filter/CheckLoginFilter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="616">
@@ -955,24 +941,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/ChatMembers">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="3d745679-d35a-41dd-b25f-356a4b875c52">
-          <filtering>
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/ChatMessages">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="3d745679-d35a-41dd-b25f-356a4b875c52">
-          <filtering>
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
+    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/ChatMembers" />
+    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/ChatMessages" />
     <entry file="file://$PROJECT_DIR$/web/assets/js/contact.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="79">
@@ -1005,59 +975,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/js/react_effect.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="93" column="34" selection-start-line="93" selection-start-column="12" selection-end-line="93" selection-end-column="34" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/css/reactBtns.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="250" column="23" selection-start-line="250" selection-start-column="23" selection-end-line="250" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/views/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="99" column="20" selection-start-line="99" selection-start-column="20" selection-end-line="99" selection-end-column="20" />
-          <folding>
-            <element signature="n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/Users">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="3d745679-d35a-41dd-b25f-356a4b875c52">
-          <filtering>
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/Announcements">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="3d745679-d35a-41dd-b25f-356a4b875c52">
-          <filtering>
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/358cd58d-e04e-4913-b482-d317944550d2/console.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/Users" />
+    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/Announcements" />
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/358cd58d-e04e-4913-b482-d317944550d2/console.sql" />
     <entry file="file://$PROJECT_DIR$/src/Model/Chat/Recent.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="112">
@@ -1072,13 +992,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/getAllStories@().sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
-          <caret line="1" column="33" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/getAllStories@().sql" />
     <entry file="file://$PROJECT_DIR$/src/Model/Chat/Message.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="56">
@@ -1180,15 +1094,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/Stories">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="3d745679-d35a-41dd-b25f-356a4b875c52">
-          <filtering>
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
+    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/Stories" />
     <entry file="file://$PROJECT_DIR$/web/views/view.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
@@ -1209,37 +1115,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/assets/js/view.jsx">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/css/view.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-112">
-          <caret line="11" column="9" lean-forward="true" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/views/view.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="448">
-          <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#style#0;n#p#0;n#div#2;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#0;n#div#2;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#1;n#div#2;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#2;n#div#2;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#3;n#div#2;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#4;n#div#2;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#5;n#div#2;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#2;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/Main/GetAllStoriesServlet.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -1262,6 +1137,59 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="241">
           <caret line="210" column="70" lean-forward="true" selection-start-line="210" selection-start-column="70" selection-end-line="210" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/css/message.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3069" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/css/reactBtns.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="371">
+          <caret line="17" column="20" lean-forward="true" selection-start-line="12" selection-start-column="4" selection-end-line="17" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/views/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="419">
+          <caret line="154" column="18" lean-forward="true" selection-start-line="154" selection-start-column="18" selection-end-line="154" selection-end-column="18" />
+          <folding>
+            <element signature="n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/css/view.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5146">
+          <caret line="166" column="16" lean-forward="true" selection-start-line="166" selection-start-column="16" selection-end-line="166" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/js/react_effect.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="574">
+          <caret line="158" column="14" lean-forward="true" selection-start-line="158" selection-start-column="14" selection-end-line="158" selection-end-column="14" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/views/view.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="419">
+          <caret line="331" column="32" lean-forward="true" selection-start-line="331" selection-start-column="32" selection-end-line="331" selection-end-column="32" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#div#2;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#0;n#div#4;n#div#1;n#body#0;n#html#0;n#!!top" />
+          </folding>
         </state>
       </provider>
     </entry>
