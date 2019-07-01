@@ -173,3 +173,28 @@ div.main_content {
     height: 100%;
     padding: 10px;
 }
+
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+
+}
+
+.inputfile + label {
+    display: inline-block;
+    color: #FF1789;
+}
+
+
+.inputfile + label {
+    cursor: pointer; /* "hand" cursor */
+}
+
+#add_Image {
+    margin: 0 10px;
+}
