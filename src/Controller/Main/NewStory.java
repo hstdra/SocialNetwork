@@ -9,14 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "GetAllStoriesServlet", urlPatterns = "/getAllStories")
-public class GetAllStoriesServlet extends HttpServlet {
+@WebServlet(name = "NewStory", urlPatterns = "/newStory")
+public class NewStory extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String sid = request.getParameter("StoryID");
-        request.setAttribute("listAllStories", Story.getAllStories(sid));
-        request.getRequestDispatcher("/views/view.jsp").forward(request, response);
+        String uid = request.getParameter("UserID");
+        String content = request.getParameter("Content");
+        String image = request.getParameter("Image");
+        response.getWriter().write(Story.newStory(uid, content, image));
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 }

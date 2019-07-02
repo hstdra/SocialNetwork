@@ -94,7 +94,7 @@ $(document).ready(function () {
         if ($(e.target).closest(".div_for_users_react").length || $(e.target).closest(".react_announce_box").length) {
             $(".cover_for_react")
                 .fadeIn()
-                .css({'display':'flex'});
+                .css({'display': 'flex'});
             $(".react_announce_box").fadeIn();
         } else {
             $(".react_announce_box").fadeOut();
@@ -149,17 +149,18 @@ $(document).ready(function () {
             .animate({'left': '+=' + result + '%'})
             .css({'background-color': 'forestgreen'});
     });
+
+
     /*-------------------------------------------------------*/
     /*Comment Button*/
     var displayComment = 0;
     $("button.commentBtn").click(function () {
-        if(displayComment==0){
+        if (displayComment == 0) {
             $(".display_comment")
                 .slideDown()
-                .css({'display':'grid'});
+                .css({'display': 'grid'});
             displayComment = 1;
-        }
-        else{
+        } else {
             $(".display_comment").slideUp();
             displayComment = 0;
         }
@@ -168,7 +169,7 @@ $(document).ready(function () {
         if ($(e.target).closest(".div_for_more_comment").length || $(e.target).closest(".comment_box").length) {
             $(".cover_for_comment")
                 .fadeIn()
-                .css({'display':'flex'});
+                .css({'display': 'flex'});
             $(".comment_box").fadeIn();
         } else {
             $(".comment_box").fadeOut();

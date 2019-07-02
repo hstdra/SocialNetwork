@@ -61,8 +61,10 @@ function readURL(input) {
                     dob: $('input[name="dob"]').val()
                 },
                 success: function (data) {
+                    console.log(data);
                     if (data === 'true') {
                         $("form").attr("success", "true");
+                        $('.validate-form').submit();
                     } else {
                         $('input[name="email"]').parent().attr("data-validate", "Email already exist");
                         $('input[name="email"]').parent().addClass('alert-validate');

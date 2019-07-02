@@ -54,7 +54,8 @@ public class UPLOAD {
                 for (FileItem item : formItems) {
                     // processes only fields that are not form fields
                     if (!item.isFormField()) {
-                        String fileName = new File(item.getName()).getName();
+//                        String fileName = new File(item.getName()).getName();
+                        String fileName = MD5.randomAlphaNumeric(10);
                         String filePath = uploadPath + File.separator + fileName;
                         File storeFile = new File(filePath);
 

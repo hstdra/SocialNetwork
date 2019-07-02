@@ -3,13 +3,13 @@ body{
     overflow-x: hidden;
 }
 div.main_container {
-    background-color: #eeeded;
     padding: 10px;
     margin: 10px;
     display: grid;
 }
 .avatar {
-    width: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     margin-right: 10px;
 }
@@ -24,19 +24,21 @@ div.main_content {
 #w_status {
     display: inline-block;
     vertical-align: middle;
-    height: 125px;
     width: 100%;
 }
 #status_content {
-    width: 528px;
-    margin: 5px;
-    height: 100px;
+    width: 518px;
+    margin: 5px 0;
+    height: 120px;
     resize: none;
     font-size: 14px;
+    border: none;
+    background: #e6e6e6;
+    padding: 10px;
 }
 #status_button {
     display: flex;
-    height: 30px;
+    height: 40px;
 }
 #user1infor {
     padding-left: 10%;
@@ -63,6 +65,7 @@ div.main_content {
     font-size: 13px;
     font-style: italic;
     margin-top: 5px;
+    margin-left: 5px;
 }
 .para{
     padding: 0 20px 0px 10px;
@@ -90,14 +93,11 @@ div.main_content {
     background-color: white;
     cursor: pointer;
 }
-.add_commentBtn:hover{
-    background-color: #d9d9d9;
-}
 .div_to_comment{
     margin: auto;
     display: inline-flex;
     width: 550px;
-    height: 40px;
+    height: 56px;
     background-color: #FFFFFF;
     padding: 8px 16px;
     position: relative;
@@ -119,15 +119,17 @@ div.main_content {
 }
 .comment_field {
     border-radius: 25px;
-    background-color: #d9d9d9;
+    background-color: #e2dfdf;
     margin-left: 12px;
     padding: 12px;
     max-width: 460px;
     overflow-wrap: break-word;
+    font-size: 14px;
 }
 .field_to_write_comment{
     width: 80%;
     margin-right: 10px;
+    background: #b3b3b3;
 }
 .display_comment{
     margin: auto;
@@ -135,15 +137,15 @@ div.main_content {
     background-color: #FFFFFF;
     padding: 8px 16px;
     position: relative;
-    display: none;
+    display: grid;
 }
 .div_for_more_comment{
     width: 100%;
-    height: 20px;
     text-align: center;
 }
 .more_comment{
     cursor: pointer;
+    font-size: 15px;
 }
 .cover_for_comment{
     background-color: rgba(0, 0, 0, 0.4);
@@ -175,26 +177,11 @@ div.main_content {
 }
 
 
-.inputfile {
-    width: 0.1px;
-    height: 0.1px;
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    z-index: -1;
-
+.user_name{
+    margin-top: 7px;
+    font-weight: bold;
 }
 
-.inputfile + label {
-    display: inline-block;
-    color: #FF1789;
-}
-
-
-.inputfile + label {
-    cursor: pointer; /* "hand" cursor */
-}
-
-#add_Image {
-    margin: 0 10px;
+*:focus {
+    outline: none;
 }

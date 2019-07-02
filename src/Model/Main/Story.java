@@ -1,27 +1,36 @@
 package Model.Main;
 
-import java.util.Date;
 import java.util.LinkedList;
 
 public class Story {
     private String storyID;
     private String content;
-    private Date time;
+    private long time;
     private String userID;
     private String name;
     private String avatar;
+    private String image;
+    private LinkedList<ReactStory> listReact;
+    private LinkedList<Comment> comments;
 
-    public static LinkedList<Story> getAllStories() {
-        return StoryDB.getAllStories();
+    public static LinkedList<Story> getAllStories(String sid) {
+        return StoryDB.getAllStories(sid);
     }
 
-    public Story(String storyID, String content, Date time, String userID, String name, String avatar) {
+    public static String newStory(String uid, String content, String image) {
+        return StoryDB.newStory(uid, content, image);
+    }
+
+    public Story(String storyID, String content, long time, String userID, String name, String avatar, String image, LinkedList<ReactStory> listReact, LinkedList<Comment> comments) {
         this.storyID = storyID;
         this.content = content;
         this.time = time;
         this.userID = userID;
         this.name = name;
         this.avatar = avatar;
+        this.image = image;
+        this.listReact = listReact;
+        this.comments = comments;
     }
 
     public String getStoryID() {
@@ -32,7 +41,7 @@ public class Story {
         return content;
     }
 
-    public Date getTime() {
+    public long getTime() {
         return time;
     }
 
@@ -48,4 +57,15 @@ public class Story {
         return avatar;
     }
 
+    public LinkedList<ReactStory> getListReact() {
+        return listReact;
+    }
+
+    public LinkedList<Comment> getComments() {
+        return comments;
+    }
+
+    public String getImage() {
+        return image;
+    }
 }

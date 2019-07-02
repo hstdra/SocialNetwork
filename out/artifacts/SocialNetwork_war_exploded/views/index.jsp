@@ -11,18 +11,20 @@
     <link rel="stylesheet" href="../assets/css/contact.css">
     <link rel="stylesheet" href="../assets/css/message.css">
     <link rel="stylesheet" href="../assets/fontawesome/css/all.css">
+    <link rel="stylesheet" href="../assets/css/view.css">
+    <link rel="stylesheet" href="../assets/css/reactBtns.css">
 
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/js/library/bootstrap.min.css">
 
     <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="../assets/js/library/jquery.min.js"></script>
 
     <!-- Popper JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<%--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>--%>
 
     <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="../assets/js/library/bootstrap.min.js"></script>
 
     <!-- Latest compiled React -->
     <script src="../assets/js/library/react.development.js"></script>
@@ -38,6 +40,8 @@
 </head>
 
 <body>
+<input id="file-input" type="file" accept="image/*" name="uploadFile" style="display: none;" />
+
 <div id="main-task-bar">
     <div id="zone1" class="task-bar">
         <div id="main-task-bar-info" class="mid if">
@@ -105,7 +109,27 @@
 <div id="main-section">
     <!--TRÍ CODE HERE-->
     <div id="view">
-        <iframe src="../views/view.html" frameborder="0" width="100%" height="100%"></iframe>
+        <div class="main_container">
+            <div class="main_content">
+                <div style="display: inline-flex">
+                    <img class="avatar" src="${sessionScope.user.avatar}"/>
+                    <p class="user_name">${sessionScope.user.getFullName()}</p>
+                </div>
+                <div id="w_status">
+                    <textarea id="status_content" placeholder="Cập nhật trạng thái của bạn?"></textarea>
+                </div>
+                <div id="div_story_img" style="width: 518px; display: none">
+                    <img id="story_img" src=""
+                         style="width: 100%;">
+                </div>
+                <div id="status_button">
+                    <button type="button" class="but" id="story_img_button">
+                        <span class="addPic"><i class="fas fa-images"></i></span></button>
+                    <button type="button" class="but" id="post_button">
+                        <span class="post"><i class="fas fa-paper-plane"></i></span></button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!--PORN CODE HERE-->
@@ -212,7 +236,9 @@
     $("body").attr("host", host);
 </script>
 <script type="text/babel" src="../assets/js/contact.jsx"></script>
+<script type="text/babel" src="../assets/js/view.jsx"></script>
 <script src="../assets/js/index.js"></script>
+<%--<script src="../assets/js/react_effect.js"></script>--%>
 
 </body>
 </html>

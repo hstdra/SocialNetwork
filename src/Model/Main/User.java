@@ -96,4 +96,6 @@ public class User {
     public String getFullName() {
         return (lastName + " " + firstName + "           ").substring(0, 12);
     }
+
+
 }

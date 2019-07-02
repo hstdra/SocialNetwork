@@ -137,7 +137,6 @@ const coupleSocket = new WebSocket('ws://' + host + '/chat');
 
 coupleSocket.onmessage = function (e) {
     const data = JSON.parse(e.data);
-
     const chat_region = $('.chat_region[chatid="' + data.chatID + '"]');
     const chat_tab = $('.contact-main-people[chatid="' + data.chatID + '"]');
 
@@ -198,11 +197,11 @@ allSocket.onopen = function (e) {
 
 //Ham auto
 let typing = 0;
-$('#chat_box').on('input',function(e){
-    if (typing === 0){
+$('#chat_box').on('input', function (e) {
+    if (typing === 0) {
         updateLSMessage();
     }
-    if ($('#chat_box').val() !== ""){
+    if ($('#chat_box').val() !== "") {
         typing = 1;
     } else {
         typing = 0;
@@ -224,7 +223,7 @@ $('#input_chat_send').click(function () {
 });
 
 $('#chat_box').keypress(function (event) {
-    var keycode = (event.keyCode ? event.keyCode : event.which);
+    const keycode = (event.keyCode ? event.keyCode : event.which);
     if (keycode == '13') {
         $('#input_chat_send').click();
     }
