@@ -17,6 +17,10 @@ public class Story {
         return StoryDB.getAllStories(sid);
     }
 
+    public static LinkedList<Story> getAllStoriesByUser(String sid, String uid) {
+        return StoryDB.getAllStoriesByUser(sid, uid);
+    }
+
     public static String newStory(String uid, String content, String image) {
         return StoryDB.newStory(uid, content, image);
     }

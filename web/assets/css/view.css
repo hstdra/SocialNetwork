@@ -107,6 +107,7 @@ div.main_content {
     height: 40px;
     margin: auto;
     border-radius: 50%;
+    cursor: pointer;
 }
 .username_in_comment{
     cursor: pointer;
@@ -129,7 +130,8 @@ div.main_content {
 .field_to_write_comment{
     width: 80%;
     margin-right: 10px;
-    background: #b3b3b3;
+    background: #bab8b82e;
+    border: 1px solid lightgray;
 }
 .display_comment{
     margin: auto;

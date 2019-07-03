@@ -75,7 +75,7 @@
         </div>
         <i class="far fa-chevron-down fa-lg ma"></i>
         <div id="zone3-down">
-            <div class="zone3-option">
+            <div id="homepage" class="zone3-option">
                 <div class="col-sm-3 if">
                     <i class="fas fa-home-lg-alt fa-lg ma"></i>
                 </div>
@@ -93,7 +93,7 @@
                 </div>
                 <i class="far fa-chevron-right fa-lg ma"></i>
             </div>
-            <div class="zone3-option">
+            <div class="zone3-option" onclick="location.href='logout';">
                 <div class="col-sm-3 if">
                     <i class="fas fa-sign-out fa-lg ma"></i>
                 </div>
@@ -109,27 +109,7 @@
 <div id="main-section">
     <!--TRÍ CODE HERE-->
     <div id="view">
-        <div class="main_container">
-            <div class="main_content">
-                <div style="display: inline-flex">
-                    <img class="avatar" src="${sessionScope.user.avatar}"/>
-                    <p class="user_name">${sessionScope.user.getFullName()}</p>
-                </div>
-                <div id="w_status">
-                    <textarea id="status_content" placeholder="Cập nhật trạng thái của bạn?"></textarea>
-                </div>
-                <div id="div_story_img" style="width: 518px; display: none">
-                    <img id="story_img" src=""
-                         style="width: 100%;">
-                </div>
-                <div id="status_button">
-                    <button type="button" class="but" id="story_img_button">
-                        <span class="addPic"><i class="fas fa-images"></i></span></button>
-                    <button type="button" class="but" id="post_button">
-                        <span class="post"><i class="fas fa-paper-plane"></i></span></button>
-                </div>
-            </div>
-        </div>
+
     </div>
 
     <!--PORN CODE HERE-->

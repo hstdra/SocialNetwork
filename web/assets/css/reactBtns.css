@@ -150,6 +150,7 @@ span.react_announce{
     align-items: center;
     justify-items: center;
     color: #514949;
+    cursor: pointer;
 }
 .child_react_font{
     font-size: 20px;

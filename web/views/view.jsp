@@ -1,16 +1,39 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
+<c:if test="${not empty requestScope.input}">
+    <div class="main_container">
+        <div class="main_content">
+            <div style="display: inline-flex">
+                <img class="avatar" src="${sessionScope.user.avatar}"/>
+                <p class="user_name">${sessionScope.user.getFullName()}</p>
+            </div>
+            <div id="w_status">
+                <textarea id="status_content" placeholder="Cập nhật trạng thái của bạn?"></textarea>
+            </div>
+            <div id="div_story_img" style="width: 518px; display: none">
+                <img id="story_img" src=""
+                     style="width: 100%;">
+            </div>
+            <div id="status_button">
+                <button type="button" class="but" id="story_img_button">
+                    <span class="addPic"><i class="fas fa-images"></i></span></button>
+                <button type="button" class="but" id="post_button">
+                    <span class="post"><i class="fas fa-paper-plane"></i></span></button>
+            </div>
+        </div>
+    </div>
+</c:if>
 
 <c:forEach items="${requestScope.listAllStories}" var="story">
-    <div sid="${story.storyID}" class="main_container">
+    <div sid="${story.storyID}" uid="${story.userID}" class="main_container">
         <c:forEach items="${story.listReact}" var="react">
             <c:if test="${react.userID == sessionScope.user.userID}">
                 <div class="react-story-display" type="${react.type}"></div>
             </c:if>
         </c:forEach>
         <div class="main_content">
-            <div style="display: inline-flex">
+            <div class="story_user_infor" style="display: inline-flex; cursor: pointer">
                 <img class="avatar" src="${story.avatar}"/>
                 <p class="user_name">${story.name}</p>
             </div>
@@ -63,7 +86,7 @@
                 <%--                <span class="react_announce more_comment">Nhấn để xem thêm...</span>--%>
                 <%--            </div>--%>
             <c:forEach items="${story.comments}" var="comment">
-                <div class="each_comment">
+                <div uid="${comment.userID}" class="each_comment">
                     <div><img class="ava_in_comment" src="${comment.avatar}"></div>
                     <div class="comment_field">
                         <span class="username_in_comment"> ${comment.name}</span>

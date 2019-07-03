@@ -10,7 +10,7 @@ import java.util.List;
 
 public class UPLOAD {
     // location to store file uploaded
-    private static final String UPLOAD_DIRECTORY = "upload/avatar";
+    private static final String UPLOAD_DIRECTORY = "upload";
 
     // upload settings
     private static final int MEMORY_THRESHOLD = 1024 * 1024 * 3;  // 3MB

@@ -2,6 +2,7 @@ const host = $("body").attr("host");
 const userID = $("#task-bar-name").attr("userID");
 const name = $("#task-bar-name").text();
 const avatar = $("#task-bar-ava").attr("src");
+let uid_view = 0;
 
 const view = $('#view');
 
@@ -12,9 +13,23 @@ view.scroll(function () {
     const sid = view.attr("sid");
     if (view[0].scrollHeight - view.scrollTop() < view[0].clientHeight + 500 && sid !== "1") {
         view.attr("sid", "1");
-        loadMoreStories(sid);
+        if (uid_view === 0) {
+            loadMoreStories(sid);
+        } else {
+            loadMoreStoriesByUser(sid, uid_view);
+        }
     }
 });
+
+function allListener() {
+    updateStoryTime();
+    mainReactListener();
+    updateCountReacts();
+    updateUserReacts();
+    addCommentListener();
+    addStoryListener();
+    userHomePageListener();
+}
 
 function addCommentListener() {
     $('.add_commentBtn').click(function () {
@@ -234,6 +249,34 @@ function mainReactListener() {
     });
 }
 
+function uploadListener() {
+    $('#story_img_button').click(function () {
+        uploadImage();
+    });
+    $('#story_img').attr("src", null);
+}
+
+function userHomePageListener() {
+    $('.story_user_infor').click(function () {
+        uid_view = $(this).parent().parent().attr("uid");
+        loadMoreStoriesByUser(-1, uid_view);
+    });
+    $('.username_in_comment').click(function () {
+        uid_view = $(this).parent().parent().attr("uid");
+        loadMoreStoriesByUser(-1, uid_view);
+    });
+    $('.ava_in_comment').click(function () {
+        uid_view = $(this).parent().parent().attr("uid");
+        loadMoreStoriesByUser(-1, uid_view);
+    });
+    $('.child_announce_detail').click(function () {
+        uid_view = $(this).attr("uid");
+        loadMoreStoriesByUser(-1, uid_view);
+    });
+
+}
+
+
 //////////////////////////////////////////
 
 //MAIN FUNCTION
@@ -244,16 +287,48 @@ function loadMoreStories(sid) {
         data: {
             StoryID: sid
         },
+        beforeSend: function () {
+            if (sid === -1) {
+                view.html("");
+            }
+        },
         success: function (data) {
             view.append(data);
             view.attr("sid", $(".main_container").last().attr("sid"));
             $(".cover").hide();
-            updateStoryTime();
-            mainReactListener();
-            updateCountReacts();
-            updateUserReacts();
-            addCommentListener();
-            addStoryListener();
+
+            allListener();
+
+            if (sid === -1) {
+                uploadListener();
+            }
+        }
+    });
+}
+
+function loadMoreStoriesByUser(sid, uid) {
+    $.ajax({
+        type: 'POST',
+        url: 'http://' + host + '/getAllStoriesByUser',
+        data: {
+            StoryID: sid,
+            UserID: uid
+        },
+        beforeSend: function () {
+            if (sid === -1) {
+                view.html("");
+            }
+        },
+        success: function (data) {
+            view.append(data);
+            view.attr("sid", $(".main_container").last().attr("sid"));
+            $(".cover").hide();
+
+            allListener();
+
+            if (sid === -1) {
+                uploadListener();
+            }
         }
     });
 }
@@ -392,12 +467,13 @@ function addUserReactToView(sid, uid, nm, ava, t) {
     }
 
     updateCountReacts();
+    userHomePageListener();
 }
 
 function addUserCommentToView(sid, uid, nm, ava, ct) {
     const main_container = view.find('.main_container[sid="' + sid + '"]');
 
-    const comment = `<div class="each_comment">
+    const comment = `<div uid="${uid}" class="each_comment">
                     <div><img class="ava_in_comment" src="${ava}"></div>
                     <div class="comment_field">
                         <span class="username_in_comment">${nm}</span>
@@ -406,6 +482,8 @@ function addUserCommentToView(sid, uid, nm, ava, ct) {
                 </div>`;
 
     main_container.find('.display_comment').append(comment);
+
+    userHomePageListener();
 }
 
 function addUserStoryToView(uid, nm, ava, img, ct) {
@@ -559,7 +637,14 @@ function uploadImage() {
     });
 }
 
-$('#story_img_button').click(function () {
-    uploadImage();
+
+$('#main-task-bar-info').click(function () {
+    loadMoreStories(-1);
+    uid_view = 0;
 });
-$('#story_img').attr("src", null);
+
+
+$('#homepage').click(function () {
+    uid_view = userID;
+    loadMoreStoriesByUser(-1, uid_view);
+});

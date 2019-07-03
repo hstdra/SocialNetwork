@@ -10,42 +10,20 @@
     <bookmark url="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/ChatMembers" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3279c7d8-6094-4e56-a308-fbe3fbd481ae" name="Default Changelist" comment="v0.3.1&#10;- Complete chat feature 100%&#10;- Update login + signup">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/Main/NewComment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/Main/NewReactStory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/Main/NewStory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/UploadImageServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/Main/CommentDB.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/Main/ReactStoryDB.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/js/library/bootstrap.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/js/library/bootstrap.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/js/library/jquery.min.js" afterDir="false" />
+    <list default="true" id="3279c7d8-6094-4e56-a308-fbe3fbd481ae" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Controller/LogoutServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/Main/GetAllStoriesByUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/SocialNetwork_war_exploded/views/content.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/SocialNetwork_war_exploded/views/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/SocialNetwork_war_exploded/views/index.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Main/GetAllStoriesServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Main/GetAllStoriesServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/MD5.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/MD5.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Main/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Main/Comment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Main/ReactComment.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Main/ReactStory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Main/ReactStory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/Main/Story.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Main/Story.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/Main/StoryDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Main/StoryDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Main/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Main/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Main/UserDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Main/UserDB.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/UPLOAD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/UPLOAD.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/assets/css/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/css/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/assets/css/message.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/css/message.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/assets/css/reactBtns.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/css/reactBtns.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/assets/css/view.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/css/view.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/assets/js/contact.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/js/contact.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/assets/js/react_effect.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/js/react_effect.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/assets/js/view.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/js/view.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/views/content.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/web/views/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/views/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/views/inout/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/views/inout/js/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/views/upload.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/views/upload.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/views/view.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/views/view.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/views/view.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/views/view.jsp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -107,24 +85,48 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/views/view.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="21" column="36" lean-forward="true" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
+            <state relative-caret-position="69">
+              <caret line="88" column="42" selection-start-line="88" selection-start-column="42" selection-end-line="88" selection-end-column="42" />
               <folding>
-                <element signature="n#style#0;n#div#3;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#div#3;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#hr#1;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#div#3;n#div#0;n#!!top" />
-                <element signature="n#div#4;n#div#0;n#!!top" />
+                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/views/upload.jsp">
+        <entry file="file://$PROJECT_DIR$/web/assets/js/view.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="24" column="4" selection-start-line="24" selection-start-column="4" selection-end-line="42" selection-end-column="5" />
+            <state relative-caret-position="211">
+              <caret line="432" column="50" selection-start-line="432" selection-start-column="50" selection-end-line="432" selection-end-column="50" />
+              <folding>
+                <element signature="e#269#468#0" />
+                <element signature="n#!!block;n#f#0" />
+                <element signature="n#!!block;n#addStoryListener#0" />
+                <element signature="n#!!block;n#mainReactListener#0" />
+                <element signature="n#!!block;n#uploadListener#0" />
+                <element signature="n#!!block;n#userHomePageListener#0" />
+                <element signature="n#!!block;n#loadMoreStories#0" />
+                <element signature="n#!!block;n#loadMoreStories#1" />
+                <element signature="n#!!block;n#updateStoryTime#0" />
+                <element signature="n#!!block;n#updateCountReacts#0" />
+                <element signature="n#!!block;n#updateUserReacts#0" />
+                <element signature="n#!!block;n#addUserReactToView#0" />
+                <element signature="n#!!block;n#addUserCommentToView#0" />
+                <element signature="n#!!block;n#addUserStoryToView#0" />
+                <element signature="n#!!block;n#writeReactStory#0" />
+                <element signature="n#!!block;n#writeComment#0" />
+                <element signature="n#!!block;n#uploadImage#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/assets/css/reactBtns.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="535">
+              <caret line="259" column="1" selection-start-line="259" selection-start-column="1" selection-end-line="259" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -132,96 +134,56 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Model/UPLOAD.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-290">
-              <caret line="19" column="25" selection-start-line="19" selection-start-column="25" selection-end-line="19" selection-end-column="25" />
+            <state relative-caret-position="168">
+              <caret line="12" column="58" selection-start-line="12" selection-start-column="58" selection-end-line="12" selection-end-column="58" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Controller/LoginServlet.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="252">
+              <caret line="12" column="28" lean-forward="true" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Controller/UploadImageServlet.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="420">
+              <caret line="15" column="37" lean-forward="true" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Controller/LogoutServlet.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="140">
+              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Model/Main/Comment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="644">
+              <caret line="33" column="5" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/web/assets/js/view.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="302">
-              <caret line="498" column="39" lean-forward="true" selection-start-line="498" selection-start-column="39" selection-end-line="498" selection-end-column="39" />
-              <folding>
-                <element signature="e#250#449#0" />
-                <element signature="n#!!block;n#f#0" />
-                <element signature="n#!!block;n#mainReactListener#0" />
-                <element signature="n#!!block;n#loadMoreStories#0" />
-                <element signature="n#!!block;n#updateStoryTime#0" />
-                <element signature="n#!!block;n#updateCountReacts#0" />
-                <element signature="n#!!block;n#updateUserReacts#0" />
-                <element signature="n#!!block;n#addUserReactToView#0" />
-                <element signature="n#!!block;n#addUserCommentToView#0" />
-                <element signature="e#15853#15893#0" />
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#div#0;n#!!top" />
-                <element signature="n#div#0;n#div#0;n#!!top" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#hr#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#hr#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#hr#2;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#3;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#!!block;n#writeReactStory#0" />
-                <element signature="n#!!block;n#writeReactStory#1" />
-                <element signature="n#!!block;n#x#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Controller/Main/NewStory.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="17" column="45" selection-start-line="17" selection-start-column="45" selection-end-line="17" selection-end-column="45" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Model/Main/Story.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="20" column="24" selection-start-line="20" selection-start-column="24" selection-end-line="20" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Model/Main/StoryDB.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="382">
-              <caret line="53" column="34" selection-start-line="53" selection-start-column="34" selection-end-line="53" selection-end-column="34" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2143#2144#0" expanded="true" />
-                <element signature="e#2216#2217#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/newStory@(int(11),varchar(5000)).sql">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="84">
-              <caret line="3" column="76" selection-start-line="3" selection-start-column="76" selection-end-line="3" selection-end-column="76" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/views/index.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="122" column="46" selection-start-line="122" selection-start-column="46" selection-end-line="122" selection-end-column="46" />
-              <folding>
-                <element signature="n#style#0;n#input#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="140">
+              <caret line="95" column="68" selection-start-line="95" selection-start-column="68" selection-end-line="95" selection-end-column="68" />
             </state>
           </provider>
         </entry>
@@ -229,8 +191,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/assets/css/view.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1459">
-              <caret line="186" column="1" selection-start-line="186" selection-start-column="1" selection-end-line="186" selection-end-column="1" />
+            <state relative-caret-position="507">
+              <caret line="184" column="1" lean-forward="true" selection-start-line="184" selection-start-column="1" selection-end-line="184" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -294,8 +256,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/web/views/inout/login.jsp" />
-        <option value="$PROJECT_DIR$/web/views/inout/js/login.js" />
         <option value="$PROJECT_DIR$/src/Controller/UploadServlet.java" />
         <option value="$PROJECT_DIR$/src/Controller/LoginServlet.java" />
         <option value="$PROJECT_DIR$/src/Controller/SignupServlet.java" />
@@ -309,15 +269,12 @@
         <option value="$PROJECT_DIR$/src/Controller/GetAllStoriesServlet.java" />
         <option value="$PROJECT_DIR$/src/Controller/IndexServlet.java" />
         <option value="/76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/getAllStories@().sql" />
-        <option value="$PROJECT_DIR$/src/Controller/Main/GetAllStoriesServlet.java" />
         <option value="$PROJECT_DIR$/web/assets/js/view.js" />
         <option value="/76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/getReactStories@(int(11)).sql" />
         <option value="$PROJECT_DIR$/web/assets/css/message.css" />
         <option value="$PROJECT_DIR$/web/views/view.html" />
         <option value="$PROJECT_DIR$/web/assets/js/react_effect.js" />
-        <option value="$PROJECT_DIR$/web/assets/css/reactBtns.css" />
         <option value="$PROJECT_DIR$/src/Model/MD5.java" />
-        <option value="$PROJECT_DIR$/src/Model/UPLOAD.java" />
         <option value="$PROJECT_DIR$/src/Model/Main/User.java" />
         <option value="$PROJECT_DIR$/src/Model/Main/UserDB.java" />
         <option value="$PROJECT_DIR$/web/views/inout/js/main.js" />
@@ -329,22 +286,27 @@
         <option value="$PROJECT_DIR$/src/Model/Main/Comment.java" />
         <option value="$PROJECT_DIR$/src/Controller/Main/NewComment.java" />
         <option value="$PROJECT_DIR$/web/assets/js/contact.jsx" />
-        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/358cd58d-e04e-4913-b482-d317944550d2/console.sql" />
         <option value="$PROJECT_DIR$/web/assets/js/library/bootstrap.min.css" />
         <option value="$PROJECT_DIR$/web/assets/js/library/jquery.min.js" />
         <option value="$PROJECT_DIR$/web/assets/js/library/bootstrap.min.js" />
-        <option value="/76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/getAllStories@(int(11)).sql" />
         <option value="$PROJECT_DIR$/src/Controller/UploadImageServlet.java" />
-        <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
         <option value="$PROJECT_DIR$/web/views/upload.jsp" />
-        <option value="$PROJECT_DIR$/web/assets/css/view.css" />
-        <option value="$PROJECT_DIR$/web/views/index.jsp" />
         <option value="$PROJECT_DIR$/src/Controller/Main/NewStory.java" />
-        <option value="$PROJECT_DIR$/src/Model/Main/Story.java" />
-        <option value="$PROJECT_DIR$/src/Model/Main/StoryDB.java" />
         <option value="/76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/newStory@(int(11),varchar(5000)).sql" />
+        <option value="/76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/getAllStories@(int(11)).sql" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/358cd58d-e04e-4913-b482-d317944550d2/console.sql" />
+        <option value="$PROJECT_DIR$/src/Model/Main/StoryDB.java" />
+        <option value="$PROJECT_DIR$/src/Model/Main/Story.java" />
+        <option value="$PROJECT_DIR$/src/Controller/Main/GetAllStoriesServlet.java" />
+        <option value="$PROJECT_DIR$/src/Controller/Main/GetAllStoriesByUser.java" />
+        <option value="$PROJECT_DIR$/web/assets/css/view.css" />
         <option value="$PROJECT_DIR$/web/views/view.jsp" />
+        <option value="$PROJECT_DIR$/web/assets/css/reactBtns.css" />
         <option value="$PROJECT_DIR$/web/assets/js/view.jsx" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
+        <option value="$PROJECT_DIR$/src/Model/UPLOAD.java" />
+        <option value="$PROJECT_DIR$/src/Controller/LogoutServlet.java" />
+        <option value="$PROJECT_DIR$/web/views/index.jsp" />
       </list>
     </option>
   </component>
@@ -413,15 +375,6 @@
               <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
               <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
               <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="artifacts" type="462c0819:PsiDirectoryNode" />
-              <item name="SocialNetwork_war_exploded" type="462c0819:PsiDirectoryNode" />
-              <item name="upload" type="462c0819:PsiDirectoryNode" />
-              <item name="avatar" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
               <item name="production" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -445,6 +398,19 @@
             <path>
               <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
               <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Model" type="462c0819:PsiDirectoryNode" />
+              <item name="Main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SocialNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SocialNetwork" type="462c0819:PsiDirectoryNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -457,8 +423,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -476,12 +442,9 @@
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Study\SocialNetwork\web\views" />
-      <recent name="D:\Study\SocialNetwork\web\views\inout\js" />
-      <recent name="D:\Study\SocialNetwork\web\views\inout" />
-      <recent name="D:\Study\SocialNetwork\web\assets\js" />
-      <recent name="D:\Study\SocialNetwork\web\assets\audio" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Study\SocialNetwork\web\assets\css" />
+      <recent name="D:\Study\SocialNetwork\web\assets\cssold" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="Controller" />
@@ -490,9 +453,12 @@
       <recent name="Controller.Chat" />
       <recent name="WebSocket" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Study\SocialNetwork\web\assets\css" />
-      <recent name="D:\Study\SocialNetwork\web\assets\cssold" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Study\SocialNetwork\web\views" />
+      <recent name="D:\Study\SocialNetwork\web\views\inout\js" />
+      <recent name="D:\Study\SocialNetwork\web\views\inout" />
+      <recent name="D:\Study\SocialNetwork\web\assets\js" />
+      <recent name="D:\Study\SocialNetwork\web\assets\audio" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -647,11 +613,11 @@
     </configuration>
     <list>
       <item itemvalue="Application.ReactStoryDB" />
-      <item itemvalue="Tomcat Server.Tomcat 8.0.27" />
       <item itemvalue="Application.ReactStory" />
       <item itemvalue="Application.Comment" />
       <item itemvalue="Application.Story" />
       <item itemvalue="Application.StoryDB" />
+      <item itemvalue="Tomcat Server.Tomcat 8.0.27" />
     </list>
     <recent_temporary>
       <list>
@@ -726,7 +692,8 @@
       <workItem from="1561887356215" duration="16403000" />
       <workItem from="1561948662325" duration="9696000" />
       <workItem from="1561963984509" duration="24064000" />
-      <workItem from="1562039528057" duration="26051000" />
+      <workItem from="1562039528057" duration="26959000" />
+      <workItem from="1562120149041" duration="7802000" />
     </task>
     <task id="LOCAL-00001" summary="v0.1.2&#10;- Lam tam bay choi">
       <created>1559991551705</created>
@@ -819,11 +786,18 @@
       <option name="project" value="LOCAL" />
       <updated>1561797558743</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="v1.0.0&#10;- Update View&#10;- Some feature:&#10; + View story with comments, reacts&#10; + Add story&#10; + Add comment, react for story">
+      <created>1562084721643</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1562084721643</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="294202000" />
+    <option name="totallyTimeSpent" value="302912000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -865,7 +839,7 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.24966443" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info active="true" anchor="right" id="Database" order="4" visible="true" weight="0.18053691" />
+      <window_info anchor="right" id="Database" order="4" visible="true" weight="0.18053691" />
       <window_info anchor="right" id="Maven" order="5" weight="0.3295302" />
       <window_info anchor="right" id="Palette&#9;" order="6" />
       <window_info anchor="right" id="Codota" order="7" weight="0.3295302" />
@@ -962,43 +936,14 @@
     <MESSAGE value="v0.2.7&#10;- Update chat feature ~ 91%&#10;- Fix some bugs" />
     <MESSAGE value="v0.3.0&#10;- Complete chat feature ~99%&#10;- Update some css" />
     <MESSAGE value="v0.3.1&#10;- Complete chat feature 100%&#10;- Update login + signup" />
-    <option name="LAST_COMMIT_MESSAGE" value="v0.3.1&#10;- Complete chat feature 100%&#10;- Update login + signup" />
+    <MESSAGE value="v1.0.0&#10;- Update View&#10;- Some feature:&#10; + View story with comments, reacts&#10; + Add story&#10; + Add comment, react for story" />
+    <option name="LAST_COMMIT_MESSAGE" value="v1.0.0&#10;- Update View&#10;- Some feature:&#10; + View story with comments, reacts&#10; + Add story&#10; + Add comment, react for story" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/ReactComments">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="f1d9ea26-2e39-4cf1-943a-ad9fd8ada2f6">
-          <filtering>
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/ReactStories.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="13" selection-start-line="13" selection-end-line="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/Stories.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
-          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/css/message.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="871">
-          <caret line="207" selection-start-line="207" selection-end-line="207" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/assets/js/react_effect.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
@@ -1048,24 +993,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/Main/GetAllStoriesServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="15" column="53" selection-start-line="15" selection-start-column="53" selection-end-line="15" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/web/WEB-INF/lib/mysql-connector-java-5.1.47.jar!/com/mysql/jdbc/Util.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="87">
           <caret line="267" selection-start-line="267" selection-end-line="267" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/css/reactBtns.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6916">
-          <caret line="247" selection-start-line="247" selection-end-line="247" />
         </state>
       </provider>
     </entry>
@@ -1117,13 +1048,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
           <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/LoginServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="12" column="28" lean-forward="true" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -1192,25 +1116,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Model/Main/Comment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="395">
-          <caret line="33" column="5" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
-          <folding>
-            <element signature="e#323#324#0" expanded="true" />
-            <element signature="e#347#348#0" expanded="true" />
-            <element signature="e#387#388#0" expanded="true" />
-            <element signature="e#416#417#0" expanded="true" />
-            <element signature="e#447#448#0" expanded="true" />
-            <element signature="e#474#475#0" expanded="true" />
-            <element signature="e#508#509#0" expanded="true" />
-            <element signature="e#538#539#0" expanded="true" />
-            <element signature="e#571#572#0" expanded="true" />
-            <element signature="e#600#601#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/Main/NewComment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="224">
@@ -1222,13 +1127,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1736">
           <caret line="228" column="5" lean-forward="true" selection-start-line="228" selection-start-column="5" selection-end-line="228" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/358cd58d-e04e-4913-b482-d317944550d2/console.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="10" column="58" selection-start-line="10" selection-end-line="10" selection-end-column="58" />
         </state>
       </provider>
     </entry>
@@ -1275,22 +1173,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/getAllStories@(int(11)).sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="12" column="116" selection-start-line="12" selection-start-column="116" selection-end-line="12" selection-end-column="116" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/Stories">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="04c0c300-5262-42c6-ab2b-2fc172105365">
-          <filtering>
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/UploadServlet.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
@@ -1298,75 +1180,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/UploadImageServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="15" column="37" lean-forward="true" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/artifacts/SocialNetwork_war_exploded/upload/avatar/XVR3ADXPWB">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/artifacts/SocialNetwork_war_exploded/upload/avatar/GP3NSWEDR0">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/Users">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="04c0c300-5262-42c6-ab2b-2fc172105365">
-          <filtering>
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Model/UPLOAD.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-290">
-          <caret line="19" column="25" selection-start-line="19" selection-start-column="25" selection-end-line="19" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/css/view.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1459">
-          <caret line="186" column="1" selection-start-line="186" selection-start-column="1" selection-end-line="186" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/out/artifacts/SocialNetwork_war_exploded/upload/avatar/XVR3ADXPWB" />
+    <entry file="file://$PROJECT_DIR$/out/artifacts/SocialNetwork_war_exploded/upload/avatar/GP3NSWEDR0" />
     <entry file="file://$PROJECT_DIR$/web/views/upload.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
+        <state relative-caret-position="672">
           <caret line="24" column="4" selection-start-line="24" selection-start-column="4" selection-end-line="42" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Model/Main/Story.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="20" column="24" selection-start-line="20" selection-start-column="24" selection-end-line="20" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Model/Main/StoryDB.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="382">
-          <caret line="53" column="34" selection-start-line="53" selection-start-column="34" selection-end-line="53" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2143#2144#0" expanded="true" />
-            <element signature="e#2216#2217#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/newStory@(int(11),varchar(5000)).sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="3" column="76" selection-start-line="3" selection-start-column="76" selection-end-line="3" selection-end-column="76" />
         </state>
       </provider>
     </entry>
@@ -1377,60 +1196,186 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/views/index.jsp">
+    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/newStory@(int(11),varchar(5000)).sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="122" column="46" selection-start-line="122" selection-start-column="46" selection-end-line="122" selection-end-column="46" />
+        <state relative-caret-position="84">
+          <caret line="3" column="76" selection-start-line="3" selection-start-column="76" selection-end-line="3" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/Announcements.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28">
+          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/358cd58d-e04e-4913-b482-d317944550d2/console.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-265">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Model/Main/StoryDB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="82" lean-forward="true" selection-start-line="82" selection-end-line="82" />
           <folding>
-            <element signature="n#style#0;n#input#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="method#getAllStories#0;class#StoryDB#0" />
+            <element signature="method#getAllStories#1;class#StoryDB#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/Main/GetAllStoriesServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="15" column="17" lean-forward="true" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/Announcements">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="dd3e6924-c6a2-46ad-a8b9-79a49625ee7e">
+          <filtering>
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/getAllStories@(int(11)).sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28">
+          <caret line="1" column="33" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Model/Main/Story.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="616">
+          <caret line="24" column="53" lean-forward="true" selection-start-line="24" selection-start-column="53" selection-end-line="24" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/Stories">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="dd3e6924-c6a2-46ad-a8b9-79a49625ee7e">
+          <filtering>
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/Main/GetAllStoriesByUser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="22" column="5" lean-forward="true" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Model/Main/Comment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="644">
+          <caret line="33" column="5" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/css/view.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="507">
+          <caret line="184" column="1" lean-forward="true" selection-start-line="184" selection-start-column="1" selection-end-line="184" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/views/view.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="21" column="36" lean-forward="true" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
+        <state relative-caret-position="69">
+          <caret line="88" column="42" selection-start-line="88" selection-start-column="42" selection-end-line="88" selection-end-column="42" />
           <folding>
-            <element signature="n#style#0;n#div#3;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#div#3;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#hr#1;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#3;n#div#0;n#!!top" />
-            <element signature="n#div#4;n#div#0;n#!!top" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/css/reactBtns.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="535">
+          <caret line="259" column="1" selection-start-line="259" selection-start-column="1" selection-end-line="259" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/assets/js/view.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="498" column="39" lean-forward="true" selection-start-line="498" selection-start-column="39" selection-end-line="498" selection-end-column="39" />
+        <state relative-caret-position="211">
+          <caret line="432" column="50" selection-start-line="432" selection-start-column="50" selection-end-line="432" selection-end-column="50" />
           <folding>
-            <element signature="e#250#449#0" />
+            <element signature="e#269#468#0" />
             <element signature="n#!!block;n#f#0" />
+            <element signature="n#!!block;n#addStoryListener#0" />
             <element signature="n#!!block;n#mainReactListener#0" />
+            <element signature="n#!!block;n#uploadListener#0" />
+            <element signature="n#!!block;n#userHomePageListener#0" />
             <element signature="n#!!block;n#loadMoreStories#0" />
+            <element signature="n#!!block;n#loadMoreStories#1" />
             <element signature="n#!!block;n#updateStoryTime#0" />
             <element signature="n#!!block;n#updateCountReacts#0" />
             <element signature="n#!!block;n#updateUserReacts#0" />
             <element signature="n#!!block;n#addUserReactToView#0" />
             <element signature="n#!!block;n#addUserCommentToView#0" />
-            <element signature="e#15853#15893#0" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#!!top" />
-            <element signature="n#div#0;n#div#0;n#!!top" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#hr#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#hr#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#hr#2;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#!!block;n#addUserStoryToView#0" />
             <element signature="n#!!block;n#writeReactStory#0" />
-            <element signature="n#!!block;n#writeReactStory#1" />
-            <element signature="n#!!block;n#x#0" />
+            <element signature="n#!!block;n#writeComment#0" />
+            <element signature="n#!!block;n#uploadImage#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/Users">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="dd3e6924-c6a2-46ad-a8b9-79a49625ee7e">
+          <filtering>
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Model/UPLOAD.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="12" column="58" selection-start-line="12" selection-start-column="58" selection-end-line="12" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/LoginServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="12" column="28" lean-forward="true" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/UploadImageServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="15" column="37" lean-forward="true" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/LogoutServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/views/index.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="95" column="68" selection-start-line="95" selection-start-column="68" selection-end-line="95" selection-end-column="68" />
         </state>
       </provider>
     </entry>
