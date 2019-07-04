@@ -11,48 +11,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3279c7d8-6094-4e56-a308-fbe3fbd481ae" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Controller/Main/GetNotifications.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/Main/NewNotification.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/Main/SeenNotifications.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/Main/Notification.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/Main/NotificationDB.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/Socket/CommentSK.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/Socket/NotificationSK.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/Socket/ReactStorySK.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/WebSocket/NotificationEndpoint.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/Main/GetStory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/SocialNetwork_war_exploded/WEB-INF/classes/Controller/LoginServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/SocialNetwork_war_exploded/WEB-INF/classes/Controller/LoginServlet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/SocialNetwork_war_exploded/WEB-INF/classes/Model/ConnectDatabase.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/SocialNetwork_war_exploded/views/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/SocialNetwork_war_exploded/views/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SocialNetwork/Controller/LoginServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SocialNetwork/Controller/LoginServlet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Chat/LoadChatServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Chat/LoadChatServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/LoginServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LoginServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Main/NewComment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Main/NewComment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SignupServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SignupServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/UploadImageServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UploadImageServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/UploadServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UploadServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Chat/ContactDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Chat/ContactDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Chat/MessageDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Chat/MessageDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Chat/RecentDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Chat/RecentDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/ConnectDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Library/ConnectDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/GSON.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Library/GSON.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/MD5.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Library/MD5.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Main/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Main/Comment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Main/CommentDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Main/CommentDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Main/ReactStoryDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Main/ReactStoryDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Main/Story.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Main/Story.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/Main/StoryDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Main/StoryDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Main/UserDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Main/UserDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/MainListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Listener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/UPLOAD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Library/UPLOAD.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/UTCDate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Library/UTCDate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/WebSocket/ChatAllEndpoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WebSocket/ChatAllEndpoint.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/WebSocket/ChatEndpoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WebSocket/ChatEndpoint.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/assets/css/taskbar.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/css/taskbar.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/assets/js/contact.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/js/contact.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/assets/js/view.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/js/view.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/views/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/views/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/views/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/views/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/views/view.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/views/view.jsp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -111,10 +74,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/views/index.jsp">
+        <entry file="file://$PROJECT_DIR$/src/Controller/Main/GetStory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="66" column="49" selection-start-line="66" selection-start-column="49" selection-end-line="66" selection-end-column="49" />
+            <state relative-caret-position="143">
+              <caret line="16" column="50" selection-start-line="16" selection-start-column="50" selection-end-line="16" selection-end-column="50" />
             </state>
           </provider>
         </entry>
@@ -122,129 +85,115 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/assets/js/view.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="400" lean-forward="true" selection-start-line="400" selection-end-line="400" />
+            <state relative-caret-position="1068">
+              <caret line="453" column="21" selection-start-line="453" selection-start-column="21" selection-end-line="453" selection-end-column="21" />
               <folding>
-                <element signature="e#693#1003#0" />
-                <element signature="e#669#847#0" />
-                <element signature="e#879#1647#0" />
-                <element signature="e#1677#2003#0" />
-                <element signature="e#2308#2316#0" />
-                <element signature="e#2034#10329#0" />
-                <element signature="e#10357#10477#0" />
-                <element signature="e#11228#11830#0" />
-                <element signature="e#11873#12506#0" />
-                <element signature="n#!!block;n#loadNotification#0" />
-                <element signature="e#12535#12896#0" />
-                <element signature="e#12927#13638#0" />
-                <element signature="e#13668#16025#0" />
-                <element signature="e#16166#17750#0" />
-                <element signature="e#17810#18304#0" />
-                <element signature="e#18357#24304#0" />
-                <element signature="e#24398#25938#0" />
-                <element signature="e#25975#26136#0" />
-                <element signature="e#26263#26456#0" />
-                <element signature="e#26504#26912#0" />
-                <element signature="e#26973#27323#0" />
-                <element signature="e#28248#28256#0" />
-                <element signature="e#27417#28038#0" />
-                <element signature="e#28915#28946#0" />
-                <element signature="e#29101#29340#0" />
-                <element signature="e#29384#29387#0" />
-                <element signature="e#29450#29810#0" />
+                <element signature="e#558#904#0" />
+                <element signature="e#931#1127#0" />
+                <element signature="e#1154#1332#0" />
+                <element signature="e#1364#2132#0" />
+                <element signature="e#2162#2491#0" />
+                <element signature="e#3129#11424#0" />
+                <element signature="e#11452#11572#0" />
+                <element signature="e#11606#12534#0" />
+                <element signature="e#12631#13370#0" />
+                <element signature="e#13418#14188#0" />
+                <element signature="e#15550#15889#0" />
+                <element signature="e#15918#16279#0" />
+                <element signature="e#16310#17021#0" />
+                <element signature="e#17051#19408#0" />
+                <element signature="e#19549#21243#0" />
+                <element signature="e#21303#21797#0" />
+                <element signature="e#21856#22150#0" />
+                <element signature="e#22244#23784#0" />
+                <element signature="e#23835#29165#0" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="e#29202#29423#0" />
+                <element signature="e#29459#29639#0" />
+                <element signature="e#29676#29837#0" />
+                <element signature="e#29964#30157#0" />
+                <element signature="e#30205#30613#0" />
+                <element signature="e#30674#31024#0" />
+                <element signature="e#31057#31235#0" />
+                <element signature="e#31329#31950#0" />
+                <element signature="e#32023#32213#0" />
+                <element signature="e#32250#32461#0" />
+                <element signature="e#32490#32521#0" />
+                <element signature="e#33056#33416#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/getAllStories@(int(11)).sql">
+        <entry file="file://$PROJECT_DIR$/src/Controller/Main/GetAllStoriesServlet.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="308">
-              <caret line="11" column="8" lean-forward="true" selection-end-line="21" />
+              <caret line="18" column="56" lean-forward="true" selection-start-line="18" selection-start-column="56" selection-end-line="18" selection-end-column="56" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Controller/Main/GetAllStoriesByUser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="140">
+              <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Model/Main/ReactStory.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="140">
+              <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Model/Main/Story.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="234">
+              <caret line="20" column="34" lean-forward="true" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
+              <folding>
+                <element signature="e#434#435#0" expanded="true" />
+                <element signature="e#407#408#0" expanded="true" />
+                <element signature="e#456#457#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/358cd58d-e04e-4913-b482-d317944550d2/console.sql">
+        <entry file="file://$PROJECT_DIR$/src/Model/Main/StoryDB.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="421">
-              <caret line="30" column="28" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/assets/js/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="423">
-              <caret line="21" column="7" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Model/Main/NotificationDB.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="65" column="31" selection-start-line="65" selection-start-column="31" selection-end-line="65" selection-end-column="31" />
+            <state relative-caret-position="234">
+              <caret line="31" column="21" lean-forward="true" selection-start-line="31" selection-start-column="21" selection-end-line="31" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#getNotifications#0;class#NotificationDB#0" />
+                <element signature="method#getAllStoriesByUser#0;class#StoryDB#0" />
+                <element signature="method#newStory#0;class#StoryDB#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Controller/Main/SeenNotifications.java">
+        <entry file="file://$PROJECT_DIR$/src/Model/Main/CommentDB.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="18" selection-start-line="18" selection-end-line="18" />
+            <state relative-caret-position="56">
+              <caret line="10" column="31" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Model/Main/Notification.java">
+        <entry file="file://$PROJECT_DIR$/src/Controller/Main/GetNotifications.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="560">
-              <caret line="20" column="37" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
-              <folding>
-                <element signature="e#695#696#0" expanded="true" />
-                <element signature="e#724#725#0" expanded="true" />
-                <element signature="e#1113#1114#0" expanded="true" />
-                <element signature="e#1139#1140#0" expanded="true" />
-                <element signature="e#1170#1171#0" expanded="true" />
-                <element signature="e#1197#1198#0" expanded="true" />
-                <element signature="e#1228#1229#0" expanded="true" />
-                <element signature="e#1255#1256#0" expanded="true" />
-                <element signature="e#1288#1289#0" expanded="true" />
-                <element signature="e#1317#1318#0" expanded="true" />
-                <element signature="e#1350#1351#0" expanded="true" />
-                <element signature="e#1379#1380#0" expanded="true" />
-                <element signature="e#1413#1414#0" expanded="true" />
-                <element signature="e#1443#1444#0" expanded="true" />
-                <element signature="e#1479#1480#0" expanded="true" />
-                <element signature="e#1511#1512#0" expanded="true" />
-                <element signature="e#1547#1548#0" expanded="true" />
-                <element signature="e#1579#1580#0" expanded="true" />
-                <element signature="e#1610#1611#0" expanded="true" />
-                <element signature="e#1637#1638#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/assets/js/contact.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="406">
-              <caret line="506" column="35" selection-start-line="506" selection-start-column="35" selection-end-line="506" selection-end-column="35" />
-              <folding>
-                <element signature="e#1632#4073#0" />
-              </folding>
+            <state relative-caret-position="140">
+              <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -252,7 +201,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/WebSocket/ChatEndpoint.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-224">
+            <state relative-caret-position="196">
               <caret line="17" selection-start-line="17" selection-end-line="17" />
             </state>
           </provider>
@@ -272,8 +221,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>chat_tab_ava</find>
-      <find>audio</find>
       <find>get</find>
       <find>updateCountContact</find>
       <find>setInterval</find>
@@ -302,6 +249,8 @@
       <find>notifi</find>
       <find>Count</find>
       <find>Update</find>
+      <find>console.</find>
+      <find>NID</find>
     </findStrings>
     <replaceStrings>
       <replace>const</replace>
@@ -317,7 +266,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/Model/Main/User.java" />
         <option value="$PROJECT_DIR$/src/Model/Main/UserDB.java" />
         <option value="$PROJECT_DIR$/web/views/inout/js/main.js" />
         <option value="$PROJECT_DIR$/src/Model/Main/ReactStoryDB.java" />
@@ -332,8 +280,6 @@
         <option value="$PROJECT_DIR$/src/Controller/Main/NewStory.java" />
         <option value="/76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/newStory@(int(11),varchar(5000)).sql" />
         <option value="/76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/getAllStories@(int(11)).sql" />
-        <option value="$PROJECT_DIR$/src/Model/Main/StoryDB.java" />
-        <option value="$PROJECT_DIR$/src/Model/Main/Story.java" />
         <option value="$PROJECT_DIR$/src/Controller/Main/GetAllStoriesServlet.java" />
         <option value="$PROJECT_DIR$/web/assets/css/view.css" />
         <option value="$PROJECT_DIR$/web/assets/css/reactBtns.css" />
@@ -360,14 +306,17 @@
         <option value="$PROJECT_DIR$/src/WebSocket/NotificationEndpoint.java" />
         <option value="$PROJECT_DIR$/web/assets/css/taskbar.css" />
         <option value="$PROJECT_DIR$/web/assets/js/contact.jsx" />
-        <option value="/76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/getNotifications@(int(11),int(11)).sql" />
         <option value="$PROJECT_DIR$/web/views/index.jsp" />
         <option value="$PROJECT_DIR$/web/assets/js/index.js" />
         <option value="$PROJECT_DIR$/src/Model/Main/NotificationDB.java" />
         <option value="$PROJECT_DIR$/src/Controller/Main/SeenNotifications.java" />
         <option value="$PROJECT_DIR$/src/Model/Main/Notification.java" />
-        <option value="$PROJECT_DIR$/web/assets/js/view.jsx" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/358cd58d-e04e-4913-b482-d317944550d2/console.sql" />
+        <option value="$PROJECT_DIR$/src/Model/Main/Story.java" />
+        <option value="$PROJECT_DIR$/src/Controller/Main/GetStory.java" />
+        <option value="$PROJECT_DIR$/src/Model/Main/StoryDB.java" />
+        <option value="/76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/getNotifications@(int(11),int(11)).sql" />
+        <option value="$PROJECT_DIR$/web/assets/js/view.jsx" />
       </list>
     </option>
   </component>
@@ -399,6 +348,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -452,8 +403,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -471,12 +420,9 @@
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Study\SocialNetwork\web\views" />
-      <recent name="D:\Study\SocialNetwork\web\views\inout\js" />
-      <recent name="D:\Study\SocialNetwork\web\views\inout" />
-      <recent name="D:\Study\SocialNetwork\web\assets\js" />
-      <recent name="D:\Study\SocialNetwork\web\assets\audio" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Study\SocialNetwork\web\assets\css" />
+      <recent name="D:\Study\SocialNetwork\web\assets\cssold" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="Controller.Main" />
@@ -485,9 +431,12 @@
       <recent name="Model.Main" />
       <recent name="Controller" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Study\SocialNetwork\web\assets\css" />
-      <recent name="D:\Study\SocialNetwork\web\assets\cssold" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Study\SocialNetwork\web\views" />
+      <recent name="D:\Study\SocialNetwork\web\views\inout\js" />
+      <recent name="D:\Study\SocialNetwork\web\views\inout" />
+      <recent name="D:\Study\SocialNetwork\web\assets\js" />
+      <recent name="D:\Study\SocialNetwork\web\assets\audio" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -644,15 +593,15 @@
       <item itemvalue="Application.Comment" />
       <item itemvalue="Application.Story" />
       <item itemvalue="Application.StoryDB" />
-      <item itemvalue="Tomcat Server.Tomcat 8.0.27" />
       <item itemvalue="Application.NotificationDB" />
       <item itemvalue="Application.CommentDB" />
+      <item itemvalue="Tomcat Server.Tomcat 8.0.27" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.StoryDB" />
         <item itemvalue="Application.CommentDB" />
         <item itemvalue="Application.NotificationDB" />
-        <item itemvalue="Application.StoryDB" />
         <item itemvalue="Application.Story" />
         <item itemvalue="Application.Comment" />
       </list>
@@ -726,7 +675,8 @@
       <workItem from="1562128153662" duration="131000" />
       <workItem from="1562142435259" duration="2290000" />
       <workItem from="1562208023594" duration="2300000" />
-      <workItem from="1562210653228" duration="24215000" />
+      <workItem from="1562210653228" duration="24609000" />
+      <workItem from="1562246072054" duration="10218000" />
     </task>
     <task id="LOCAL-00001" summary="v0.1.2&#10;- Lam tam bay choi">
       <created>1559991551705</created>
@@ -833,11 +783,18 @@
       <option name="project" value="LOCAL" />
       <updated>1562128244167</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="v1.1.0&#10;- Update Notifications&#10;- Fix some bugs">
+      <created>1562239289062</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1562239289062</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="331848000" />
+    <option name="totallyTimeSpent" value="342460000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -852,7 +809,40 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49558824" weight="0.2966443" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49558824" weight="0.3" />
+      <window_info id="Structure" order="1" sideWeight="0.50441176" side_tool="true" weight="0.28053692" />
+      <window_info id="Web" order="2" sideWeight="0.5058824" side_tool="true" weight="0.24765101" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Favorites" order="5" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.94264704" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4986577" weight="0.5588235" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32941177" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49798658" weight="0.42352942" />
+      <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="10" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5013423" side_tool="true" weight="0.5588235" />
+      <window_info anchor="bottom" id="Java Enterprise" order="12" />
+      <window_info anchor="bottom" id="Messages" order="13" weight="0.32941177" />
+      <window_info anchor="bottom" id="Application Servers" order="14" sideWeight="0.49932885" weight="0.32941177" />
+      <window_info anchor="bottom" id="Database Console" order="15" sideWeight="0.49932885" weight="0.72205883" />
+      <window_info anchor="bottom" id="SQL Generator" order="16" weight="0.8882353" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.24966443" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Database" order="4" visible="true" weight="0.18053691" />
+      <window_info anchor="right" id="Maven" order="5" weight="0.3295302" />
+      <window_info anchor="right" id="Palette&#9;" order="6" />
+      <window_info anchor="right" id="Codota" order="7" weight="0.3295302" />
+    </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49558824" weight="0.3" />
       <window_info id="Structure" order="1" sideWeight="0.50441176" side_tool="true" weight="0.28053692" />
       <window_info id="Web" order="2" sideWeight="0.5058824" side_tool="true" weight="0.24765101" />
       <window_info id="Designer" order="3" />
@@ -883,7 +873,7 @@
       <window_info anchor="right" id="Maven" order="5" weight="0.3295302" />
       <window_info anchor="right" id="Palette&#9;" order="6" />
       <window_info anchor="right" id="Codota" order="7" weight="0.3295302" />
-    </layout>
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -945,88 +935,26 @@
     <MESSAGE value="v0.3.1&#10;- Complete chat feature 100%&#10;- Update login + signup" />
     <MESSAGE value="v1.0.0&#10;- Update View&#10;- Some feature:&#10; + View story with comments, reacts&#10; + Add story&#10; + Add comment, react for story" />
     <MESSAGE value="v1.0.1&#10;- Update Homepage&#10;- Fix some bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="v1.0.1&#10;- Update Homepage&#10;- Fix some bugs" />
+    <MESSAGE value="v1.1.0&#10;- Update Notifications&#10;- Fix some bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="v1.1.0&#10;- Update Notifications&#10;- Fix some bugs" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-field">
+          <url>file://$PROJECT_DIR$/src/Model/Main/ReactStory.java</url>
+          <line>6</line>
+          <properties field="type" class="Model.Main.ReactStory" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Controller/Chat/GetChatIDServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/Chat/InsertMessageServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/Users">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="94260750-5be0-48b4-be86-8ff68697f0c8">
-          <filtering>
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
-    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/newComment@(int(11),int(11),varchar(1000)).sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
-          <caret line="1" column="33" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/views/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="96" selection-start-line="96" selection-end-line="106" selection-end-column="26" />
-          <folding>
-            <element signature="n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#2;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#3;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/Chat/LoadChatServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="22" column="41" selection-start-line="22" selection-start-column="41" selection-end-line="22" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/Main/GetNotifications.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="24" selection-start-column="24" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/newNotifications@(int(11),int(11),int(11),int(11),int(11)).sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
-          <caret line="1" column="50" selection-start-line="1" selection-start-column="50" selection-end-line="1" selection-end-column="105" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Model/Main/StoryDB.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="85" selection-start-line="85" selection-end-line="99" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#getAllStories#0;class#StoryDB#0" />
-            <element signature="method#getAllStoriesByUser#0;class#StoryDB#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/Main/NewStory.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
@@ -1062,30 +990,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Model/Main/CommentDB.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1025">
-          <caret line="53" column="26" selection-start-line="53" selection-start-column="26" selection-end-line="53" selection-end-column="26" />
-          <folding>
-            <element signature="e#1693#1694#0" expanded="true" />
-            <element signature="e#1721#1722#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/Main/NewComment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="392">
           <caret line="21" column="50" selection-start-line="21" selection-start-column="50" selection-end-line="21" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/Notifications">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="94260750-5be0-48b4-be86-8ff68697f0c8">
-          <filtering>
-            <filter text="" />
-          </filtering>
         </state>
       </provider>
     </entry>
@@ -1243,68 +1151,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/getNotifications@(int(11),int(11)).sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="13" column="34" lean-forward="true" selection-start-line="13" selection-start-column="34" selection-end-line="13" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/assets/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1201" />
       </provider>
     </entry>
+    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/seenNotifications@(int(11)).sql" />
     <entry file="file://$PROJECT_DIR$/web/views/index.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
+        <state relative-caret-position="1848">
           <caret line="66" column="49" selection-start-line="66" selection-start-column="49" selection-end-line="66" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/getAllStories@(int(11)).sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="11" column="8" selection-end-line="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/assets/js/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
+        <state relative-caret-position="588">
           <caret line="21" column="7" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Model/Main/NotificationDB.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
+        <state relative-caret-position="1008">
           <caret line="65" column="31" selection-start-line="65" selection-start-column="31" selection-end-line="65" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#getNotifications#0;class#NotificationDB#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Model/Main/Notification.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="560">
-          <caret line="20" column="37" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
-          <folding>
-            <element signature="e#695#696#0" expanded="true" />
-            <element signature="e#724#725#0" expanded="true" />
-            <element signature="e#1113#1114#0" expanded="true" />
-            <element signature="e#1139#1140#0" expanded="true" />
-            <element signature="e#1170#1171#0" expanded="true" />
-            <element signature="e#1197#1198#0" expanded="true" />
-            <element signature="e#1228#1229#0" expanded="true" />
-            <element signature="e#1255#1256#0" expanded="true" />
-            <element signature="e#1288#1289#0" expanded="true" />
-            <element signature="e#1317#1318#0" expanded="true" />
-            <element signature="e#1350#1351#0" expanded="true" />
-            <element signature="e#1379#1380#0" expanded="true" />
-            <element signature="e#1413#1414#0" expanded="true" />
-            <element signature="e#1443#1444#0" expanded="true" />
-            <element signature="e#1479#1480#0" expanded="true" />
-            <element signature="e#1511#1512#0" expanded="true" />
-            <element signature="e#1547#1548#0" expanded="true" />
-            <element signature="e#1579#1580#0" expanded="true" />
-            <element signature="e#1610#1611#0" expanded="true" />
-            <element signature="e#1637#1638#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1316,16 +1196,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/WebSocket/ChatEndpoint.java">
+    <entry file="file://$PROJECT_DIR$/src/Model/Main/Notification.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-224">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
+        <state relative-caret-position="560">
+          <caret line="20" column="37" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/assets/js/contact.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="406">
+        <state relative-caret-position="12460">
           <caret line="506" column="35" selection-start-line="506" selection-start-column="35" selection-end-line="506" selection-end-column="35" />
           <folding>
             <element signature="e#1632#4073#0" />
@@ -1333,60 +1213,156 @@
         </state>
       </provider>
     </entry>
-    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/seenNotifications@(int(11)).sql">
+    <entry file="file://$PROJECT_DIR$/src/WebSocket/ChatEndpoint.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
-          <caret line="1" column="49" lean-forward="true" selection-start-line="1" selection-start-column="49" selection-end-line="1" selection-end-column="49" />
+        <state relative-caret-position="196">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/js/view.jsx">
+    <entry file="file://$PROJECT_DIR$/src/Controller/Main/GetNotifications.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="400" lean-forward="true" selection-start-line="400" selection-end-line="400" />
-          <folding>
-            <element signature="e#693#1003#0" />
-            <element signature="e#669#847#0" />
-            <element signature="e#879#1647#0" />
-            <element signature="e#1677#2003#0" />
-            <element signature="e#2308#2316#0" />
-            <element signature="e#2034#10329#0" />
-            <element signature="e#10357#10477#0" />
-            <element signature="e#11228#11830#0" />
-            <element signature="e#11873#12506#0" />
-            <element signature="n#!!block;n#loadNotification#0" />
-            <element signature="e#12535#12896#0" />
-            <element signature="e#12927#13638#0" />
-            <element signature="e#13668#16025#0" />
-            <element signature="e#16166#17750#0" />
-            <element signature="e#17810#18304#0" />
-            <element signature="e#18357#24304#0" />
-            <element signature="e#24398#25938#0" />
-            <element signature="e#25975#26136#0" />
-            <element signature="e#26263#26456#0" />
-            <element signature="e#26504#26912#0" />
-            <element signature="e#26973#27323#0" />
-            <element signature="e#28248#28256#0" />
-            <element signature="e#27417#28038#0" />
-            <element signature="e#28915#28946#0" />
-            <element signature="e#29101#29340#0" />
-            <element signature="e#29384#29387#0" />
-            <element signature="e#29450#29810#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/getAllStories@(int(11)).sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="11" column="8" lean-forward="true" selection-end-line="21" />
+        <state relative-caret-position="140">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/358cd58d-e04e-4913-b482-d317944550d2/console.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="421">
-          <caret line="30" column="28" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
+        <state relative-caret-position="365">
+          <caret line="31" column="4" selection-start-line="31" selection-start-column="4" selection-end-line="31" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/getStory@(int(11)).sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28">
+          <caret line="1" column="33" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Model/Main/ReactStory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/Main/GetAllStoriesByUser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/ReactStories">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="77301735-2fdc-46bb-8fc8-23c66ad0e5b6">
+          <filtering>
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/table/Notifications">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="77301735-2fdc-46bb-8fc8-23c66ad0e5b6">
+          <filtering>
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbSrc:///76ce7888/358cd58d-e04e-4913-b482-d317944550d2/schema/dungxoanua/routine/getNotifications@(int(11),int(11)).sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="42" column="25" selection-start-line="42" selection-start-column="25" selection-end-line="42" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/Main/GetStory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="16" column="50" selection-start-line="16" selection-start-column="50" selection-end-line="16" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/js/view.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1068">
+          <caret line="453" column="21" selection-start-line="453" selection-start-column="21" selection-end-line="453" selection-end-column="21" />
+          <folding>
+            <element signature="e#558#904#0" />
+            <element signature="e#931#1127#0" />
+            <element signature="e#1154#1332#0" />
+            <element signature="e#1364#2132#0" />
+            <element signature="e#2162#2491#0" />
+            <element signature="e#3129#11424#0" />
+            <element signature="e#11452#11572#0" />
+            <element signature="e#11606#12534#0" />
+            <element signature="e#12631#13370#0" />
+            <element signature="e#13418#14188#0" />
+            <element signature="e#15550#15889#0" />
+            <element signature="e#15918#16279#0" />
+            <element signature="e#16310#17021#0" />
+            <element signature="e#17051#19408#0" />
+            <element signature="e#19549#21243#0" />
+            <element signature="e#21303#21797#0" />
+            <element signature="e#21856#22150#0" />
+            <element signature="e#22244#23784#0" />
+            <element signature="e#23835#29165#0" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#29202#29423#0" />
+            <element signature="e#29459#29639#0" />
+            <element signature="e#29676#29837#0" />
+            <element signature="e#29964#30157#0" />
+            <element signature="e#30205#30613#0" />
+            <element signature="e#30674#31024#0" />
+            <element signature="e#31057#31235#0" />
+            <element signature="e#31329#31950#0" />
+            <element signature="e#32023#32213#0" />
+            <element signature="e#32250#32461#0" />
+            <element signature="e#32490#32521#0" />
+            <element signature="e#33056#33416#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/Main/GetAllStoriesServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="18" column="56" lean-forward="true" selection-start-line="18" selection-start-column="56" selection-end-line="18" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Model/Main/Story.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="20" column="34" lean-forward="true" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
+          <folding>
+            <element signature="e#434#435#0" expanded="true" />
+            <element signature="e#407#408#0" expanded="true" />
+            <element signature="e#456#457#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Model/Main/CommentDB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="56">
+          <caret line="10" column="31" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Model/Main/StoryDB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="31" column="21" lean-forward="true" selection-start-line="31" selection-start-column="21" selection-end-line="31" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#getAllStoriesByUser#0;class#StoryDB#0" />
+            <element signature="method#newStory#0;class#StoryDB#0" />
+          </folding>
         </state>
       </provider>
     </entry>

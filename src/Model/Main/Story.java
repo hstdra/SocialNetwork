@@ -13,6 +13,10 @@ public class Story {
     private LinkedList<ReactStory> listReact;
     private LinkedList<Comment> comments;
 
+    public static Story getStory(String sid) {
+        return StoryDB.getStory(sid);
+    }
+
     public static LinkedList<Story> getAllStories(String sid) {
         return StoryDB.getAllStories(sid);
     }

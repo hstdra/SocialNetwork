@@ -16,6 +16,13 @@ loadMoreStories(-1, KEY);
 loadNotification(-1);
 
 //LISTENER FUNCTION
+$('#notification-icon').mouseenter(function () {
+    $('#notification-zone').show();
+});
+$('#notification-icon').mouseleave(function () {
+    $('#notification-zone').hide();
+});
+
 view.scroll(function () {
     const sid = view.attr("sid");
     if (view[0].scrollHeight - view.scrollTop() < view[0].clientHeight + 500 && sid !== "1") {
@@ -75,7 +82,7 @@ function addStoryListener() {
         const input = $('#status_content');
         const img = $('#story_img').attr("src");
         if (input.val().trim() !== '' || typeof img !== 'undefined') {
-            addUserStoryToView(userID, name, avatar, img, input.val());
+            addUserStoryToView(userID, name, avatar, img, input.val(), 0);
             input.val("");
         }
     });
@@ -86,6 +93,8 @@ function seenNotificationListener() {
         const nid = $(this).attr("nid");
         $(this).removeClass('nseen').addClass('seen');
         seenNotification(nid);
+        loadStoryForNotification($(this).attr("sid"), $(this).attr("cid"));
+        $('#notification-zone').hide();
     });
 
     $('#notification-zone-mark').click(function () {
@@ -351,7 +360,7 @@ function loadMoreStories(sid, key) {
             if (sid === -1) {
                 view.html("");
             }
-            if (key === view.attr("key")) {
+            if (KEY === view.attr("key")) {
                 view.append(data);
             }
             view.attr("sid", $(".main_container").last().attr("sid"));
@@ -362,6 +371,7 @@ function loadMoreStories(sid, key) {
             if (sid === -1) {
                 uploadListener();
             }
+
         }
     });
 }
@@ -384,7 +394,7 @@ function loadMoreStoriesByUser(sid, uid, key) {
             if (sid === -1) {
                 view.html("");
             }
-            if (key === view.attr("key")) {
+            if (KEY === view.attr("key")) {
                 view.append(data);
             }
             view.attr("sid", $(".main_container").last().attr("sid"));
@@ -411,10 +421,48 @@ function loadNotification(id) {
             notifications.forEach(n => {
                 ntf.append(notification(n.NID, n.type, n.userID, n.name, n.avatar, n.storyID, n.commentID, n.reactType, n.seen));
             });
-            ntf.attr("nid", notifications.length > 0 ? notifications[0].NID : 0);
+            ntf.attr("nid", notifications.length > 0 ? notifications[notifications.length - 1].NID : 0);
             updateCountNotification();
             seenNotificationListener();
         }
+    });
+}
+
+function loadStoryForNotification(sid, cid) {
+    $.ajax({
+        type: 'POST',
+        url: 'http://' + host + '/getStory',
+        data: {
+            StoryID: sid
+        }, success: function (data) {
+            const s = JSON.parse(data);
+            view.html("");
+            prependStory(story(sid, s.userID, s.name, s.avatar, s.image, s.content, s.time));
+            s.comments.forEach(c => {
+                addUserCommentToView(sid, c.userID, c.commentID, c.name, c.avatar, c.content);
+            });
+            s.listReact.forEach(r => {
+                addUserReactToView(sid, r.userID, r.name, r.avatar, r.type);
+            });
+
+            KEY = Math.random().toString();
+            $(".each_comment[cid=" + cid + "]")[0].scrollIntoView();
+            $(".each_comment[cid=" + cid + "]").find('.comment_field').css("background-color", "yellow");
+
+            setTimeout(function () {
+                $(".each_comment[cid=" + cid + "]").find('.comment_field').css("background-color", "#e2dfdf");
+            }, 3000);
+        }
+    });
+}
+
+function loadStory(s) {
+    appendStory(story(s.storyID, s.userID, s.name, s.avatar, s.image, s.content, s.time));
+    s.comments.forEach(c => {
+        addUserCommentToView(s.storyID, c.userID, c.commentID, c.name, c.avatar, c.content);
+    });
+    s.listReact.forEach(r => {
+        addUserReactToView(s.storyID, r.userID, r.name, r.avatar, r.type);
     });
 }
 
@@ -523,18 +571,23 @@ function addUserReactToView(sid, uid, nm, ava, t) {
     if (t !== 0) {
         let icon;
         switch (t) {
+            case '1':
             case 1:
                 icon = '<span class="heart reactBtn_count_font list-react-icon"><i class="fas fa-heart"></i></span>';
                 break;
+            case '2':
             case 2:
                 icon = '<span class="thumbs reactBtn_count_font list-react-icon"><i class="far fa-thumbs-up"></i></span>';
                 break;
+            case '3':
             case 3:
                 icon = '<span class="thumbs reactBtn_count_font list-react-icon"><i class="far fa-thumbs-down"></i></span>';
                 break;
+            case '4':
             case 4:
                 icon = '<span class="face chile_react_font list-react-icon"><i class="far fa-laugh-squint"></i></span>';
                 break;
+            case '5':
             case 5:
                 icon = '<span class="face chile_react_font list-react-icon"><i class="far fa-sad-cry"></i></span>';
                 break;
@@ -569,7 +622,7 @@ function addUserCommentToView(sid, uid, cid, nm, ava, ct) {
     main_container.find('.display_comment').append(comment);
 }
 
-function addUserStoryToView(uid, nm, ava, img, ct) {
+function addUserStoryToView(uid, nm, ava, img, ct, time) {
     $.ajax({
         type: 'POST',
         url: 'http://' + host + '/newStory',
@@ -578,21 +631,66 @@ function addUserStoryToView(uid, nm, ava, img, ct) {
             Content: ct,
             Image: img
         }, success: function (sid) {
-            const post_container = $('.main_container').eq(0);
-            let image = '';
-            let content = ct.trim() === '' ? '' : `<div><p class="para">${ct}</p></div>`;
-            if (typeof img !== 'undefined') {
-                image = `<div class="square" style="width: 518px;">
+            prependStory(story(sid, uid, nm, ava, img, ct, time));
+        }
+    });
+}
+
+function notification(nid, type, userID, name, avatar, storyID, commentID, reactType, seen) {
+    let icon;
+    switch (type) {
+        case '1':
+            icon = `<i class="fa fa-comment-alt"></i>`;
+            break;
+        case '2':
+            switch (reactType) {
+                case '1':
+                    icon = `<i class="fa fa-heart heart"></i>`;
+                    break;
+                case '2':
+                    icon = `<i class="fa fa-thumbs-up thumbs"></i>`;
+                    break;
+                case '3':
+                    icon = `<i class="fa fa-thumbs-down thumbs"></i>`;
+                    break;
+                case '4':
+                    icon = `<i class="fa fa-laugh-squint face"></i>`;
+                    break;
+                case '5':
+                    icon = `<i class="fa fa-sad-cry face"></i>`;
+                    break;
+
+            }
+    }
+
+    return `    <div type="${type}" nid="${nid}" sid="${storyID}" cid="${commentID}" class="notification-child ${seen === '1' ? 'seen' : 'nseen'}">
+                                <div class="nt-avatar">
+                                    <img src="${avatar}" alt="">
+                                </div>
+                                <div class="nt-content">
+                                    <p><b>${name}</b> ${type === '1' ? 'đã bình luận vào bài viết của bạn' : 'đã bày tỏ cảm xúc về bài viết của bạn'}</p>
+                                </div>
+                                <div class="nt-icon">
+                                    ${icon}
+                                </div>
+                             </div>`;
+}
+
+function story(sid, uid, nm, ava, img, ct, time) {
+    let image = '';
+    let content = ct.trim() === '' ? '' : `<div><p class="para">${ct}</p></div>`;
+    if (typeof img !== 'undefined') {
+        image = `<div class="square" style="width: 518px;">
                     <img src="${img}" style="width: 100%;">
                 </div>`;
-            }
-            const story = `<div sid="${sid}" class="main_container">
+    }
+    return `<div sid="${sid}" class="main_container">
                 <div class="main_content">
                     <div style="display: inline-flex">
                         <img class="avatar" src="${ava}">
                         <p class="user_name">${nm}</p>
                     </div>
-                    <div class="newFeedTime" time="0">0 phút trước</div>
+                    <div class="newFeedTime" time="${time}"></div>
                     <hr style="border-top: 1px solid #929292;">
                     ${content}
                     ${image}
@@ -655,57 +753,25 @@ function addUserStoryToView(uid, nm, ava, img, ct) {
                     </div>
                 </div>
             </div>`;
-
-            $('#story_img').attr("src", null);
-            $('#div_story_img').hide();
-
-            view.prepend(story);
-            post_container.prependTo("#view");
-            mainReactListener();
-            updateCountReacts();
-            addCommentListener();
-        }
-    });
 }
 
-function notification(nid, type, userID, name, avatar, storyID, commentID, reactType, seen) {
-    let icon;
-    switch (type) {
-        case '1':
-            icon = `<i class="fa fa-comment-alt"></i>`;
-            break;
-        case '2':
-            switch (reactType) {
-                case '1':
-                    icon = `<i class="fa fa-heart heart"></i>`;
-                    break;
-                case '2':
-                    icon = `<i class="fa fa-thumbs-up thumbs"></i>`;
-                    break;
-                case '3':
-                    icon = `<i class="fa fa-thumbs-down thumbs"></i>`;
-                    break;
-                case '4':
-                    icon = `<i class="fa fa-laugh-squint face"></i>`;
-                    break;
-                case '5':
-                    icon = `<i class="fa fa-sad-cry face"></i>`;
-                    break;
+function prependStory(story, json) {
+    const post_container = $('.main_container').eq(0);
+    view.prepend(story);
+    post_container.prependTo("#view");
+    updateStoryTime();
+    mainReactListener();
+    updateCountReacts();
+    addCommentListener();
+}
 
-            }
-    }
-
-    return `    <div type="${type}" nid="${nid}" sid="${storyID}" cid="${commentID}" class="notification-child ${seen === '1' ? 'seen' : 'nseen'}">
-                                <div class="nt-avatar">
-                                    <img src="${avatar}" alt="">
-                                </div>
-                                <div class="nt-content">
-                                    <p><b>${name}</b> ${type === '1' ? 'đã bình luận vào bài viết của bạn' : 'đã bày tỏ cảm xúc về bài viết của bạn'}</p>
-                                </div>
-                                <div class="nt-icon">
-                                    ${icon}
-                                </div>
-                             </div>`;
+function appendStory(story, json) {
+    view.append(story);
+    addUserCommentToView(sid, uid, cid, nm, ava, ct);
+    updateStoryTime();
+    mainReactListener();
+    updateCountReacts();
+    addCommentListener();
 }
 
 function updateCountNotification() {
@@ -745,19 +811,22 @@ function writeComment(sid, uid, ct, toUserID) {
 }
 
 function writeNotification(t, uid, sid, cid, rt, toUserID) {
-    $.ajax({
-        type: 'POST',
-        url: 'http://' + host + '/newNotification',
-        data: {
-            Type: t,
-            UserID: uid,
-            StoryID: sid,
-            CommentID: cid,
-            ReactType: rt
-        }, success: function (nid) {
-            sendNotificationSK(nid, 1, sid, cid, 0, toUserID);
-        }
-    });
+    if (uid !== toUserID) {
+        $.ajax({
+            type: 'POST',
+            url: 'http://' + host + '/newNotification',
+            data: {
+                Type: t,
+                UserID: uid,
+                StoryID: sid,
+                CommentID: cid,
+                ReactType: rt
+            }, success: function (nid) {
+                sendNotificationSK(nid, 1, sid, cid, 0, toUserID);
+            }
+        });
+    }
+
 }
 
 function seenNotification(nid) {
@@ -838,6 +907,7 @@ notificationSocket.onmessage = function (e) {
     const nt = notification(n.NID, n.type, n.userID, n.name, n.avatar, n.storyID, n.commentID, n.reactType, n.seen);
     $('#notification-zone-include').prepend(nt);
     updateCountNotification();
+    seenNotificationListener();
 };
 
 notificationSocket.onopen = function (e) {
