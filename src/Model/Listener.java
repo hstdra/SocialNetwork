@@ -14,12 +14,12 @@ import javax.servlet.http.HttpSessionListener;
 import java.util.LinkedList;
 
 @WebListener()
-public class MainListener implements ServletContextListener,
+public class Listener implements ServletContextListener,
         HttpSessionListener, HttpSessionAttributeListener {
     private static final Gson gson = new Gson();
 
     // Public constructor is required by servlet spec
-    public MainListener() {
+    public Listener() {
     }
 
     // -------------------------------------------------------
@@ -43,9 +43,9 @@ public class MainListener implements ServletContextListener,
 
         //ChatAll message list
         LinkedList<Message> listAllMess = new LinkedList<>();
-        listAllMess.add(new Message("0", "Chào mọi người đến với chat all", "http://file.vforum.vn/hinh/2018/03/hinh-anh-hinh-nen-gau-truc-dep-nhat-de-thuong-24.jpg"));
-        listAllMess.add(new Message("0", "Tôi là hệ thống", "http://file.vforum.vn/hinh/2018/03/hinh-anh-hinh-nen-gau-truc-dep-nhat-de-thuong-24.jpg"));
-        listAllMess.add(new Message("0", "Hi all...", "http://file.vforum.vn/hinh/2018/03/hinh-anh-hinh-nen-gau-truc-dep-nhat-de-thuong-24.jpg"));
+        listAllMess.add(new Message("0", "Hi all...", "https://yt3.ggpht.com/a/AGF-l79eoN7hD8o5vbcSSMi2xg9MkbUqrwPJMIbq=s900-mo-c-c0xffffffff-rj-k-no"));
+        listAllMess.add(new Message("0", "Hi all...", "https://yt3.ggpht.com/a/AGF-l79eoN7hD8o5vbcSSMi2xg9MkbUqrwPJMIbq=s900-mo-c-c0xffffffff-rj-k-no"));
+        listAllMess.add(new Message("0", "Hi all...", "https://yt3.ggpht.com/a/AGF-l79eoN7hD8o5vbcSSMi2xg9MkbUqrwPJMIbq=s900-mo-c-c0xffffffff-rj-k-no"));
         sce.getServletContext().setAttribute("ListAllMess", listAllMess);
 
     }

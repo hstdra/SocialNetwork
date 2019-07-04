@@ -1,7 +1,6 @@
 package Model.Chat;
 
-import Model.ConnectDatabase;
-import Model.GSON;
+import Model.Library.ConnectDatabase;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;

@@ -65,7 +65,7 @@
 }
 
 .task-bar-icon:hover {
-    background-color: #ffffff6b;
+    background-color: #ffffffc2;
     cursor: pointer;
 }
 
@@ -135,4 +135,102 @@
 
 .zone3-option:hover {
     background-color: white;
+}
+
+#notification-zone {
+    display: none;
+    width: 280px;
+    max-height: 380px;
+    margin-left: -150px;
+    background: #c4c4c4;
+    position: absolute;
+    z-index: 100;
+    margin-top: 45px;
+}
+
+.notification-child {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    background: #cbc7c7;
+    border: 1px solid #d6d6d5;
+}
+
+.notification-child:hover {
+    background: #316fe8bd;
+}
+
+.seen{
+    background: #f6f6f6;
+}
+
+.nt-avatar {
+    height: 100%;
+    width: 80px;
+    display: flex;
+}
+
+.nt-avatar > img {
+    margin: auto;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.nt-content {
+
+}
+
+.nt-content > p {
+    text-align: center;
+    height: 30px;
+}
+
+.nt-icon {
+    width: 80px;
+    height: 100%;
+    display: flex;
+}
+
+.nt-icon > i {
+    margin: auto;
+}
+
+#notification-icon:hover #notification-zone{
+    display: unset;
+}
+
+#notification-zone-include{
+    max-height: 350px;
+    overflow: auto;
+}
+
+#notification-zone-mark{
+    height: 30px;
+    width: 100%;
+    background: #999999;
+    display: flex;
+}
+
+#notification-zone-mark > p{
+    margin: auto;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+#notification-zone-mark:hover{
+    background: #316fe8bd;
+}
+
+#count-notification{
+    display: none;
+    background: red;
+    margin-top: -25px;
+    margin-left: 14px;
+    font-weight: bolder;
+    font-size: 12px;
+    width: 18px;
+    height: 17px;
 }

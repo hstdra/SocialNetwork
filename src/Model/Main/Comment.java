@@ -1,16 +1,18 @@
 package Model.Main;
 
 public class Comment {
+    private String commentID;
     private String userID;
     private String name;
     private String content;
     private String avatar;
 
-    public static void newComment(String sid, String uid, String content) {
-        CommentDB.newComment(sid, uid, content);
+    public static String newComment(String sid, String uid, String content) {
+        return CommentDB.newComment(sid, uid, content);
     }
 
-    public Comment(String userID, String name, String content, String avatar) {
+    public Comment(String commentID, String userID, String name, String content, String avatar) {
+        this.commentID = commentID;
         this.userID = userID;
         this.name = name;
         this.content = content;
@@ -31,5 +33,9 @@ public class Comment {
 
     public String getAvatar() {
         return avatar;
+    }
+
+    public String getCommentID() {
+        return commentID;
     }
 }

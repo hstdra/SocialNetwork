@@ -1,8 +1,7 @@
 package Controller.Chat;
 
-import Model.Chat.Message;
 import Model.Chat.MessageDB;
-import Model.GSON;
+import Model.Library.GSON;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

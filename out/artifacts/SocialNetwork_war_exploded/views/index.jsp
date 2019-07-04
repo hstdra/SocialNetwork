@@ -16,31 +16,31 @@
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="../assets/js/library/bootstrap.min.css">
-
     <!-- jQuery library -->
     <script src="../assets/js/library/jquery.min.js"></script>
-
-    <!-- Popper JS -->
-<%--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>--%>
-
     <!-- Latest compiled JavaScript -->
     <script src="../assets/js/library/bootstrap.min.js"></script>
-
     <!-- Latest compiled React -->
     <script src="../assets/js/library/react.development.js"></script>
     <script src="../assets/js/library/react-dom.development.js"></script>
     <script src="../assets/js/library/react.production.min.js"></script>
     <script src="../assets/js/library/react-dom.production.min.js"></script>
     <script src="../assets/js/library/browser.min.js"></script>
-
     <!-- Plugin CSS -->
     <link type="text/css" href="../assets/css/OverlayScrollbar.css" rel="stylesheet"/>
     <!-- Plugin JS -->
     <script type="text/javascript" src="../assets/js/jquery.overlayScrollbars.js"></script>
+
+    <script type="text/babel">
+        const host = window.location.hostname + ":" + window.location.port;
+        $("body").attr("host", host);
+    </script>
+    <script type="text/babel" src="../assets/js/contact.jsx"></script>
+    <script type="text/babel" src="../assets/js/view.jsx"></script>
 </head>
 
 <body>
-<input id="file-input" type="file" accept="image/*" name="uploadFile" style="display: none;" />
+<input id="file-input" type="file" accept="image/*" name="uploadFile" style="display: none;"/>
 
 <div id="main-task-bar">
     <div id="zone1" class="task-bar">
@@ -59,7 +59,15 @@
             </div>
         </div>
         <div id="notification-icon" class="task-bar-icon mid if">
-            <i class="fas fa-bells fa-lg ma"></i>
+            <i class="fas fa-bells fa-lg ma">
+                <p id="count-notification" class="contact-count"></p>
+            </i>
+            <div id="notification-zone">
+                <div id="notification-zone-include"></div>
+                <div id="notification-zone-mark">
+                    <p>Đánh dấu tất cả đã đọc</p>
+                </div>
+            </div>
         </div>
         <div id="friend-icon" class="task-bar-icon mid if">
             <i class="fas fa-user-friends fa-lg ma"></i>
@@ -211,12 +219,7 @@
         </div>
     </div>
 </div>
-<script type="text/babel">
-    const host = window.location.hostname + ":" + window.location.port;
-    $("body").attr("host", host);
-</script>
-<script type="text/babel" src="../assets/js/contact.jsx"></script>
-<script type="text/babel" src="../assets/js/view.jsx"></script>
+
 <script src="../assets/js/index.js"></script>
 <%--<script src="../assets/js/react_effect.js"></script>--%>
 

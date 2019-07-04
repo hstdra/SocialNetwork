@@ -86,7 +86,7 @@
                 <%--                <span class="react_announce more_comment">Nhấn để xem thêm...</span>--%>
                 <%--            </div>--%>
             <c:forEach items="${story.comments}" var="comment">
-                <div uid="${comment.userID}" class="each_comment">
+                <div uid="${comment.userID}" cid="${comment.commentID}" class="each_comment">
                     <div><img class="ava_in_comment" src="${comment.avatar}"></div>
                     <div class="comment_field">
                         <span class="username_in_comment"> ${comment.name}</span>
@@ -158,7 +158,7 @@
                                 </c:when>
                                 <c:when test='${type.equals("5")}'>
                                     <span class="face chile_react_font list-react-icon"><i
-                                            class="fa-sad-cry"></i></span>
+                                            class="far fa-sad-cry"></i></span>
                                 </c:when>
                             </c:choose>
                         </div>

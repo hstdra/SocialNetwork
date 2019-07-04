@@ -460,7 +460,7 @@ function newRecentTab(chatid, userid, firstname, avatar) {
         '                        \n' +
         '                            <i class="far fa-comment fa-lg ma"></i>\n' +
         '                        \n' +
-        '                    </div>'
+        '                    </div>';
     $('#contact-main-recent').prepend(tab);
     recentTabOnClick();
 }

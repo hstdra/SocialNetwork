@@ -2,11 +2,18 @@ const host = $("body").attr("host");
 const userID = $("#task-bar-name").attr("userID");
 const name = $("#task-bar-name").text();
 const avatar = $("#task-bar-ava").attr("src");
+
 let uid_view = 0;
+let KEY = Math.random().toString();
+let xhrPool = [];
 
+const section = $('#main-section');
 const view = $('#view');
+const ntf = $('#notification-zone-include');
 
-loadMoreStories(-1);
+view.attr("key", KEY);
+loadMoreStories(-1, KEY);
+loadNotification(-1);
 
 //LISTENER FUNCTION
 view.scroll(function () {
@@ -14,10 +21,18 @@ view.scroll(function () {
     if (view[0].scrollHeight - view.scrollTop() < view[0].clientHeight + 500 && sid !== "1") {
         view.attr("sid", "1");
         if (uid_view === 0) {
-            loadMoreStories(sid);
+            loadMoreStories(sid, view.attr("key"));
         } else {
-            loadMoreStoriesByUser(sid, uid_view);
+            loadMoreStoriesByUser(sid, uid_view, view.attr("key"));
         }
+    }
+});
+
+ntf.scroll(function () {
+    const nid = ntf.attr("nid");
+    if (ntf[0].scrollHeight - ntf.scrollTop() < ntf[0].clientHeight + 100 && nid !== "0") {
+        view.attr("nid", "0");
+        loadNotification(nid);
     }
 });
 
@@ -35,11 +50,13 @@ function addCommentListener() {
     $('.add_commentBtn').click(function () {
         const main_container = $(this).parent().parent();
         const sid = main_container.attr("sid");
+        const uid = main_container.attr("uid");
         const input = main_container.find('.field_to_write_comment');
 
         if (input.val().trim() !== '') {
-            addUserCommentToView(sid, userID, name, avatar, input.val());
-            writeComment(sid, userID, input.val());
+            addUserCommentToView(sid, userID, null, name, avatar, input.val());
+            writeComment(sid, userID, input.val(), uid);
+
             input.val("");
             input.focus();
         }
@@ -62,6 +79,23 @@ function addStoryListener() {
             input.val("");
         }
     });
+}
+
+function seenNotificationListener() {
+    $('.notification-child').click(function () {
+        const nid = $(this).attr("nid");
+        $(this).removeClass('nseen').addClass('seen');
+        seenNotification(nid);
+    });
+
+    $('#notification-zone-mark').click(function () {
+        $('.notification-child').each(function () {
+            const nid = $(this).attr("nid");
+            $(this).removeClass('nseen').addClass('seen');
+            seenNotification(nid);
+        });
+    });
+
 }
 
 function mainReactListener() {
@@ -89,15 +123,17 @@ function mainReactListener() {
             $(this).parent().find(".cryBtn").fadeIn();
         });
         $(".reactBtn").mouseleave(function () {
-            $(this).parent().find(".heartBtn").fadeOut(1500);
-            $(this).parent().find(".thumbs-upBtn").fadeOut(1500);
-            $(this).parent().find(".thumbs-downBtn").fadeOut(1500);
-            $(this).parent().find(".laughBtn").fadeOut(1500);
-            $(this).parent().find(".cryBtn").fadeOut(1500);
+            $(this).parent().find(".heartBtn").fadeOut(2000);
+            $(this).parent().find(".thumbs-upBtn").fadeOut(2000);
+            $(this).parent().find(".thumbs-downBtn").fadeOut(2000);
+            $(this).parent().find(".laughBtn").fadeOut(2000);
+            $(this).parent().find(".cryBtn").fadeOut(2000);
         });
         $(".heartBtn").click(function () {
             writeReactStory($(this).parent().parent().parent().attr("sid"), userID, 1);
             addUserReactToView($(this).parent().parent().parent().attr("sid"), userID, name, avatar, 1);
+            writeNotification(2, userID, $(this).parent().parent().parent().attr("sid"), 0, 1, $(this).parent().parent().parent().attr("uid"));
+
             $(this).parent().find(".reactBtn span")
                 .removeClass()
                 .addClass(font)
@@ -110,6 +146,8 @@ function mainReactListener() {
         $(".thumbs-upBtn").click(function () {
             writeReactStory($(this).parent().parent().parent().attr("sid"), userID, 2);
             addUserReactToView($(this).parent().parent().parent().attr("sid"), userID, name, avatar, 2);
+            writeNotification(2, userID, $(this).parent().parent().parent().attr("sid"), 0, 2, $(this).parent().parent().parent().attr("uid"));
+
             $(this).parent().find(".reactBtn span")
                 .removeClass()
                 .addClass(font)
@@ -122,6 +160,8 @@ function mainReactListener() {
         $(".thumbs-downBtn").click(function () {
             writeReactStory($(this).parent().parent().parent().attr("sid"), userID, 3);
             addUserReactToView($(this).parent().parent().parent().attr("sid"), userID, name, avatar, 3);
+            writeNotification(2, userID, $(this).parent().parent().parent().attr("sid"), 0, 3, $(this).parent().parent().parent().attr("uid"));
+
             $(this).parent().find(".reactBtn span")
                 .removeClass()
                 .addClass(font)
@@ -134,6 +174,9 @@ function mainReactListener() {
         $(".laughBtn").click(function () {
             writeReactStory($(this).parent().parent().parent().attr("sid"), userID, 4);
             addUserReactToView($(this).parent().parent().parent().attr("sid"), userID, name, avatar, 4);
+            writeNotification(2, userID, $(this).parent().parent().parent().attr("sid"), 0, 4, $(this).parent().parent().parent().attr("uid"));
+
+
             $(this).parent().find(".reactBtn span")
                 .removeClass()
                 .addClass(font)
@@ -146,6 +189,8 @@ function mainReactListener() {
         $(".cryBtn").click(function () {
             writeReactStory($(this).parent().parent().parent().attr("sid"), userID, 5);
             addUserReactToView($(this).parent().parent().parent().attr("sid"), userID, name, avatar, 5);
+            writeNotification(2, userID, $(this).parent().parent().parent().attr("sid"), 0, 5, $(this).parent().parent().parent().attr("uid"));
+
             $(this).parent().find(".reactBtn span")
                 .removeClass()
                 .addClass(font)
@@ -158,6 +203,8 @@ function mainReactListener() {
         $(".reactBtn").click(function () {
             writeReactStory($(this).parent().parent().parent().attr("sid"), userID, 0);
             addUserReactToView($(this).parent().parent().parent().attr("sid"), userID, name, avatar, 0);
+
+
             $(this).parent().find(".reactBtn span")
                 .removeClass()
                 .addClass(font)
@@ -259,41 +306,54 @@ function uploadListener() {
 function userHomePageListener() {
     $('.story_user_infor').click(function () {
         uid_view = $(this).parent().parent().attr("uid");
-        loadMoreStoriesByUser(-1, uid_view);
+        KEY = Math.random().toString();
+        view.attr("key", KEY);
+        loadMoreStoriesByUser(-1, uid_view, KEY);
     });
     $('.username_in_comment').click(function () {
         uid_view = $(this).parent().parent().attr("uid");
-        loadMoreStoriesByUser(-1, uid_view);
+        KEY = Math.random().toString();
+        view.attr("key", KEY);
+        loadMoreStoriesByUser(-1, uid_view, KEY);
     });
     $('.ava_in_comment').click(function () {
         uid_view = $(this).parent().parent().attr("uid");
-        loadMoreStoriesByUser(-1, uid_view);
+        KEY = Math.random().toString();
+        view.attr("key", KEY);
+        loadMoreStoriesByUser(-1, uid_view, KEY);
     });
     $('.child_announce_detail').click(function () {
         uid_view = $(this).attr("uid");
-        loadMoreStoriesByUser(-1, uid_view);
+        KEY = Math.random().toString();
+        view.attr("key", KEY);
+        loadMoreStoriesByUser(-1, uid_view, KEY);
     });
 
 }
 
-
 //////////////////////////////////////////
 
 //MAIN FUNCTION
-function loadMoreStories(sid) {
+function loadMoreStories(sid, key) {
     $.ajax({
         type: 'POST',
         url: 'http://' + host + '/getAllStories',
         data: {
             StoryID: sid
         },
-        beforeSend: function () {
+        beforeSend: function (jqXHR, settings) {
+            xhrPool.push(jqXHR);
             if (sid === -1) {
                 view.html("");
             }
         },
         success: function (data) {
-            view.append(data);
+            if (sid === -1) {
+                view.html("");
+            }
+            if (key === view.attr("key")) {
+                view.append(data);
+            }
             view.attr("sid", $(".main_container").last().attr("sid"));
             $(".cover").hide();
 
@@ -306,7 +366,7 @@ function loadMoreStories(sid) {
     });
 }
 
-function loadMoreStoriesByUser(sid, uid) {
+function loadMoreStoriesByUser(sid, uid, key) {
     $.ajax({
         type: 'POST',
         url: 'http://' + host + '/getAllStoriesByUser',
@@ -314,13 +374,19 @@ function loadMoreStoriesByUser(sid, uid) {
             StoryID: sid,
             UserID: uid
         },
-        beforeSend: function () {
+        beforeSend: function (jqXHR, settings) {
+            xhrPool.push(jqXHR);
             if (sid === -1) {
                 view.html("");
             }
         },
         success: function (data) {
-            view.append(data);
+            if (sid === -1) {
+                view.html("");
+            }
+            if (key === view.attr("key")) {
+                view.append(data);
+            }
             view.attr("sid", $(".main_container").last().attr("sid"));
             $(".cover").hide();
 
@@ -329,6 +395,25 @@ function loadMoreStoriesByUser(sid, uid) {
             if (sid === -1) {
                 uploadListener();
             }
+        }
+    });
+}
+
+function loadNotification(id) {
+    $.ajax({
+        type: 'POST',
+        url: 'http://' + host + '/getNotifications',
+        data: {
+            ID: id,
+            UserID: userID,
+        }, success: function (data) {
+            const notifications = JSON.parse(data);
+            notifications.forEach(n => {
+                ntf.append(notification(n.NID, n.type, n.userID, n.name, n.avatar, n.storyID, n.commentID, n.reactType, n.seen));
+            });
+            ntf.attr("nid", notifications.length > 0 ? notifications[0].NID : 0);
+            updateCountNotification();
+            seenNotificationListener();
         }
     });
 }
@@ -470,10 +555,10 @@ function addUserReactToView(sid, uid, nm, ava, t) {
     userHomePageListener();
 }
 
-function addUserCommentToView(sid, uid, nm, ava, ct) {
+function addUserCommentToView(sid, uid, cid, nm, ava, ct) {
     const main_container = view.find('.main_container[sid="' + sid + '"]');
 
-    const comment = `<div uid="${uid}" class="each_comment">
+    const comment = `<div uid="${uid}" cid="${cid}" class="each_comment">
                     <div><img class="ava_in_comment" src="${ava}"></div>
                     <div class="comment_field">
                         <span class="username_in_comment">${nm}</span>
@@ -482,8 +567,6 @@ function addUserCommentToView(sid, uid, nm, ava, ct) {
                 </div>`;
 
     main_container.find('.display_comment').append(comment);
-
-    userHomePageListener();
 }
 
 function addUserStoryToView(uid, nm, ava, img, ct) {
@@ -585,6 +668,52 @@ function addUserStoryToView(uid, nm, ava, img, ct) {
     });
 }
 
+function notification(nid, type, userID, name, avatar, storyID, commentID, reactType, seen) {
+    let icon;
+    switch (type) {
+        case '1':
+            icon = `<i class="fa fa-comment-alt"></i>`;
+            break;
+        case '2':
+            switch (reactType) {
+                case '1':
+                    icon = `<i class="fa fa-heart heart"></i>`;
+                    break;
+                case '2':
+                    icon = `<i class="fa fa-thumbs-up thumbs"></i>`;
+                    break;
+                case '3':
+                    icon = `<i class="fa fa-thumbs-down thumbs"></i>`;
+                    break;
+                case '4':
+                    icon = `<i class="fa fa-laugh-squint face"></i>`;
+                    break;
+                case '5':
+                    icon = `<i class="fa fa-sad-cry face"></i>`;
+                    break;
+
+            }
+    }
+
+    return `    <div type="${type}" nid="${nid}" sid="${storyID}" cid="${commentID}" class="notification-child ${seen === '1' ? 'seen' : 'nseen'}">
+                                <div class="nt-avatar">
+                                    <img src="${avatar}" alt="">
+                                </div>
+                                <div class="nt-content">
+                                    <p><b>${name}</b> ${type === '1' ? 'đã bình luận vào bài viết của bạn' : 'đã bày tỏ cảm xúc về bài viết của bạn'}</p>
+                                </div>
+                                <div class="nt-icon">
+                                    ${icon}
+                                </div>
+                             </div>`;
+}
+
+function updateCountNotification() {
+    const x = $('.nseen').length;
+    $('#count-notification').text(x);
+    if (x > 0) $('#count-notification').show(); else $('#count-notification').hide();
+}
+
 ////////////////////////////////////////////////////////////
 
 //CALL DATABASE FUNCTION
@@ -600,7 +729,7 @@ function writeReactStory(sid, uid, t) {
     });
 }
 
-function writeComment(sid, uid, ct) {
+function writeComment(sid, uid, ct, toUserID) {
     $.ajax({
         type: 'POST',
         url: 'http://' + host + '/newComment',
@@ -608,9 +737,42 @@ function writeComment(sid, uid, ct) {
             StoryID: sid,
             UserID: uid,
             Content: ct
+        }, success: function (cid) {
+            view.find('.main_container[sid="' + sid + '"]').find('.each_comment[cid="null"]').attr("cid", cid);
+            writeNotification(1, userID, sid, cid, 0, toUserID);
         }
     });
 }
+
+function writeNotification(t, uid, sid, cid, rt, toUserID) {
+    $.ajax({
+        type: 'POST',
+        url: 'http://' + host + '/newNotification',
+        data: {
+            Type: t,
+            UserID: uid,
+            StoryID: sid,
+            CommentID: cid,
+            ReactType: rt
+        }, success: function (nid) {
+            sendNotificationSK(nid, 1, sid, cid, 0, toUserID);
+        }
+    });
+}
+
+function seenNotification(nid) {
+    $.ajax({
+        type: 'POST',
+        url: 'http://' + host + '/seenNotification',
+        data: {
+            NID: nid,
+        }
+    });
+    updateCountNotification();
+}
+
+/////////////////////////////////////////////////
+
 
 //IMAGE FUNCTION
 function uploadImage() {
@@ -637,14 +799,67 @@ function uploadImage() {
     });
 }
 
+//////////////////////////
 
 $('#main-task-bar-info').click(function () {
-    loadMoreStories(-1);
-    uid_view = 0;
-});
+    $.each(xhrPool, function (idx, jqXHR) {
+        jqXHR.abort();
+    });
 
+    uid_view = 0;
+    KEY = Math.random().toString();
+    view.attr("key", KEY);
+    loadMoreStories(-1, KEY);
+});
 
 $('#homepage').click(function () {
+    $.each(xhrPool, function (idx, jqXHR) {
+        jqXHR.abort();
+    });
+
     uid_view = userID;
-    loadMoreStoriesByUser(-1, uid_view);
+    KEY = Math.random().toString();
+    view.attr("key", KEY);
+    loadMoreStoriesByUser(-1, uid_view, KEY);
 });
+
+
+setInterval(function () {
+    userHomePageListener();
+}, 2000);
+
+
+// Notification Socket
+const notificationSocket = new WebSocket('ws://' + host + '/notification');
+
+notificationSocket.onmessage = function (e) {
+    const data = JSON.parse(e.data);
+    const n = data.notification;
+    const nt = notification(n.NID, n.type, n.userID, n.name, n.avatar, n.storyID, n.commentID, n.reactType, n.seen);
+    $('#notification-zone-include').prepend(nt);
+    updateCountNotification();
+};
+
+notificationSocket.onopen = function (e) {
+};
+
+function sendNotificationSK(nid, t, sid, cid, rt, toUserID) {
+    const data = JSON.stringify({
+        notification: {
+            NID: nid,
+            type: t,
+            userID: userID,
+            name: name,
+            avatar: avatar,
+            storyID: sid,
+            commentID: cid,
+            reactType: rt,
+            seen: 0
+        },
+        to: toUserID
+    });
+    notificationSocket.send(data);
+}
+
+/////////////////////////////////////////////////////
+

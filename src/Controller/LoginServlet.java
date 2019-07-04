@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.MD5;
+import Model.Library.MD5;
 import Model.Main.User;
 
 import java.io.IOException;

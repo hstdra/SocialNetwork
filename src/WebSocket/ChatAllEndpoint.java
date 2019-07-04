@@ -1,7 +1,7 @@
 package WebSocket;
 
 import Model.Chat.Message;
-import Model.GSON;
+import Model.Library.GSON;
 
 import javax.servlet.http.HttpSession;
 import javax.websocket.*;

@@ -1,4 +1,4 @@
-package Model;
+package Model.Library;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;

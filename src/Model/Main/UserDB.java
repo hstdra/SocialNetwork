@@ -1,6 +1,6 @@
 package Model.Main;
 
-import Model.ConnectDatabase;
+import Model.Library.ConnectDatabase;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

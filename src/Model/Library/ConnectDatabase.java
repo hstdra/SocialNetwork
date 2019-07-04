@@ -1,4 +1,4 @@
-package Model;
+package Model.Library;
 
 import java.sql.*;
 import java.util.Objects;

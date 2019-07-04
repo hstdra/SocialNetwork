@@ -1,10 +1,9 @@
 package Model.Chat;
 
-import Model.ConnectDatabase;
-import Model.UTCDate;
+import Model.Library.ConnectDatabase;
+import Model.Library.UTCDate;
 
 import java.sql.CallableStatement;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;

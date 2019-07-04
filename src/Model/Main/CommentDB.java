@@ -1,6 +1,6 @@
 package Model.Main;
 
-import Model.ConnectDatabase;
+import Model.Library.ConnectDatabase;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,12 +17,13 @@ class CommentDB {
             ps.execute();
             ResultSet rs = ps.getResultSet();
             while (rs.next()){
+                String commentID = rs.getString("CommentID");
                 String userID = rs.getString("UserID");
                 String name = rs.getString("Name");
                 String content = rs.getString("Content");
                 String avatar = rs.getString("Avatar");
 
-                comments.add(new Comment(userID, name, content, avatar));
+                comments.add(new Comment(commentID, userID, name, content, avatar));
             }
             return comments;
         } catch (SQLException e) {
@@ -31,7 +32,7 @@ class CommentDB {
         return null;
     }
 
-    static void newComment(String sid, String uid, String content) {
+    static String newComment(String sid, String uid, String content) {
         PreparedStatement ps = ConnectDatabase.preparedStatement("{CALL newComment(?,?,?)}");
         try {
             assert ps != null;
@@ -39,8 +40,17 @@ class CommentDB {
             ps.setString(2, uid);
             ps.setNString(3, content);
             ps.execute();
+
+            ResultSet rs = ps.getResultSet();
+            rs.next();
+            return rs.getString(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    public static void main(String[] args) {
+        getComments("21");
     }
 }
