@@ -2,11 +2,23 @@
 const host = $("body").attr("host");
 const userID = $("#task-bar-name").attr("userID");
 const avatar = $("#task-bar-ava").attr("src");
-const audio = new Audio('../assets/audio/new_mess.mp3');
+
+let audio = new Audio('../assets/audio/new_mess.mp3');
+audio.volume = 0.01;
 const promise = audio.play();
 if (promise) {
     //Older browsers may not return a promise, according to the MDN website
     promise.catch(function (error) {
+        console.error(error);
+    });
+}
+
+let audio_typing = new Audio('../assets/audio/typing.mp3');
+audio_typing.volume = 0.01;
+const promise2 = audio_typing.play();
+if (promise2) {
+    //Older browsers may not return a promise, according to the MDN website
+    promise2.catch(function (error) {
         console.error(error);
     });
 }
@@ -138,33 +150,60 @@ const coupleSocket = new WebSocket('ws://' + host + '/chat');
 coupleSocket.onmessage = function (e) {
     const data = JSON.parse(e.data);
     const chat_region = $('.chat_region[chatid="' + data.chatID + '"]');
-    const chat_tab = $('.contact-main-people[chatid="' + data.chatID + '"]');
+    const is_typing = chat_region.find(".is_typing");
+    const seen_mess = chat_region.find('.seen-mess');
+    seen_mess.hide();
 
-    if (chat_tab.length === 0) {
-        newRecentTab(data.chatID, data.userID, $('.contact-main-people[userid="' + data.userID + '"]').attr("firstname"), data.avatar);
+    if (data.messID !== '0') {
+        const chat_tab = $('.contact-main-people[chatid="' + data.chatID + '"]');
+
+        if (chat_tab.length === 0) {
+            newRecentTab(data.chatID, data.userID, $('.contact-main-people[userid="' + data.userID + '"]').attr("firstname"), data.avatar);
+        }
+
+        chat_region.append('                <div class="other_chat">\n' +
+            '                    <div class="other_chat_ava">\n' +
+            '                        <img class="mid" src="' + data.avatar + '" alt="">\n' +
+            '                    </div>\n' +
+            '                    <div class="other_chat_mess">\n' +
+            '                        <p class="mid">' + data.content + '</p>\n' +
+            '                    </div>\n' +
+            '                </div>\n');
+        $('#chat_body').scrollTop(9999999);
+
+        //Update recent tab
+        $("div.contact-main-people[chatid=" + data.chatID + "]").prependTo('#contact-main-recent');
+        $("div.contact-main-people[chatid=" + data.chatID + "] div:nth-child(2) p:nth-child(2)").text(data.content.length > 25 ? data.content.substring(0, 21) + '...' : data.content);
+        $("div.contact-main-people[chatid=" + data.chatID + "] div:nth-child(2) p:nth-child(2)").attr("class", "contact-main-people-message ma b");
+        $("div.contact-main-people[chatid=" + data.chatID + "] div:nth-child(2) p:nth-child(2)").css("font-weight", "bolder");
+        $("div.contact-main-people[chatid=" + data.chatID + "]").find("i").attr("class", "far fa-bell fa-lg ma");
+
+        //Update some addition
+        updateCountRecent();
+        audio.volume = 1;
+        audio.play();
+
+        is_typing.hide();
+        is_typing.appendTo(chat_region);
+    } else {
+        is_typing.show();
+        const key = Math.random().toString();
+        is_typing.attr("key", key);
+        audio_typing.volume = 1;
+        audio_typing.play();
+
+        setInterval(function () {
+            if (is_typing.attr("key") === key && chatid.toString() === data.chatID) {
+                is_typing.hide();
+                const check = $('.chat_region[chatid="' + data.chatID + '"]').find('.mess').last().hasClass("your_chat").toString();
+
+                if (check === 'true') {
+                    ajaxCheckSeen(data.chatID, data.userID, userID);
+                }
+            }
+        }, 30000);
+        $('#chat_body').scrollTop(9999999);
     }
-
-
-    chat_region.append('                <div class="other_chat">\n' +
-        '                    <div class="other_chat_ava">\n' +
-        '                        <img class="mid" src="' + data.avatar + '" alt="">\n' +
-        '                    </div>\n' +
-        '                    <div class="other_chat_mess">\n' +
-        '                        <p class="mid">' + data.content + '</p>\n' +
-        '                    </div>\n' +
-        '                </div>\n');
-    $('#chat_body').scrollTop(9999999);
-
-    //Update recent tab
-    $("div.contact-main-people[chatid=" + data.chatID + "]").prependTo('#contact-main-recent');
-    $("div.contact-main-people[chatid=" + data.chatID + "] div:nth-child(2) p:nth-child(2)").text(data.content.length > 25 ? data.content.substring(0, 21) + '...' : data.content);
-    $("div.contact-main-people[chatid=" + data.chatID + "] div:nth-child(2) p:nth-child(2)").attr("class", "contact-main-people-message ma b");
-    $("div.contact-main-people[chatid=" + data.chatID + "] div:nth-child(2) p:nth-child(2)").css("font-weight", "bolder");
-    $("div.contact-main-people[chatid=" + data.chatID + "]").find("i").attr("class", "far fa-bell fa-lg ma");
-
-    //Update some addition
-    updateCountRecent();
-    audio.play();
 };
 coupleSocket.onopen = function (e) {
 };
@@ -200,6 +239,7 @@ let typing = 0;
 $('#chat_box').on('input', function (e) {
     if (typing === 0) {
         updateLSMessage();
+        sendIsTyping(chatid, userID, to, avatar);
     }
     if ($('#chat_box').val() !== "") {
         typing = 1;
@@ -210,6 +250,7 @@ $('#chat_box').on('input', function (e) {
 
 $('#input_chat_send').click(function () {
     const content = $('#chat_box').val();
+
     if (content !== "") {
         $('#chat_box').val("");
         if (chatid === "0") {
@@ -299,7 +340,11 @@ function sendMessage(chatID, userID, to, content, avatar) {
 
     //Update view
     const chat_region = $('.chat_region[chatid="' + chatid + '"]');
-    chat_region.append('                <div class="your_chat">\n' +
+    const seen_mess = chat_region.find('.seen-mess');
+    const is_typing = chat_region.find(".is_typing");
+
+    seen_mess.hide();
+    chat_region.append('                <div class="mess your_chat">\n' +
         '                    <div class="your_chat_mess">\n' +
         '                        <p>' + content + '</p>\n' +
         '                    </div>\n' +
@@ -307,6 +352,7 @@ function sendMessage(chatID, userID, to, content, avatar) {
         '                        <img src="' + avatar + '" alt="">\n' +
         '                    </div>\n' +
         '                </div>');
+    is_typing.appendTo(chat_region);
 
     //Write database
     $.ajax({
@@ -321,6 +367,18 @@ function sendMessage(chatID, userID, to, content, avatar) {
             updateLSMessage();
         }
     });
+}
+
+function sendIsTyping(chatID, userID, to, avatar) {
+    const data = JSON.stringify({
+        messID: 0,
+        chatID: chatID,
+        userID: userID,
+        to: to,
+        content: null,
+        avatar: avatar
+    });
+    coupleSocket.send(data);
 }
 
 function loadChat(chatID, messID) {
@@ -339,7 +397,7 @@ function loadChat(chatID, messID) {
 
             list.map(chat => {
                 if (chat.userID !== userID) {
-                    chat_region.prepend('                <div class="other_chat">\n' +
+                    chat_region.prepend('                <div class="mess other_chat">\n' +
                         '                    <div class="other_chat_ava">\n' +
                         '                        <img class="mid" src="' + chat.avatar + '" alt="">\n' +
                         '                    </div>\n' +
@@ -348,7 +406,7 @@ function loadChat(chatID, messID) {
                         '                    </div>\n' +
                         '                </div>\n')
                 } else {
-                    chat_region.prepend('                <div class="your_chat">\n' +
+                    chat_region.prepend('                <div class="mess your_chat">\n' +
                         '                    <div class="your_chat_mess">\n' +
                         '                        <p>' + chat.content + '</p>\n' +
                         '                    </div>\n' +
@@ -359,8 +417,10 @@ function loadChat(chatID, messID) {
                 }
             });
             if (messID === -1) {
-                $('#chat_body').scrollTop(1000);
+                $('#chat_body').scrollTop(9999999);
             }
+
+            ajaxCheckSeen(chatID, to, userID);
         }
     });
 }
@@ -401,6 +461,8 @@ function loadChatTab(cid, uid, name, ava) {
         $('#chat_body').append(chat_region);
         $('#chat_bar').append(chat_tab);
         loadChat(chatid, -1);
+        appendIsTyping(cid, ava);
+
     } else {
         chatid = cid;
         to = uid;
@@ -416,10 +478,29 @@ function loadChatTab(cid, uid, name, ava) {
         $('.chat_region[chatid="' + first + '"]').remove();
         $('.chat_tab[chatid="' + first + '"]').remove();
         loadChat(chatid, -1);
+        appendIsTyping(cid, ava);
+
     }
     setActiveTab(chatid);
     changeChatTab();
     removeChat();
+}
+
+function appendIsTyping(cid, ava) {
+    const typing_chat = `<div class="other_chat is_typing" style="display: none;">
+                    <div class="other_chat_ava">
+                        <img class="mid" src="${ava}" alt="">
+                    </div>
+                    <div class="other_chat_mess">
+                        <p class="mid"><i class="fas fa-spinner fa-pulse"></i></p>
+                    </div>
+                </div>`;
+    const seen_mess = `<div class="seen-mess" style="display: none;">
+                        <p style="font-size: 13px; margin-top: -2px">Đã xem</p>
+                        <i class="fas fa-check-double" style="margin: auto 5px;"></i>
+                    </div>`;
+    $('.chat_region[chatid="' + cid + '"]').append(typing_chat);
+    $('.chat_region[chatid="' + cid + '"]').append(seen_mess);
 }
 
 function removeChat() {
@@ -441,7 +522,7 @@ function removeChat() {
 function setActiveTab(cid) {
     $('.chat_tab').css("background-color", "#cdcdcd");
     $('.chat_tab[chatid="' + cid + '"]').css("background-color", "#ececec");
-    // updateLSMessage();
+    updateLSMessage();
 }
 
 function newRecentTab(chatid, userid, firstname, avatar) {
@@ -502,6 +583,29 @@ function updateMainUserOnline() {
     });
 }
 
+function ajaxCheckSeen(cid, uid1, uid2) {
+    $.ajax({
+        type: 'POST',
+        url: 'http://' + host + '/checkSeenMessage',
+        data: {
+            ChatID: cid,
+            UserID1: uid1,
+            UserID2: uid2
+        },
+        success: function (seen) {
+            const chat_region = $('.chat_region[chatid="' + cid + '"]');
+            const check = chat_region.find('.mess').last().hasClass("your_chat").toString();
+
+            if (seen === '1' && check === 'true') {
+                const seen_mess = chat_region.find('.seen-mess');
+                seen_mess.appendTo(chat_region);
+                seen_mess.show();
+                $('#chat_body').scrollTop(9999999);
+            }
+        }
+    });
+}
+
 // ====================
 setActiveTab(0);
 $('#chat_body').scrollTop(9999999);
@@ -512,5 +616,8 @@ updateCountContact();
 
 setInterval(function () {
     updateMainUserOnline();
+}, 30000);
+
+setInterval(function () {
     updateCountContact();
-}, 20000);
+}, 5000);

@@ -11,6 +11,18 @@ const section = $('#main-section');
 const view = $('#view');
 const ntf = $('#notification-zone-include');
 
+let audio = new Audio('../assets/audio/notification.mp3');
+audio.volume = 0.01;
+const promise = audio.play();
+if (promise) {
+    //Older browsers may not return a promise, according to the MDN website
+    promise.catch(function (error) {
+        console.error(error);
+    });
+}
+
+
+
 view.attr("key", KEY);
 loadMoreStories(-1, KEY);
 loadNotification(-1);
@@ -822,7 +834,7 @@ function writeNotification(t, uid, sid, cid, rt, toUserID) {
                 CommentID: cid,
                 ReactType: rt
             }, success: function (nid) {
-                sendNotificationSK(nid, 1, sid, cid, 0, toUserID);
+                sendNotificationSK(nid, t, sid, cid, rt, toUserID);
             }
         });
     }
@@ -906,6 +918,8 @@ notificationSocket.onmessage = function (e) {
     const n = data.notification;
     const nt = notification(n.NID, n.type, n.userID, n.name, n.avatar, n.storyID, n.commentID, n.reactType, n.seen);
     $('#notification-zone-include').prepend(nt);
+    audio.volume = 1;
+    audio.play();
     updateCountNotification();
     seenNotificationListener();
 };

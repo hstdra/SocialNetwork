@@ -1,5 +1,7 @@
 package Model.Chat;
 
+import java.util.LinkedList;
+
 public class Message {
     private String messID;
     private String chatID;
@@ -7,6 +9,14 @@ public class Message {
     private String to;
     private String content;
     private String avatar;
+
+    public static String checkSeenMessage(String chatID, String uidSeen, String uidHaveMess) {
+        return MessageDB.checkSeenMessage(chatID, uidSeen, uidHaveMess);
+    }
+
+    public static LinkedList<Message> loadChat(String chatID, String messID) {
+        return MessageDB.loadChat(chatID, messID);
+    }
 
     public Message(String messID, String chatID, String userID, String to, String content, String avatar) {
         this.chatID = chatID;
@@ -26,7 +36,7 @@ public class Message {
         this.avatar = avatar;
     }
 
-    public static void insertMessage(String chatID, String userID, String content){
+    public static void insertMessage(String chatID, String userID, String content) {
         MessageDB.insertMessage(chatID, userID, content);
     }
 
@@ -68,5 +78,9 @@ public class Message {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getMessID() {
+        return messID;
     }
 }

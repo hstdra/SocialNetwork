@@ -8,8 +8,26 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
-public class MessageDB {
-    public static void insertMessage(String chatID, String userID, String content) {
+class MessageDB {
+    static String checkSeenMessage(String chatID, String uidSeen, String uidHaveMess){
+        PreparedStatement ps = ConnectDatabase.preparedStatement("CALL checkSeenMessage(?,?,?)");
+        try {
+            assert ps != null;
+            ps.setString(1, chatID);
+            ps.setString(2, uidSeen);
+            ps.setString(3, uidHaveMess);
+            ps.execute();
+
+            ResultSet rs = ps.getResultSet();
+            rs.next();
+            return rs.getString(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    static void insertMessage(String chatID, String userID, String content) {
         PreparedStatement ps = ConnectDatabase.preparedStatement("INSERT INTO ChatMessages(ChatID, UserID, Content, Time) VALUES (?,?,?,NOW())");
         try {
             assert ps != null;
@@ -22,7 +40,7 @@ public class MessageDB {
         }
     }
 
-    public static LinkedList<Message> loadChat(String chatID, String messID) {
+    static LinkedList<Message> loadChat(String chatID, String messID) {
         LinkedList<Message> list = new LinkedList<>();
         CallableStatement cs = ConnectDatabase.prepareCall("{CALL getChatBox(?,?)}");
         try {
@@ -42,9 +60,5 @@ public class MessageDB {
             e.printStackTrace();
         }
         return list;
-    }
-
-    public static void main(String[] args) {
-        insertMessage("3", "1", "Nguyễn Bạn");
     }
 }
